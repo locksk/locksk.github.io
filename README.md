@@ -2,47 +2,13 @@
 
 
 
-## Getting started
+## Details
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+The full CLOZUK3 dataset was used for linear mixed-effect regression models and single-mediator analyses, benefitting from multiple FBC/PK measurements per patient over time. 
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://git.cardiff.ac.uk/c1713552/fancy-repo.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://git.cardiff.ac.uk/c1713552/fancy-repo/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
+* lme4 and lmerTest were used to fit the LMMs (Bates et al. 2015; Kuznetsova et al. 2017). The mediation package (Tingley et al. 2014) was used to perform single-mediation analyses in the longitudinal data. 
+* The CLOZUK3 dataset was transformed into cross-sectional data through taking the lowest observation of ANC for each participant. This reduced dataset was used for multiple-, and single-mediator analyses using SEM in lavaan (Rosseel 2012), and in replication analyses (i.e., Spearman’s correlations, Linear Models) of previous research (Vaquero-Baez et al. 2019; Willcocks et al. 2021).
+* Prior to inclusion in all regression and structural equation models, covariates were standardised (mean centred and scaled) using the datawizard R package (Patil et al. 2022). 
 
 # Editing this README
 
