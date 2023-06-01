@@ -1,0 +1,22 @@
+# first was making a virtual environment
+
+module load python/3.9.2
+
+python3 -m venv <ve_name>
+
+source <ve_name>/bin/activate
+
+# create requirements .txt containing names of used things (pypgx, install-jdk)
+
+pip install -r requirements.txt
+
+pypgx run-chip-pipeline GENE GENE-pipeline path/to/file.vcf
+
+# creates a bunch of output files
+# alleles.zip; consolidated-variants.zip; genotypes.zip; imported-variants.zip; phased-variants.zip; phenotypes.zip; results.zip
+
+# you'll want to unzip the files and oragnise them a bit better
+unzip folder_name -d new_name
+
+mv new_name/* .
+rm -r tmp*
