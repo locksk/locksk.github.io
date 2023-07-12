@@ -62,6 +62,7 @@ div.blue { background-color:#EFEFEF; border-radius: 20px; padding: 20px;}
 ```{r set up, echo = F, warning= FALSE}
 
 knitr::opts_chunk$set(warning = FALSE, message = FALSE, echo = TRUE, fig.align = "center", dev = "png", dev.args=list(bg="transparent")) 
+options(knitr.kable.NA = '')
 
 library(beepr)
 
@@ -450,15 +451,15 @@ CLOZUK3.fbc.pk.gen.min <- CLOZUK3.fbc.pk.gen %>%
 
 
 #standardise ur predictors (MIN)
-CLOZUK3.fbc.pk.min.std <- datawizard::standardise(x = CLOZUK3.fbc.pk.min, select = c("dailydose", "age_at_assay", "std_age2", "TDS", "clozapine", "norclozapine", "ratio", "ig_num"))
+CLOZUK3.fbc.pk.min.std <- datawizard::standardise(x = CLOZUK3.fbc.pk.min, select = c("dailydose", "age_at_assay", "std_age2", "TDS", "clozapine", "norclozapine", "ratio"))
 
-CLOZUK3.fbc.pk.gen.min.std <- datawizard::standardise(x = CLOZUK3.fbc.pk.gen.min, select = c("dailydose", "age_at_assay", "std_age2", "TDS", "clozapine", "norclozapine", "c_PRS", "n_PRS", "est_score", "rs2472297_T", "rs61750900_T", "rs2011425_G", "rs1126545_T", "duffynull", "ig_num"))
+CLOZUK3.fbc.pk.gen.min.std <- datawizard::standardise(x = CLOZUK3.fbc.pk.gen.min, select = c("dailydose", "age_at_assay", "std_age2", "TDS", "clozapine", "norclozapine", "c_PRS", "n_PRS", "est_score", "rs2472297_T", "rs61750900_T", "rs2011425_G", "rs1126545_T", "duffynull"))
 
 #standardise ur predictors (LT/full data)
 
-CLOZUK3.fbc.pk.std <- datawizard::standardise(x = CLOZUK3.fbc.pk, select = c("dailydose", "age_at_assay", "std_age2", "TDS", "clozapine", "norclozapine", "ig_num"))
+CLOZUK3.fbc.pk.std <- datawizard::standardise(x = CLOZUK3.fbc.pk, select = c("dailydose", "age_at_assay", "std_age2", "TDS", "clozapine", "norclozapine"))
 
-CLOZUK3.fbc.pk.gen.std <- datawizard::standardise(x = CLOZUK3.fbc.pk.gen, select = c("dailydose", "age_at_assay", "std_age2", "TDS", "clozapine", "norclozapine", "c_PRS", "n_PRS", "est_score", "rs2472297_T", "rs61750900_T", "rs2011425_G", "rs1126545_T", "ig_num"))
+CLOZUK3.fbc.pk.gen.std <- datawizard::standardise(x = CLOZUK3.fbc.pk.gen, select = c("dailydose", "age_at_assay", "std_age2", "TDS", "clozapine", "norclozapine", "c_PRS", "n_PRS", "est_score", "rs2472297_T", "rs61750900_T", "rs2011425_G", "rs1126545_T"))
 
 ```
 
@@ -467,7 +468,7 @@ CLOZUK3.fbc.pk.gen.std <- datawizard::standardise(x = CLOZUK3.fbc.pk.gen, select
 <br>
 <br>
 
-Clozapine is effective at reducing treatment-resistant schizophrenia, but it can also induce several adverse outcomes including neutropenia and agranulocytosis. We used linear mixed-effect models and structural equation modelling to determine whether pharmacokinetic and genetic variables influence absolute neutrophil count in a UK-based sample of clozapine users without neutropenia. Increased daily clozapine dose was associated with elevated absolute neutrophil count, amounting to a 133 cells/mm3 rise per standard deviation increase in clozapine dose. One third of the total effect of clozapine dose was mediated by plasma clozapine and norclozapine levels jointly, which themselves demonstrated opposing, independent associations with absolute neutrophil count. Finally, CYP1A2 activity score was associated with absolute neutrophil count, supporting this pharmacogenomic factor as predictive of neutrophil levels within the context of clozapine use. This information could allow identification of at-risk patients and introduction of preventative interventions and individualised pharmacovigilance procedures to mitigate serious harm from haematological adverse effects.
+Clozapine is effective at reducing symptoms of treatment-resistant schizophrenia, but it can also induce several adverse outcomes including neutropenia and agranulocytosis. We used linear mixed-effect models and structural equation modelling to determine whether pharmacokinetic and genetic variables influence absolute neutrophil count in a UK-based sample (N = 811) of clozapine users not currently experiencing neutropenia. Increased daily clozapine dose was associated with elevated neutrophil count, amounting to a 133 cells/mm3 rise per standard deviation increase in clozapine dose. One-third of the total effect of clozapine dose was mediated by plasma clozapine and norclozapine levels, which themselves demonstrated opposing, independent associations with absolute neutrophil count. Finally, a CYP1A2 pharmacogenomic activity score was associated with absolute neutrophil count, supporting lower neutrophil levels in CYP1A2 poor metabolisers during clozapine use. This information may facilitate identifying at-risk patients and then introducing preventative interventions or individualised pharmacovigilance procedures to help mitigate these adverse haematological reactions.
 
 
 <br>
@@ -480,15 +481,15 @@ Clozapine is effective at reducing treatment-resistant schizophrenia, but it can
 
 ### Introduction
  
-Antipsychotic medication is the primary treatment option for people with schizophrenia; however, just like the presentation of the disorder itself, response to these drugs is highly variable. Approximately one third of patients are affected by treatment resistance (Kane et al. 2019), characterised by failure to respond to at least two different antipsychotics taken at a therapeutic dose, for an appropriate length of time, and after having ruled out non-compliance (Howes et al. 2017; Potkin et al. 2020). Clozapine is the sole evidence-based pharmacotherapy for treatment resistant schizophrenia, but clinicians are often hesitant to prescribe it due to a range of potential adverse effects. One of these involves a decline in patients’ absolute neutrophil count (ANC), which can lead to neutropenia or agranulocytosis depending on the severity and rapidity of this decline (Wiciński and Węclewicz 2018). While the extreme agranulocytosis often reported as a main clozapine-induced adverse reaction is currently unpredictable and rare (Taylor et al. 2022), less severe but sustained white blood cell loss can result in a partial suppression of the immune system even before being detected as neutropenia, and this has been suggested to increase vulnerability to infection and disease  (Ponsford et al. 2020).
+Antipsychotic medication is the primary treatment option for people with schizophrenia; however, just like the presentation of the disorder itself, response to these drugs is highly variable. Approximately one-third of patients are affected by treatment resistance (Kane et al. 2019), characterised by failure to respond to at least two different antipsychotics taken at a therapeutic dose, for an appropriate length of time, and after having ruled out non-compliance (Howes et al. 2017; Potkin et al. 2020). Clozapine is the sole evidence-based pharmacotherapy for treatment-resistant schizophrenia, but some clinicians are hesitant to prescribe it due to a range of potential adverse drug reactions (ADRs). One of these involves a decline in patients’ absolute neutrophil count (ANC), which can lead to neutropenia or agranulocytosis depending on the severity and rapidity of this decline (Wiciński and Węclewicz 2018). While the extreme agranulocytosis often reported as a main clozapine-induced adverse reaction is currently unpredictable and rare (Taylor et al. 2022), less severe but sustained white blood cell loss can result in partial suppression of the immune system even before being detected as neutropenia, and this has been suggested to increase vulnerability to infection and disease   (Ponsford et al. 2020). 
 
-While the exact mechanisms underlying the loss of neutrophils are unknown, it is thought to arise as a consequence of clozapine metabolism in combination with features of neutrophil action (Sernoskie et al. 2023). Clozapine is metabolised by the CYP family of enzymes, notably CYP1A2, CYP2D6, and CYP3A4, with each involved at different stages of its metabolic pathway (Pouget et al. 2014). While norclozapine and clozapine-N-oxide are the key products of CYP-mediated clozapine metabolism, the drug can also be converted to a nitrenium ion (Rajagopal 2005). This oxidation may occur in the presence of the enzyme myeloperoxidase or one of its products, hypochlorous acid, both of which are produced by activated neutrophils (Mütze et al. 2003; Aratani 2018). It is thought that this reactive intermediate may harm neutrophils through either haptenation, or overactivation and subsequent depletion of the Glutathione S-transferase (GSH) system, both of which provoke neutrophil apoptosis (Uetrecht et al. 1997; Franco and Cidlowski 2009; Ramli et al. 2021).
+While the exact mechanisms underlying the loss of neutrophils are unknown, it is thought   to arise as a consequence of clozapine metabolism in combination with how neutrophils function within the immune system      (Sernoskie et al. 2023). Clozapine is metabolised by the CYP family of enzymes, notably CYP1A2, CYP2D6, and CYP3A4, with each involved at different stages of its metabolic pathway (Thorn et al. 2018). While norclozapine and clozapine-N-oxide are the key products of CYP-mediated clozapine metabolism, the drug can also be converted to a nitrenium ion (Rajagopal 2005). This oxidation may occur in the presence of the enzyme myeloperoxidase or one of its products, hypochlorous acid, both of which are produced by activated neutrophils   (Mütze et al. 2003; Aratani 2018). It is thought that this reactive intermediate may harm neutrophils through either haptenation or overactivation and subsequent depletion of the Glutathione S-transferase system, both of which provoke neutrophil apoptosis (Uetrecht et al. 1997; Franco and Cidlowski 2009; Ramli et al. 2021).
+Mandatory blood monitoring is a requirement of clozapine prescription both in the UK and in many other countries (Nielsen et al. 2016). As a framework, it has reduced risks to patient safety by identifying at-risk individuals and stopping their medication before they develop agranulocytosis. Despite this mitigation, and clozapine’s superiority in managing treatment-resistant schizophrenia, the antipsychotic remains underutilised worldwide (Oloyede et al. 2023). In order to improve the drug’s safety and tolerability, there has been some interest in assessing markers of inflammatory processes (e.g., C-reactive protein) and their relationship to poor outcomes (de Leon et al. 2022). However, identifying factors that are predictive of low neutrophil counts in an otherwise healthy   sample of clozapine users could also help clinicians to further support patient safety, for example by prioritising at-risk patients for seasonal vaccinatio  ns or more frequent blood monitoring  . 
 
-Mandatory blood monitoring is a requirement of clozapine prescription both in the UK, and in many other countries. As a framework, it has reduced risks to patient safety by identifying at-risk individuals and stopping the medication before they develop agranulocytosis. Despite this mitigation, and clozapine’s superiority in managing treatment-resistant schizophrenia, the antipsychotic remains underutilised (Oloyede et al. 2023). Identifying factors that are predictive of low neutrophil counts in an otherwise healthy sample of clozapine users could help clinicians to further support patient safety, such as prioritising at-risk patients for seasonal vaccinations or more frequent blood monitoring. This may be accompanied by the monitoring of additional biomarkers (e.g., C-reactive protein) to aid in the identification of inflammation and potential infection arising as a result of clozapine titration (de Leon et al. 2022). 
+Past research (Smith et al. 2017; Vaquero-Baez et al. 2019; Willcocks et al. 2021) explored associations between daily clozapine dose and plasma concentrations of clozapine and norclozapine with ANC. Generally, plasma clozapine concentration was found to be inversely associated with ANC, whereas increased plasma norclozapine concentration was associated with elevated neutrophil counts. As highlighted in a recent review (Tan et al. 2021), there is inconsistency in the literature regarding both the direction and magnitude of effects observed. While this could be in part due to differences in statistical methodology and the use of small samples, it could equally reflect the idiosyncrasy of this ADR, alongside the challenges of disentangling the impact of clozapine and its related variables from genetic, demographic, or lifestyle factors that may equally influence neutrophil counts.
 
-Past research (Smith et al. 2017; Vaquero-Baez et al. 2019; Willcocks et al. 2021) observed associations between daily clozapine dose, and plasma concentrations of clozapine and norclozapine with ANC. Generally, plasma clozapine concentration was found to be inversely associated with ANC, whereas increased plasma norclozapine concentration was associated with elevated neutrophil counts. As highlighted in a recent review (Tan et al. 2021), there is inconsistency in the literature regarding both the direction and magnitude of effects observed. While this could be in part due to differences in statistical methodology and the use of small samples, it could equally reflect the idiosyncrasy of this ADR, alongside the challenges of disentangling the effect of clozapine and its related variables from genetic, demographic, or lifestyle factors that may equally influence neutrophil counts.
+The present research aims to replicate and extend these previous studies by exploring predictors of ANC in a large, UK-based sample of clozapine users with treatment-resistant schizophrenia. As a continuation of previous work, linear mixed-effect   regression models were used to explore associations between pharmacokinetic and pharmacogenomic variables and ANC in the longitudinal dataset, while accounting for between- and within-individual variability. Following this, a Structural Equation Modelling (SEM) framework was used to further disentangle the contributions of clozapine dose, from plasma clozapine and norclozapine levels via a mediation analysis. Genetic predictors were also investigated to determine whether such variation influenced neutrophil counts in our sample.
 
-The present research aims to replicate and extend these previous studies by exploring predictors of ANC in a large UK-based sample of clozapine users with Treatment Resistant Schizophrenia. As continuation of previous work, linear mixed-effect regression models were used to explore associations between pharmacokinetic and pharmacogenomic variables and ANC in the longitudinal dataset, while accounting for between- and within-individual variability. Following this, a Structural Equation Modelling (SEM) framework was used to further disentangle the contributions of clozapine dose, from plasma clozapine and norclozapine levels. Genetic predictors were included in these analyses to determine whether such variation influenced neutrophil counts in our sample
 
 
 
@@ -500,22 +501,23 @@ The present research aims to replicate and extend these previous studies by expl
 ## <strong> Methods </strong> 
 ### Methods
 
-#### Sample collection
-The present study uses Full Blood Counts (FBC) and Pharmacokinetic assay data from the CLOZUK3 sample (Kappel et al. 2023), the most recent wave of the CLOZUK study (Pardiñas et al. 2018). All participants had a diagnosis of Treatment Resistant Schizophrenia and were prescribed clozapine. Samples were anonymously collected in the UK from the Zaponex Treatment Access System (ZTAS), a clozapine monitoring framework managed by Leyden Delta B.V. (Nijmegen, Netherlands). Sample collection and data extraction procedures for CLOZUK have been detailed previously (Pardiñas et al. 2018; Pardiñas et al. 2023). The CLOZUK study received UK National Research Ethics Service approval (reference 10/WSE02/15), in accordance with the requirements of the UK Human Tissue Act 2004.
+#### Sample collection / Participants
+The present study uses Full Blood Counts (FBC) and pharmacokinetic assay data from the CLOZUK3   sample (Kappel et al. 2023), the most recent wave of the CLOZUK study (Pardiñas et al. 2018)  . All participants had a diagnosis of treatment-resistant schizophrenia and were prescribed clozapine. Samples were anonymously collected in the UK from the Zaponex Treatment Access System (ZTAS), a clozapine monitoring framework managed by Leyden Delta B.V. (Nijmegen, Netherlands). Sample collection and data extraction procedures for CLOZUK have been detailed previously (Pardiñas et al. 2018; Pardiñas et al. 2023). The CLOZUK study received UK National Research Ethics Service approval (reference 10/WSE02/15), in accordance with the requirements of the UK Human Tissue Act 2004.
 
 <br>
 
 #### Inclusion / Exclusion Criteria
-CLOZUK3 contains longitudinal assay data from participants (>18 years) who had not been previously included in prior waves of CLOZUK. Data from assays with key FBC or pharmacokinetic information missing or clerical errors (e.g., several assays taken at the same date and time yielding different results) were excluded from further analyses. The FBC data were curated by removing any assay showing an ANC outside of the normal reference range (2.0 – 7.5 x 109 cells/L). The pharmacokinetic data were curated, as in previous research (Kappel et al. 2023), by removing assays (i) that were outside of a 6-24 hour period between clozapine intake and blood sampling; (ii) where clozapine and norclozapine plasma concentrations were below instrument detection levels (< 0.05 mg/L); (iii) showing a low daily clozapine dose (< 100mg, indicative of drug titration) or (iv) showing a metabolic ratio suggesting non-adherence (< 0.5 or > 3.0). Finally, FBC and pharmacokinetic assays from the same individual taken on the same date were merged to create a dataset of linked FBC and PK assays.  
+CLOZUK3 contains longitudinal assay data from participants (>18 years) who had not been previously included in prior waves of CLOZUK. Data from assays with key FBC or pharmacokinetic information missing or with clerical errors (e.g., several assays taken at the same date and time yielding different results) were excluded from further analyses. The FBC data      were curated by removing any assay showing an ANC outside of the normal reference range (2.0 – 7.5 x 109 cells/L). As in previous research (Kappel et al. 2023), we removed pharmacokinetic assays    (i) that were outside of a 6-24 hour period between clozapine intake and blood sampling; (ii) where clozapine and norclozapine plasma concentrations were below instrument detection levels (< 0.05 mg/L); (iii) showing a low daily clozapine dose (< 100mg, indicative of drug titration) or (iv) showing a metabolic ratio suggesting non-adherence (< 0.5 or > 3.0). Finally, FBC and pharmacokinetic assays from the same individual taken on the same date were merged to create a dataset of linked FBC and pharmacokinetic assays.  
 
 <br>
 
 #### Genetic Data
-A subset of individuals (N = 523) within this sample had linked genetic data, based on genotypes from an Illumina Infinium Global Sequencing Array-24 (Illumina Inc). Details regarding the curation of genetic data have been described elsewhere (Kappel et al. 2023) and summarised in the Supplementary Note. 
+A subset of individuals (N = 523) within this sample had linked genetic data, based on genotypes from an Illumina Infinium Global Sequencing Array-24 (Illumina Inc, USA).   Details regarding the curation and imputation of genetic data have been described elsewhere (Kappel et al. 2023) and summarised in the Supplementary Note. 
 
-Pharmacogenomic star alleles (i.e., genetic variants or combinations of variants constituting pharmacogenomic markers) for CYP1A2 were called with PyPGx v0.20.0 (Lee et al. 2022). Enzyme activity scores were inferred from these star alleles, and these were included in analyses to determine whether genetic predictors of CYP1A2 activity were associated with ANC. Further pharmacogenomic SNPs (Table 1) identified in a previous GWAS (Pardiñas et al. 2019) and included in analysis by Willcocks et al., (2021), were also investigated. 
+Pharmacogenomic star  alleles (i.e., genetic variants or combinations of variants constituting pharmacogenomic markers) for CYP1A2 were called using PyPGx v0.20.0 (Lee et al. 2022) on the imputed array data. Enzyme activity scores were inferred from these star alleles, and these were included in analyses to determine whether genetic predictors of CYP1A2 activity were associated with ANC. Further pharmacogenomic SNPs for clozapine (Table 1), as identified in a previous GWAS (Pardiñas et al. 2019) and included in an analysis by Willcocks et al., (2021), were also investigated. 
 
-Polygenic Risk Scores (PRS) for clozapine and norclozapine metabolism were retrieved from a previous study (Pardiñas et al. 2023) and included in secondary analyses to incorporate genetic effects not necessarily restricted to the pharmacogenomic SNPs of large effect. We also explored the impact of the Duffy-Null genotype (rs2814778; C/C homozygote) as this has been previously associated with decreased baseline ANC in carriers from ancestries where this variant is common (Legge & Pardiñas et al. 2019). Finally, the Human Leukocyte Antigen (HLA) system has long been understood as a crucial component of the immune system, with past work having implicated various HLA genotypes with risk for neutrophil loss in clozapine users (Goldstein et al. 2014). To test whether variation in the HLA system was associated with neutrophil levels, we performed genotype imputation on pre-imputed CLOZUK3 data using HIBAG v1.34.1 (Zheng et al. 2014) and incorporated these into Linear Mixed Models. Detailed descriptions of CYP1A2 pharmacogenomic allele calling and HLA genotype imputation are found in the Supplementary note. 
+Polygenic Risk Scores (PRS) for clozapine and norclozapine metabolism were calculated via PRSice2 v2.35 (Choi and O’Reilly 2019) as part of a previous stud  y (Pardiñas et al. 2023). These were included in secondary analyses to incorporate genetic effects not necessarily restricted to the pharmacogenomic SNPs of large effect. We also explored the impact of the Duffy-Null genotype (rs2814778; C/C homozygote) as this has been previously associated with decreased baseline ANC     (Legge & Pardiñas et al. 2019; Fragiadaki et al. 2020). Finally, the Human Leukocyte Antigen (HLA) system has long been understood as a crucial component of the immune system, with past work having implicated various HLA genotypes with risk for neutrophil loss in clozapine users (Goldstein et al. 2014). To test whether variation in the HLA system was associated with neutrophil levels, we    performed genotype imputation on CLOZUK3 array data using HIBAG v1.34.1 (Zheng et al. 2014) and incorporated these into Linear Mixed Models. Detailed descriptions of CYP1A2 pharmacogenomic allele calling and HLA genotype imputation are found in the Supplementary note. 
+
 
 ```{r table 1, fig.cap="Table 1. SNPs included in regression analyses exploring the impact of pharmacogenomic variation on clozapine metabolism and neutrophil levels. SNP = Single Nucleotide Polymorphism; CHR = Chromosome; Alt = Alternative (or Minor) allele."}
 
@@ -537,17 +539,16 @@ kable(genes, caption = "Table 1 . SNPs included in regression analyses exploring
 
 #### Statistical Analysis
 
-Data analysis was performed in R 4.1.1 using R Studio version 1.4.1717 (R Core Team 2021), with scripts available at https://git.cardiff.ac.uk/c1713552/fancy-repo. 
+Data analysis was performed in R  v4.1.1 using R Studio v1.4.1717 (R Core Team 2021), with scripts available at https://git.cardiff.ac.uk/c1713552/clozapine_anc_predictors. 
 
-A Directed Acyclic Graph (DAG) was drawn to consider the causal structure of the clozapine dose – ANC relationship (Rohrer 2018). 
-The longitudinal dataset was analysed using Linear Mixed Models and with ANC as the outcome variable. A baseline model, in line with Willcocks et al. (2021), included three pharmacokinetic variables related to clozapine and its metabolism (i.e., daily clozapine dose, plasma clozapine concentration, and plasma norclozapine concentration) alongside the covariates age, age2, sex, and the time between the dose intake and blood sampling (TDS). Participant identifier was included in these models as a random effect term. All predictor variables were standardised before fitting the regression model. A further analysis also included pharmacogenomic variables (i.e., CYP1A2 activity scores, and the genotypes of pharmacogenomic SNPs outlined in Table 1). 
+A Directed Acyclic Graph   (DAG) was drawn to consider the causal structure of the clozapine dose – ANC relationship (Rohrer 2018). DAG construction was based on guidelines described by Ferguson et al. (2020), with the rationale for included nodes and relationships outlined in Supplementary Table 1. 
 
-Secondary analyses extended the Linear Mixed Models by testing for associations between further genetic predictors (e.g., PRS for clozapine and norclozapine metabolism, the Duffy-null genotype, and HLA genotypes) and neutrophil counts.
+The longitudinal dataset was analysed using Linear Mixed-Effect Models in lme4   and with ANC as the outcome variable. A baseline model, in line with Willcocks et al. (2021), included three pharmacokinetic variables related to clozapine and its metabolism (i.e., daily clozapine dose, plasma clozapine concentration, and plasma norclozapine concentration) alongside the covariates age, age2, sex, and the time between the dose intake and blood sampling (TDS). Participant identifier was included in these models as a random effect term. All predictor variables were standardised    before fitting the regression model. Further analysis also included pharmacogenomic variables (i.e., CYP1A2 activity scores, and the genotypes of pharmacogenomic SNPs outlined in Table 1). 
+Secondary analyses extended the Linear Mixed Models by testing for associations between further genetic predictors (e.g., PRS for clozapine and norclozapine metabolism, the Duffy-null genotype, and HLA genotypes) with neutrophil counts.
 
-Due to the difficulty of implementing and interpreting causal analyses on longitudinal datasets with irregular time points (Zeng et al. 2021), mediation models were fit using the lowest value of ANC reported for each individual as the outcome variable. SEM was employed using lavaan (Rosseel 2012) with clozapine and norclozapine plasma concentrations as the mediating variables, daily clozapine dose as the exposure, and lowest ANC as the outcome. Residualised versions of these variables were included in the model, as described in the Supplementary Note.  Predictor variable residuals were standardised prior to inclusion in the model. 
+Due to the difficulty of implementing and interpreting causal analyses on longitudinal datasets with irregular time points (Zeng et al. 2021), mediation models were fit using the lowest value of ANC reported for each individual as the outcome variable. SEM was employed using lavaan (Rosseel 2012) with clozapine and norclozapine plasma concentrations as the mediating variables, daily clozapine dose as the exposure, and lowest ANC as the outcome. Residualised versions of these variables were included in the model, as described in the Supplementary Note  .  Predictor variable residuals were standardised before inclusion in the model. 
 
-Further analyses tested the robustness of these results, assessing both the impact of using residualised variables and using cross-sectional, as opposed to longitudinal data. Single-mediator analyses were implemented in the mediation package (Tingley et al. 2014). This approach can estimate direct and indirect effects on longitudinal datasets but can only accommodate a single mediator variable. Therefore, it was not appropriate for the primary analysis of the multiple mediation model that we defined and evaluated using SEM on cross-sectional data in lavaan. Finally, we attempted to formally replicate the analyses described in previous studies (Vaquero-Baez et al. 2019; Willcocks et al. 2021) by implementing Spearman’s correlations and Linear Models, as reported in the Supplementary Note. 
-
+Further analyses tested the robustness of these results, assessing both the impact of using residualised variables and using cross-sectional, as opposed to longitudinal data. Single-mediator analyses were implemented in the mediation R package (Tingley et al. 2014). This approach can estimate direct and indirect effects in longitudinal datasets but can only accommodate a single mediator variable. Therefore, it was not appropriate for the primary analysis of the multiple mediation model that we defined and evaluated using SEM on cross-sectional data in lavaan. Finally, we attempted to formally replicate the analyses described in previous studies (Vaquero-Baez et al. 2019; Willcocks et al. 2021) by implementing Spearman’s correlations and Linear Models, as reported in the Supplementary Note. 
 
 <br>
 <br>
@@ -557,10 +558,7 @@ Further analyses tested the robustness of these results, assessing both the impa
 ## <strong> Main Results </strong> 
 ### Main Results 
 
-The final curated CLOZUK3 longitudinal dataset included 811 participants, with a total of 2,362 FBC/pharmacokinetic assays. Participants had a mean (SD) age of 40.1 (12.2) years; 28.9% were female (N = 234) and 71.1% were male (N = 577) .  Full descriptive  statistics of the sample at point of lowest ANC are given in Table 2.
-
-Causal paths for an analysis of ANC as outcome are shown in the DAG (Figure 1), supporting daily clozapine dose as the exposure variable, and the joint inclusion of plasma concentrations of clozapine and norclozapine as potential mediators between dose and ANC. The DAG highlights that the clozapine/norclozapine ratio (“metabolic ratio”) could act as a collider if included alongside plasma clozapine and norclozapine concentrations in the analysis. This reflects a previous observation that including it as a covariate in a regression model of ANC considerably attenuated the effects of both clozapine and norclozapine (Willcocks et al. 2021). Therefore, the metabolic ratio was not included in downstream analyses given that controlling for collider variables can introduce spurious associations as described in the causal inference literature (Rohrer 2018) . 
-
+The final curated CLOZUK3 longitudinal dataset included 811 participants, with a total of 2,362 FBC/pharmacokinetic assays. Participants had a mean (SD) age of 40.1 (12.2) years; 28.9% were female (N = 234) and 71.1% were male (N = 577). Full descriptive statistics of the sample at the point of lowest ANC   are given in Table 2. Causal paths for an analysis of ANC as the outcome are shown in the DAG (described in the Supplemental Notes), highlighting daily clozapine dose as the exposure variable, and plasma concentrations of clozapine and norclozapine as potential mediators between dose and ANC.
 
 ```{r Table 2, fig.cap="Table 2. Summary of CLOZUK3 variables used in mediation analysis. Descriptive statistics presented for a ‘cross-sectional’ version of CLOZUK3 where the assay with the lowest value of ANC per person is retained.  TDS = Time between Dose and Sample; ANC = Absolute Neutrophil Count."}
 
@@ -596,15 +594,6 @@ kable(table, col.names = c("Variable", "Mean","SD","Min","Max", "Mean","SD","Min
 <br>
 <br>
 
-
-```{r Fig 1, fig.align='center', fig.cap="Figure 1.  DAG of the causal structure surrounding the relationship between clozapine daily dose and ANC.  DAG shows direct effect of dose on ANC, with mediating roles of plasma clozapine and norclozapine concentrations. Metabolic Ratio, included as a predictor in past work (Willcocks et al., 2021) was identified as a collider variable.  ", dev = "png", dev.args=list(bg="transparent")}
-knitr::include_graphics("Fig1.png")
-```
-
-
-<br>
-<br>
-
 #### <small> Linear Mixed Effect Model </small>
 
 ``` {r model labels, include = FALSE}
@@ -630,9 +619,7 @@ all_labels <- c('Intercept' = "Intercept",
               "rs2011425_G" = "rs2011425_G",
               "rs1126545_T" = "rs1126545_T",
               "c_PRS" = "Clozapine Metabolism PRS",
-              "n_PRS" = "Norclozapine Metabolism PRS",
-              "first.18Yes" = "Lowest Assay in First 18 weeks? (Yes)",
-              "time.diff" = "Time between First and Lowest Assay")
+              "n_PRS" = "Norclozapine Metabolism PRS")
 
 labels_rep <- c('Intercept' = "Intercept",
                  'dailydose' = "Daily dose",
@@ -651,7 +638,7 @@ labels_rep <- c('Intercept' = "Intercept",
 
 
 ```{r main mixed model}
-anc_dcnt <- lmer(neut_num~ig_num+dailydose+clozapine+norclozapine+TDS+SEX+age_at_assay+std_age2 + (1|LUIN), data=CLOZUK3.fbc.pk.std) # base model 
+anc_dcnt <- lmer(neut_num~dailydose+clozapine+norclozapine+TDS+SEX+age_at_assay+std_age2 + (1|LUIN), data=CLOZUK3.fbc.pk.std) # base model 
 
 coefs1 <- data.frame(coef(summary(anc_dcnt)))
 coefs1$p.z <- 2 * (1 - pnorm(abs(coefs1$t.value))) # extracting estimates for use in-line
@@ -663,9 +650,13 @@ coefs1b$p.z <- 2 * (1 - pnorm(abs(coefs1b$t.value))) # extracting estimates for 
 
 ```
 
-As shown in Table 3, all pharmacokinetic variables were significantly associated with ANC. Clozapine plasma concentration was inversely associated with ANC (β = `r round(coefs1[3,1], digits = 3)`, *p* = `r round(coefs1[3,4], digits = 4)`) and norclozapine plasma concentration (β = `r round(coefs1[4,1], digits = 3)`, *p* = `r round(coefs1[4,4], digits = 4)`) was positively associated with ANC. Thus, for every standard deviation increase in plasma clozapine concentration, ANC is reduced by 166 cells/mm3. Likewise, each standard deviation increase in plasma norclozapine concentration was accompanied by a corresponding 219 cells/mm3 increase in ANC. Of note, is that daily clozapine dose was also independently associated with ANC (β = `r round(coefs1[2,1], digits = 3)`, *p* = `r round(coefs1[2,4], digits = 4)`), resulting in an estimated rise of 133 cells/mm3 per standard deviation increase in daily dose. 
+As shown in Table 3, all pharmacokinetic variables were significantly associated with ANC. Clozapine plasma concentration was inversely associated with ANC (β = `r round(coefs1[3,1], digits = 3)`, *p* = `r round(coefs1[3,4], digits = 4)`) and norclozapine plasma concentration (β = `r round(coefs1[4,1], digits = 3)`, *p* = `r round(coefs1[4,4], digits = 4)`) was positively associated with ANC. For every standard deviation increase in plasma clozapine concentration, ANC was reduced by 166 cells/mm3. Likewise, each standard deviation increase in plasma norclozapine concentration was accompanied by a 219   cells/mm3 increase in ANC. We noted that daily clozapine dose was also associated with ANC in this model (β = `r round(coefs1[2,1], digits = 3)`, *p* = `r round(coefs1[2,4], digits = 4)`), resulting in an estimated rise of 133 cells/mm3 per standard deviation increase in daily dose. 
 
-A further model also incorporated pharmacogenomic predictors (Table 3). Despite these additional covariates, the pharmacokinetic variables dose, clozapine plasma concentration, and norclozapine plasma concentration remained significantly associated with ANC. No pharmacogenomic SNP previously linked with ANC demonstrated significant associations in the present sample. Furthermore, we saw a significant, positive association between the CYP1A2 activity score with ANC, in which increased CYP1A2 function is linked with increased neutrophil counts (β = `r round(coefs1b[5,1], digits = 3)`, *p* = `r round(coefs1b[5,4], digits = 4)`).
+A further model also incorporated pharmacogenomic predictors from the individuals with genetic data (Table 3). Despite these additional covariates, the pharmacokinetic variables dose, clozapine plasma concentration, and norclozapine plasma concentration remained significantly associated with ANC. No pharmacogenomic SNP linked with ANC in the Willcocks et al., (2021) study demonstrated significant associations in the present sample. Furthermore, neither PRS for clozapine and norclozapine metabolism nor variation in the HLA locus were significantly associated with ANC. 
+
+We saw a significant, positive association between the CYP1A2 activity score with ANC, in which increased CYP1A2 function, leading to rapid metabolism of CYP1A2 substrates, was linked with increased neutrophil counts (β = `r round(coefs1b[5,1], digits = 3)`, *p* = `r round(coefs1b[5,4], digits = 4)`). As described in the Supplementary note, this association was independent of rs2472297, a known regulator of CYP1A2 activity (Pardiñas et al. 2019). 
+
+Finally, the presence of the Duffy-Null genotype was significantly associated with reduced ANC in our sample (β = -0.770; p = 0.002).
 
 
 ```{r Table 3}
@@ -743,16 +734,14 @@ fit3 <- sem(model = multipleMediation, data = Data)
     #bootstrap = 5000)
 ```
 
-The primary model (Figure 2) showed evidence of a significant direct effect of daily clozapine dose on ANC `r round(summary(fit3)$pe[3,6], digits = 3)`, *p* = `r round(summary(fit3)$pe[3,9], digits = 3)`). The indirect path via clozapine and norclozapine plasma concentrations was also significant (est = `r round(summary(fit3)$pe[12,6], digits = 3)`, *p* = `r round(summary(fit3)$pe[12,9], digits = 3)`). However, no indirect effect was observed when plasma clozapine concentration was considered as the sole mediator (est = `r round(summary(fit3)$pe[11,6], digits = 3)`, *p* = `r round(summary(fit3)$pe[11,9], digits = 3)`). Secondary analyses (Supplementary note) revealed that CYP1A2 activity scores appeared to account for part of these associations, however, its impact could not be fully disentangled from the reduction in statistical power the models suffered because of the incompletely genotyped sample. 
+The primary model (Figure 1) showed evidence of a significant direct effect   of daily clozapine dose on ANC `r round(summary(fit3)$pe[3,6], digits = 3)`, *p* = `r round(summary(fit3)$pe[3,9], digits = 3)`). The indirect path via both clozapine and norclozapine plasma concentration was also significant (est = `r round(summary(fit3)$pe[12,6], digits = 3)`, *p* = `r round(summary(fit3)$pe[12,9], digits = 3)`). However, no indirect effect was observed when plasma clozapine concentration was considered as the sole mediator (est = `r round(summary(fit3)$pe[11,6], digits = 3)`, *p* = `r round(summary(fit3)$pe[11,9], digits = 3)`). Secondary analyses revealed that CYP1A2 activity scores appeared to account for part of these associations (Supplementary note). However, as only some of the CLOZUK3 sample was genotyped (523/811), these models would have reduced statistical power in relation to our main analyses and their results should be considered with caution.     
 
-Sensitivity analyses performed firstly using non-residualised variables in the model, and then single mediators in the longitudinal dataset were consistent with their comparable models. This suggests that our analyses were not compromised by using neither residualised variables, nor the smaller, cross-sectional dataset (Supplementary note).  
+Sensitivity analyses were performed firstly using non-residualised variables in the model, and then single mediators in the longitudinal dataset. These were all consistent with their comparable models, suggesting that our analyses were not compromised through using either residualised variables, or the smaller, cross-sectional dataset (Supplementary note).  
 
 
 ```{r Fig 2, dev = "png", dev.args=list(bg="transparent"), fig.cap="Figure 2. Path diagram showing association between Clozapine Dose and Lowest Absolute Neutrophil Count with Plasma Clozapine concentration and Plasma Norclozapine concentration as mediators. Plot edges are labelled with standardised regression coefficients. Variables included in Structural Equation Model are residualised versions of parent measures. Associations between model variables are shown in blue, whereas the overall direct and indirect paths are shown in black. * p<0.05   ** p<0.01   *** p<0.001"}
 knitr::include_graphics("Fig2.png")
 ```
-
-
 
 <br>
 <br>
@@ -764,41 +753,45 @@ knitr::include_graphics("Fig2.png")
 ### Discussion
 
 #### Key Findings
-The results of the present study provide evidence for associations between both pharmacokinetic and genetic variables with neutrophil count in the CLOZUK3 sample. Our research demonstrates opposing effects of plasma clozapine and norclozapine concentrations on ANC, with plasma clozapine levels inversely associated, and plasma norclozapine levels positively associated with neutrophil counts. Daily clozapine dose was also positively associated with ANC, and approximately a third of its overall impact was mediated by plasma clozapine and norclozapine levels. Finally, we found evidence that both the Duffy-Null genotype and CYP1A2 activity score were associated with ANC.
+The results of the present study provide evidence for associations between both pharmacokinetic   and genetic variables with neutrophil count in the CLOZUK3 sample. Daily clozapine dose was positively associated with ANC, and approximately a third of its overall impact was mediated by plasma clozapine and norclozapine levels. We also observed opposing effects of plasma clozapine and norclozapine concentrations on ANC, with plasma clozapine levels inversely associated, and plasma norclozapine levels positively associated with neutrophil counts. Finally, we found evidence that both CYP1A2 activity score and the Duffy-Null genotype were associated with ANC.
 
-The independent effect of clozapine dose on ANC across our analyses is both novel and unexpected, given that past research has found clozapine dose to be a poor predictor of ANC (Oyewumi et al. 2002; Willcocks et al. 2021). Furthermore, the direction of the effect is inconsistent with expectations, given that clozapine is believed to induce neutropenia or agranulocytosis (Mijovic and MacCabe 2020). This positive relationship could reflect an immune response to the drug resulting in elevated neutrophil counts, as has been previously observed in clozapine users (Lobach and Uetrecht 2014). Further work has shown that an increase in immature neutrophils may occur as part of this immune response (Ng et al. 2014). Therefore, it could be that this positive association may be driven in part by the premature release of immature neutrophils, resulting in raised ANC. Alternatively, the positive association may arise because of human intervention, in which, contrary to recommendations, clinicians may be adjusting clozapine dose in response to patient ANC. For example, aiming to counteract their patient’s low neutrophil levels by reducing daily clozapine dose, or equally being reluctant to increase clozapine dose in such patients due to fear of prompting further neutrophil loss. The associations between plasma clozapine and norclozapine levels with ANC are consistent with past research (Smith et al. 2017; Vaquero-Baez et al. 2019; Willcocks et al. 2021)  While this work cannot firmly establish which particular aspect of clozapine use engenders neutrophil loss, taken together these results do suggest that plasma norclozapine concentration is likely not the toxic component in this process.
+The independent association between clozapine dose and ANC across our analyses is both novel and unexpected, given that past research has found clozapine dose to be a poor      predictor of ANC (Oyewumi et al. 2002; Willcocks et al. 2021). Furthermore, the direction of the effect is inconsistent  with expectations, given that clozapine is believed to induce neutropenia or agranulocytosis (Mijovic and MacCabe 2020). This positive relationship could reflect a degree of immune responses to the drug, resulting in elevated neutrophil counts, as has been previously observed in clozapine users (Lobach and Uetrecht 2014). Further work has shown that an increase in immature neutrophils may occur as part of this immune response (Ng et al. 2014), which could result in raised ANC. Alternatively, the positive association may arise because of human intervention, by clinicians altering clozapine prescriptions in response to the full blood count results in ways that are not consistent or endorsed by treatment guidelines  . For example, some clinicians might aim to counteract a patient’s low neutrophil levels by reducing daily clozapine dose    in hopes of avoiding discontinuation or might become reluctant to increase clozapine dose due to fear of prompting further neutrophil loss  . In any case, the associations between plasma clozapine and norclozapine levels with ANC are consistent with past research (Smith et al. 2017; Vaquero-Baez et al. 2019; Willcocks et al. 2021). While this work cannot firmly establish which aspect of clozapine use engenders neutrophil loss, taken together these results do suggest that plasma norclozapine concentration is likely not the toxic component in this process.
 
-The present study also explored the impact of pharmacogenomics-inferred CYP1A2 enzyme activity. In this novel analysis, we observed a positive association between CYP1A2 activity score with ANC, in which increased enzyme activity is associated with greater neutrophil counts. This is consistent with current knowledge about clozapine’s metabolic pathway. Both CYP1A2 and CYP3A4 are involved in the metabolism of clozapine, either producing norclozapine via its demethylation or, to a lesser extent, generating clozapine-N-oxide (Pardiñas et al. 2019). Therefore, increased CYP1A2 activity should result in the faster clearance of clozapine and a subsequent increase in norclozapine, resulting in raised neutrophil counts. This is preliminary evidence that genetically-inferred enzyme activity may have utility as a means of predicting neutrophil counts in a non-neutropenic, clozapine-using population. Future research should be performed across different samples to ascertain the robustness of these results, and following this, could be extended to explore other enzymes involved in clozapine metabolism. It would also be of interest to determine whether similar associations persist in patients demonstrating low neutrophil counts indicative of neutropenia, or if present, agranulocytosis. 
+The present study also explored the impact of a well-established pharmacogenomic variable: CYP1A2 enzyme activity inferred via classic star allele calling. In our analysis we observed a positive association between the CYP1A2 activity score and ANC, in which increased enzyme activity is associated with greater neutrophil counts or, conversely, poor metabolism is associated with lower ANC. This is consistent with current knowledge about clozapine’s metabolic pathway. Both CYP1A2 and CYP3A4 are involved in the metabolism of clozapine, either producing norclozapine or to a lesser extent, clozapine-N-oxide (Pardiñas et al. 2019). Therefore, increased CYP1A2 activity should result in the faster conversion of clozapine to norclozapine, reducing the potentially toxic impact of other metabolites (including clozapine itself) on neutrophil counts. This is preliminary evidence that genetically-inferred enzyme activity may have utility for predicting neutrophil counts in a non-neutropenic, clozapine-using population. Future research should be performed across different samples to ascertain the robustness of these results, and following this, could be extended to explore other enzymes involved in clozapine metabolism. It would also be of interest to determine whether similar associations persist in patients demonstrating low neutrophil counts indicative of neutropenia, or if present, agranulocytosis.     
 
-In contrast to previous work (Willcocks et al. 2021), none of the included pharmacogenomic SNPs demonstrated associations with lowest ANC. While this could be partly due to the reduced size of the genetic sample (N = 523), it does reinforce the need for future work to better understand the possible impact of these variants on neutrophil counts in clozapine users.  Furthermore, neither the PRS for clozapine and norclozapine metabolism nor HLA genotypes were significantly associated with ANC. However, prior to correction for multiple comparisons, several HLA alleles (i.e., DRB1*16:01, DRB1*04:04, DRB1*01:03) were nominally significant. While HLA-DRB1*16:01 has been previously identified in clozapine-induced agranulocytosis cases (Yunis et al. 1995), it has not yet been formally linked to neutrophil levels in a non-neutropenic population. The remaining alleles have not previously been implicated in clozapine-induced neutrophil loss. Thus, these associations could provide direction for future research investigating the impact of this locus on neutrophil levels in clozapine users. 
+In contrast to previous work (Willcocks et al. 2021), none of the included pharmacogenomic SNPs demonstrated associations with ANC. While this could be partly due to the reduced size of the genetic sample (N = 523), it does reinforce the need for future work to better understand the possible impact of these variants on neutrophil counts in clozapine users  .  Furthermore, neither the PRS for clozapine and norclozapine metabolism nor the assessed HLA genotypes    were significantly associated with ANC. However, before correction for multiple comparisons several HLA alleles (i.e., DRB1 16:01, DRB1 04:04, DRB1 01:03) were nominally     significant. While HLA-DRB1*16:01 has been previously identified in clozapine-induced agranulocytosis cases (Yunis et al. 1995), it has not yet been formally linked to neutrophil levels in a non-neutropenic population. The remaining alleles have not previously been implicated in clozapine-induced neutrophil loss.  Thus, these associations could provide direction for further work investigating the impact of this locus on neutrophil levels in clozapine users. 
 
-Finally, as expected from previous work (Legge & Pardiñas et al. 2019), a genetic predictor associated with lower non-pathological baseline neutrophil counts, the Duffy-Null genotype, was found to be negatively associated with ANC. This is consistent with observations that the genotype is linked with reduced, yet non-pathological neutrophil counts in carriers (Legge & Pardiñas et al. 2019). The genotype is most common in individuals of African ancestries on account of the selective advantage it confers against the malaria virus (Atallah-Yunes et al. 2019). However, this research highlights the influence of this genetic factor in determining neutrophil counts in participants of non-African ancestries too. This is despite the low frequency of this genotype in our sample, with carriers constituting fewer than 5% of CLOZUK3 individuals with available data (N=21/496). This supports the notion that testing patients for this genotype and interpreting their drug monitoring assays accordingly will likely be more beneficial than diagnosing patients with Benign Ethnic Neutropenia based on their ancestry (Andreou et al. 2022). Such genetic testing could increase clinician confidence when prescribing clozapine to people of ancestries where this genotype is common and thus help to combat racial disparities in clozapine use and prescription (Williams et al. 2020) and widen access to this medication. 
+Finally, as expected from previous work (Legge & Pardiñas et al. 2019), a  genetic predictor associated with lower non-pathological baseline neutrophil counts, the Duffy-Null genotype, was negatively associated with ANC. This is consistent with observations that the genotype is linked with reduced, yet non-pathological neutrophil counts in carriers (Legge & Pardiñas et al. 2019). This genotype is most common in individuals of African ancestries on account of the selective advantage it confers against the malaria parasite (Atallah-Yunes et al. 2019). Our work confirms that this genetic factor should also be considered when assessing neutrophil counts in non-African samples, despite the frequency of this genotype being below 5% of our assessed sample (N=21/496). This supports the notion that testing patients for this genotype and interpreting their blood monitoring assays accordingly will likely be more beneficial than diagnosing patients with Benign Ethnic Neutropenia based on their ancestry (Andreou et al. 2022). Such genetic testing could increase clinician confidence when prescribing clozapine to people of ancestries where this genotype is common and thus help to combat racial disparities in clozapine use and prescription and widen access to this medication (Williams et al. 2020) . 
 
 <br>
 
 #### Strenghts and Weaknesses
 
-CLOZUK3 is a larger sample that benefits from longitudinal data collection, and so is better powered to assess the relationships between clozapine dose and its related variables on ANC. Due to improved data availability, FBC and pharmacokinetic assays were merged and analysed only when taken on the same day. Again, this is advantageous, providing a more precise estimate of neutrophil counts at given plasma clozapine and norclozapine levels.  Finally, to our knowledge this work is the first to both include and establish associations between pharmacogenomics-inferred CYP1A2 activity with neutrophil counts in clozapine users. 
+In the context of research on treatment-resistant schizophrenia, CLOZUK3 is a large sample that benefits from longitudinal blood monitoring, and so is better powered than most previous studies to assess the relationships between clozapine dose and metabolites on ANC. Additionally, data availability allowed us to merge and analyse FBC and pharmacokinetic assays taken on the same day, eliminating the potential noise introduced by time lags and providing a more precise relationship between neutrophil counts and plasma clozapine and norclozapine levels.     To our knowledge, this is also the first to both assess and establish associations between pharmacogenomics-inferred CYP1A2 activity with neutrophil counts in clozapine users. 
 
-A key limitation of the present work is that the CLOZUK3 sample was not completely genotyped; this results in a reduction in statistical power to any analysis which includes genetic variables, or filters the sample based on such characteristics. Furthermore, the participants in the CLOZUK3 dataset were primarily of a single ancestral group. This limits the extent to which the observed associations can be generalised to non-European patients and necessitates the extension of these analyses in a more genetically-diverse sample, particularly given the existence of ancestry-specific genetic effects on ANC (Legge & Pardiñas et al. 2019). 
+A key limitation of the present work is that the CLOZUK3 sample was not completely genotyped; this results in a reduction in statistical power to any analysis which required genetic variables or filtering the sample based on such characteristics. Despite this, the key pharmacokinetic associations observed in the linear mixed-effect model remain even when explored in this reduced sample. Furthermore, the participants in the CLOZUK3 dataset were primarily of a single ancestral group. This limits the extent to which the observed associations can be generalised to non-European patients and necessitates the extension of these analyses in a more genetically-diverse sample, particularly given the existence of ancestry-specific genetic effects on ANC (Legge & Pardiñas et al. 2019). 
 
-Another omission is that of phenoconversion, in which concomitant medication (e.g., oral contraceptives, some antidepressants) or lifestyle factors (e.g., caffeine consumption, cigarette smoking) can modify enzyme activity, and thus impact upon clozapine metabolism (Lesche et al. 2020). As well as being linked to clozapine metabolism (Hägg et al. 2000; Wagner et al. 2020), there is some evidence that cigarette and caffeine consumption are associated with white blood cell counts (Ramanaviciene et al. 2004; Higuchi et al. 2016; Zeng et al. 2022). Unfortunately, information pertaining to these variables was unavailable in the CLOZUK3 dataset. Therefore, we were unable to account for the potential of substance use to either influence clozapine metabolism via phenoconversion or act as a confound in our analysis. Accounting for these variables through phenoconversion corrected activity scores, or their inclusion as a covariate in analyses would strengthen any conclusions drawn from future work. 
+Another omission is that of phenoconversion, in which concomitant medication (e.g., oral contraceptives, some antidepressants) or lifestyle factors (e.g., caffeine consumption, cigarette smoking) can modify enzyme activity, and thus impact clozapine metabolism (Lesche et al. 2020). As well as being linked to clozapine metabolism (Hägg et al. 2000; Wagner et al. 2020), there is some evidence that cigarette and caffeine consumption is associated with white blood cell counts (Ramanaviciene et al. 2004; Higuchi et al. 2016; Zeng et al. 2022). Unfortunately, information about these variables was unavailable in the CLOZUK3 dataset. Therefore, we were unable to account for the potential of substance use to either influence clozapine metabolism via phenoconversion or act as a confounder in our analysis. Accounting for these variables through phenoconversion-corrected activity scores as described by Lesche et al., (2020), or their inclusion as a covariate in analyses would strengthen any conclusions drawn from future work. 
 
 <br>
 
-#### Clinical Implications
+#### Implications
 
-The present work found several associations between pharmacokinetic and genetic variables with ANC in a UK-based sample of clozapine users. These associations could have clinical utility from the perspective of treatment management and engagement. Given that clozapine dose is positively associated with ANC, it could become a modifiable target in cases with abnormal neutrophil counts. While in practice clinicians are unlikely to increase the maximum dose of clozapine in patients with low ANC due to fear of inducing neutropenia. These findings could be useful at the opposite end of the spectrum, for example, reducing clozapine dose to combat high neutrophil levels in patients exhibiting signs of neutrophilia. Plasma clozapine and norclozapine levels were also significantly associated with ANC, however, they are more so impacted by between, and within-individual differences in metabolism (Skokou et al. 2022). Therefore, while they may have limited utility as manipulable variables to modify neutrophil counts, they could benefit identification of patients at-risk of low ANC, even at above-neutropenic levels. 
+The present work found several associations between pharmacokinetic and genetic variables with ANC in a UK-based sample of clozapine users with no detectable immune-related ADRs. Our results could have clinical applicability from the perspective of treatment management, supporting the view that clozapine dose might become a modifiable risk factor in cases with abnormal neutrophil counts . While agranulocytosis and severe neutropenia are regarded to be dose-independent, whether subclinical thresholds of neutropenia or neutrophilia might respond to dose alterations has not yet been systematically investigated. Clozapine metabolism is also a factor to consider as plasma clozapine and norclozapine levels were also significantly associated with ANC in our sample. However, large inter- and intra-individual differences in levels at fixed doses might make it complicated to influence these variables in practice (Skokou et al. 2022), though they still could find applicability for the identification of patients at risk of extreme ANCs. 
 
-Given the rarity of clozapine induced neutropenia and agranulocytosis both within the population, and our sample, the present analyses were performed on individuals with neutrophil counts within a healthy range. Therefore, the implications of our findings are somewhat limited with respect to applying them to these ADRs. Future research should explore these predictors in a sample of individuals who have experienced clozapine induced neutropenia or agranulocytosis, with particular attention given to instances of Life-Threatening Agranulocytosis, as previous research has observed distinct patterns of neutrophil change preceding these events (Taylor et al. 2022). This would enable a comparison of associations between those with ‘typical’ vs ‘atypical’ ANC, which could help researchers to understand whether similar or distinct mechanisms are underlying neutrophil loss across its mild and more severe forms.
+Given the rarity of clozapine-induced neutropenia and agranulocytosis both within the population and our sample, the present analyses were performed on individuals with neutrophil counts within a healthy range. Therefore, the implications of our findings are somewhat limited concerning applying them to these ADRs. Future research should explore these predictors in a sample of individuals who have experienced clozapine-induced neutropenia or agranulocytosis, with particular attention given to instances of Life-Threatening Agranulocytosis, as previous research has observed recognisable changes in ANC preceding these events (Taylor et al. 2022). This would enable a comparison of associations between those with ‘typical’ vs ‘atypical’ ANC, which could help researchers to understand whether similar or distinct mechanisms are underlying neutrophil loss across its mild and more severe forms. 
 
-Currently, there is reluctance amongst some clinicians to prescribe clozapine to patients with schizophrenia. This is primarily due to the risk of neutropenia and agranulocytosis, and the accompanying need for therapeutic blood monitoring to ensure patient safety. While effective at reducing deaths from clozapine induced agranulocytosis in the UK (Oloyede et al. 2021), such frequent haematological testing is time-consuming both from the perspective of the patient, and the healthcare provider. This work adds to the body of literature aiming to develop a complete understanding of the factors that influence ANC in clozapine users, which could have value in improving access to this gold standard medication. Pharmacokinetic and genetic variables that influence both risk to neutrophil loss, and the interpretation of that risk, could be used to stratify patients based on the probability that they’ll develop this side effect and then adjust their drug monitoring regime accordingly. This could also inform the design of preventative interventions targeting those most likely to experience neutrophil loss, and subsequent immune suppression, which may help to prevent serious illness over the duration of clozapine use. Some examples of this might include encouraging at-risk patients to take up offers of seasonal vaccinations (e.g., flu, COVID).  Alternatively, the testing of additional markers of inflammation (e.g., C-reactive protein or immunoglobulin concentration) may be incorporated into therapeutic drug monitoring to identify when the risk of developing illness amongst these patients is highest and adjusting treatment or introducing further mitigations accordingly. Knowledge of these variables could act as an additional layer of information to guide clinical decision making and ultimately help to widen access to clozapine via a two-pronged approach: both by enhancing safety for those most at-risk, alongside reducing obstacles to treatment use for those at lowest risk.
+This work adds to the body of literature aiming to develop a complete understanding of the factors that influence ANC in clozapine users, which could have value in improving access to this gold-standard medication. Currently, there is reluctance amongst some clinicians to prescribe clozapine to patients with schizophrenia. This is primarily due to the risk of neutropenia and agranulocytosis, and the accompanying need for therapeutic blood monitoring to ensure patient safety. While effective at reducing deaths from clozapine-induced agranulocytosis in the UK (Oloyede et al. 2021), such frequent haematological testing is time-consuming both from the perspective of the patient, and the healthcare provider. Pharmacokinetic and genetic variables that influence both the risk of neutrophil loss and the interpretation of that risk, could be used to stratify patients based on the probability that they’ll develop this side effect and then adjust their drug monitoring regime accordingly. This could also inform the design of preventative interventions targeting those most likely to experience neutrophil loss, and subsequent immune suppression, which may help to prevent serious illness over the duration of clozapine use. Some examples of this might include encouraging at-risk patients to take up offers of seasonal vaccinations, particularly given evidence of reduced vaccine uptake in people with psychiatric disorders (Bonkat et al. 2022).  Alternatively, the testing of additional markers of inflammation (e.g., C-reactive protein or immunoglobulin concentration) may be incorporated into therapeutic blood monitoring to identify when the risk of developing illness amongst these patients is highest and then adjusting treatment or introducing further mitigations accordingly. Knowledge of these variables could act as an additional layer of information to guide clinical decision-making and ultimately help to widen access to clozapine via a two-pronged approach: both by enhancing safety for those most at-risk, alongside reducing obstacles to treatment use for those at lowest risk.
+
 
 <br>
 
 #### Conclusions
 
-Associations between pharmacokinetic variables and ANC were observed in a subset of the CLOZUK3 cohort with neutrophil counts in the normal range. This is broadly in keeping with past research in the CLOZUK2 cohort in which plasma clozapine and norclozapine levels were found to have opposing effects on ANC. Furthermore, plasma clozapine and norclozapine concentrations were shown to mediate the total effect of clozapine dose on ANC through use of SEM. This analysis was extended with the inclusion of CYP1A2 activity scores, inferred from pharmacogenomic star alleles. While these scores were significantly, and positively associated with ANC, no associations were seen between neutrophil counts with pharmacogenomic SNPs previously associated with ANC. Additional work in larger, more genetically diverse samples is required to clarify the role of pharmacogenomic variation in clozapine metabolism, and its capacity to influence neutrophil levels in clozapine users. In all this work advances our understanding of the impacts of clozapine use on neutrophil counts, which in the future may help to improve access to clozapine via the development of both targeted interventions and personalised drug monitoring schedules based on individual risk factors. 
+Associations between pharmacokinetic and genetic variables with ANC were assessed in a subset of the CLOZUK3 sample with neutrophil counts in the normal range. Daily clozapine dose was positively associated with ANC, with clozapine and norclozapine plasma levels jointly accounting for a third of its total effect. This both supports and expands on the results from past research in CLOZUK2 and other cohorts, which suggested an opposing relationship between ANC and plasma clozapine and norclozapine levels. 
+
+The pharmacokinetic analysis was supplemented by genetic covariates, notably a CYP1A2 activity score inferred from pharmacogenomic star alleles. CYP1A2 activity was positively associated with ANC; however, no associations were seen between neutrophil counts with pharmacogenomic SNPs previously associated with clozapine metabolism. Additional work in larger, more genetically diverse samples is required to clarify the role of pharmacogenomic variation in clozapine metabolism, and its capacity to influence neutrophil levels in clozapine users. In all, this work advances our understanding of the impacts of clozapine use on neutrophil counts, which in the future may help to improve access to clozapine via the development of targeted interventions and personalised drug monitoring schedules based on individual risk factors.
+
 
 <br>
 <br>
@@ -808,13 +801,20 @@ Associations between pharmacokinetic variables and ANC were observed in a subset
 ## <strong> References </strong>
 ### References 
 
-<br>
-
 Andreou, A., Jayaram, J., Walker, A., Tek, C. and Williams, J.C. 2022. Re-examining the utility and validity of benign ethnic neutropenia: A narrative literature review. Schizophrenia Research. Available at: https://www.sciencedirect.com/science/article/pii/S0920996422000780 [Accessed: 7 December 2022].
 
 Aratani, Y. 2018. Myeloperoxidase: Its role for host defense, inflammation, and neutrophil function. Archives of Biochemistry and Biophysics 640, pp. 47–52. doi: 10.1016/j.abb.2018.01.004.
 
 Atallah-Yunes, S.A., Ready, A. and Newburger, P.E. 2019. Benign ethnic neutropenia. Blood Reviews 37, p. 100586. doi: 10.1016/j.blre.2019.06.003.
+
+Bonkat, N., Fellendorf, F.T., Dalkner, N. and Reininghaus, E.Z. 2022. Severe mental disorders and vaccinations – a systematic review. The World Journal of 
+Biological Psychiatry 23(7), pp. 501–516. doi: 10.1080/15622975.2021.2013095.
+
+Choi, S.W. and O’Reilly, P.F. 2019. PRSice-2: Polygenic Risk Score software for biobank-scale data. GigaScience 8(7), p. giz082. doi: 10.1093/gigascience/giz082.
+
+Ferguson, K.D., McCann, M., Katikireddi, S.V., Thomson, H., Green, M.J., Smith, D.J. and Lewsey, J.D. 2020. Evidence synthesis for constructing directed acyclic graphs (ESC-DAGs): a novel and systematic method for building directed acyclic graphs. International Journal of Epidemiology 49(1), pp. 322–329. doi: 10.1093/ije/dyz150.
+
+Fragiadaki, I. et al. 2020. Increased frequency of the single nucleotide polymorphism of the DARC/ACKR1 gene associated with ethnic neutropenia in a cohort of European patients with chronic idiopathic neutropenia. American Journal of Hematology 95(7), pp. E163–E166. doi: 10.1002/ajh.25813.
 
 Franco, R. and Cidlowski, J.A. 2009. Apoptosis and glutathione: beyond an antioxidant. Cell Death & Differentiation 16(10), pp. 1303–1314. doi: 10.1038/cdd.2009.107.
 
@@ -846,6 +846,8 @@ Mütze, S., Hebling, U., Stremmel, W., Wang, J., Arnhold, J., Pantopoulos, K. an
 
 Ng, W., Kennar, R. and Uetrecht, J. 2014. Effect of clozapine and olanzapine on neutrophil kinetics: implications for drug-induced agranulocytosis. Chemical Research in Toxicology 27(7), pp. 1104–1108. doi: 10.1021/tx500183x.
 
+Nielsen, J. et al. 2016. Worldwide Differences in Regulations of Clozapine Use. CNS Drugs 30(2), pp. 149–161. doi: 10.1007/s40263-016-0311-1.
+
 Oloyede, E. et al. 2021. There Is Life After the UK Clozapine Central Non-Rechallenge Database. Schizophrenia Bulletin 47(4), pp. 1088–1098. doi: 10.1093/schbul/sbab006.
 
 Oloyede, E. et al. 2023. What are the barriers and facilitators of clozapine use in early psychosis? A survey of UK early intervention clinicians. Schizophrenia 9(1), pp. 1–7. doi: 10.1038/s41537-023-00353-0.
@@ -861,8 +863,6 @@ Pardiñas, A.F. et al. 2023. Pharmacokinetics and pharmacogenomics of clozapine 
 Ponsford, M.J. et al. 2020. Clinical and laboratory characteristics of clozapine-treated patients with schizophrenia referred to a national immunodeficiency clinic reveals a B-cell signature resembling common variable immunodeficiency (CVID). Journal of Clinical Pathology 73(9), pp. 587–592. doi: 10.1136/jclinpath-2019-206235.
 
 Potkin, S.G. et al. 2020. The neurobiology of treatment-resistant schizophrenia: paths to antipsychotic resistance and a roadmap for future research. npj Schizophrenia 6(1), pp. 1–10. doi: 10.1038/s41537-019-0090-z.
-
-Pouget, J.G., Shams, T.A., Tiwari, A.K. and Müller, D.J. 2014. Pharmacogenetics and outcome with antipsychotic drugs. Dialogues in Clinical Neuroscience 16(4), pp. 555–566. doi: 10.31887/DCNS.2014.16.4/jpouget.
 
 R Core Team. 2021. R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation for Statistical Computing. Available at: https://www.R-project.org/.
 
@@ -885,6 +885,8 @@ Smith, R.L., Haslemo, T., Andreassen, O.A., Eliasson, E., Dahl, M.-L., Spigset, 
 Tan, M.S.A., Honarparvar, F., Falconer, J.R., Parekh, H.S., Pandey, P. and Siskind, D.J. 2021. A systematic review and meta-analysis of the association between clozapine and norclozapine serum levels and peripheral adverse drug reactions. Psychopharmacology 238(3), pp. 615–637. doi: 10.1007/s00213-020-05746-y.
 
 Taylor, D., Vallianatou, K., Whiskey, E., Dzahini, O. and MacCabe, J. 2022. Distinctive pattern of neutrophil count change in clozapine-associated, life-threatening agranulocytosis. Schizophrenia 8(1), p. 21. doi: 10.1038/s41537-022-00232-0.
+
+Thorn, C.F., Müller, D.J., Altman, R.B. and Klein, T.E. 2018. PharmGKB Summary: Clozapine Pathway, Pharmacokinetics. Pharmacogenetics and genomics 28(9), pp. 214–222. doi: 10.1097/FPC.0000000000000347.
 
 Tingley, D., Yamamoto, T., Hirose, K., Keele, L. and Imai, K. 2014. mediation: R Package for Causal Mediation Analysis. Journal of Statistical Software 59(5), pp. 1–38.
 
@@ -913,15 +915,11 @@ Zheng, X., Shen, J., Cox, C., Wakefield, J.C., Ehm, M.G., Nelson, M.R. and Weir,
 <br>
 <br>
 
-## <strong> Supplemental Notes on Methodology </strong> 
-### Supplemental Notes on Methodology
+## <strong> Supplemental Notes: Genetic Variables </strong> 
+### Supplemental Notes: Genetic Variables
 #### Quality Control of Genetic Data
 
-A subset of CLOZUK3 participants were genotyped using the Illumina Infinium Global Screening-24 (Illumina, Inc) at Icahn School of Medicine at Mount Sinai (New York City, USA). 
-
-The “GenotypeQCtoHRC” module of the DRAGON-data pipeline (Hubbard et al. 2022) was used to process the genotype data. This includes quality control of calls, removing individuals with genotyping rates <0.95, call rates <0.95, minor allele frequency <0.01, and any SNPs with Hardy-Weinberg Equilibrium mid-p < 10-6. Imputation was carried out via the Michigan Imputation Server, using the Haplotype Reference Consortium (HRC) panel (Das et al. 2016; McCarthy et al. 2016). 
-
-Further quality control was performed on the imputed genotypes, described in previous work (Pardiñas et al. 2023). Genetic data, including PRS for clozapine and norclozapine metabolism, key pharmacogenomic SNPs, and CYP1A2 activity scores, were merged with the combined CLOZUK3 dataset containing FBC and PK information resulting in a reduced size dataset containing `r length(unique(CLOZUK3.fbc.pk.gen$LUIN))` individuals and `r nrow(CLOZUK3.fbc.pk.gen)` assays.
+A subset of the CLOZUK3 participants was genotyped using the Illumina Infinium Global Screening-24 (Illumina Inc., USA) at Icahn School of Medicine at Mount Sinai (New York City, USA). The “GenotypeQCtoHRC” module of the DRAGON-data pipeline was used to process the genotype data (Hubbard et al. 2022). This includes quality control of calls, removing individuals with genotyping rates <0.95, and SNPs with call rates <0.95, minor allele frequency <0.01, and with Hardy-Weinberg Equilibrium mid-p < 10-6. Imputation was carried out via the Michigan Imputation Server, using the Haplotype Reference Consortium (HRC) panel (Das et al. 2016; McCarthy et al. 2016). Further quality control was performed on the imputed genotypes, described in previous work (Pardiñas et al. 2023). Genetic data, including PRS for clozapine and norclozapine metabolism, key pharmacogenomic SNPs, and CYP1A2 activity scores, were merged with the combined CLOZUK3 dataset containing FBC and PK information resulting in a dataset containing `r length(unique(CLOZUK3.fbc.pk.gen$LUIN))` individuals and `r nrow(CLOZUK3.fbc.pk.gen)` assays.
 
 <br>
 <br>
@@ -931,7 +929,7 @@ Further quality control was performed on the imputed genotypes, described in pre
 
 CYP1A2 plays a key role in clozapine metabolism, therefore it is likely that effects of CYP1A2 pharmacogenomic variability might be observed on neutrophil counts. Pharmacogenomic star alleles for CYP1A2 were called using PyPGx v0.20.0 (Lee et al. 2022) in Python v3.9.2 (Van Rossum and Drake 2009). The imputed genotyping data for CLOZUK3 was passed through the run-chip-pipeline command to derive PGx star alleles for this pharmacogene. 
 
-As CPIC validated information regarding CYP1A2 metabolism phenotypes and activity scores is currently not available, each haplotype was assigned an activity score in line with past work (Saiz-Rodríguez et al. 2019; Lesche et al. 2020) and described in Supplementary Table 1. These were summed to produce an overall activity score per participant, in which higher scores are reflective of increased enzyme function. Several participants were called with CYP1A2*1F/1C alleles in the same haplotype. These alleles have opposing functions, therefore in line with past work (Tian et al. 2019), we have treated this haplotype as a normal function allele. Pharmacogenomic variation in CYP3A4 was not explored despite its key role in clozapine metabolism on account of the rarity of pharmacogenomic star alleles conferring non-normal function (Werk and Cascorbi 2014), and likely difficulties that would arise when trying to fit models using such small sample sizes. Likewise, CYP2D6 variation was not explored as many of the increased function CYP2D6 pharmacogenomic alleles arise from copy number variation that is not easily identified through genotyping arrays (Reisberg et al. 2019). 
+As CPIC validated information regarding CYP1A2 metabolism phenotypes and activity scores is currently not available, each haplotype was assigned an activity score in line with past work (Saiz-Rodríguez et al. 2019; Lesche et al. 2020) and described in Supplementary Table 1. These were summed to produce an overall activity score per participant, in which higher scores are reflective of increased enzyme function. Several participants were called with CYP1A2*1F/1C alleles in the same haplotype. These alleles have opposing functions, therefore in line with past work (Tian et al. 2019), we have treated this haplotype as a normal function allele. Pharmacogenomic variation in CYP3A4 was not explored despite its key role in clozapine metabolism on account of the rarity of pharmacogenomic star alleles conferring non-normal function (Werk and Cascorbi 2014), and likely difficulties that would arise when trying to fit models using such small sample sizes. Likewise, CYP2D6 variation was not explored as many of the increased function CYP2D6 pharmacogenomic alleles arise from structural copy number variation that cannot be reliably identified through genotyping arrays (Reisberg et al. 2019). 
 
 ```{r ST1}
 setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
@@ -941,17 +939,19 @@ cap <- st1[7,1]
 st1 <- head(st1, -3)
 
 kable(st1,
-      caption = cap) %>%
+      caption = cap, digits = 3) %>%
       kable_styling("none", full_width = T, position = "left", font_size = 16) %>%
       kable_classic()
 
 ```
+
 <br>
 <br>
 
-The distribution of activity scores is shown in Supplementary Figure 1 and observed allele frequencies compared to previous research in Supplementary Table 1. The estimated activity scores were included in a LMM model alongside medication variables (i.e., daily dose, plasma clozapine and norclozapine concentration), pharmacogenomic SNPs, and other covariates (i.e., age, age2, sex, TDS) to determine their impact on ANC. 
+The distribution of activity scores is shown in Supplementary Figure 1 and observed allele frequencies compared to previous research in Supplementary Table 1. The estimated activity scores were included in a linear mixed-effect model alongside medication variables (i.e., daily dose, plasma clozapine and norclozapine concentration), pharmacogenomic SNPs, and other covariates (i.e., age, age2, sex, TDS) to determine their impact on ANC. 
 
 Finally, two further models were fit to compare the effect size of CYP1A2 with, and without including the intergenic CYP1A1-CYP1A2 SNP, rs2472297, in the model. There is evidence that this SNP both regulates CYP1A2 activity (Pardiñas et al. 2019) and is in weak linkage disequilibrium with the *1F allele. Therefore, it was added as a covariate in a second model to determine whether its inclusion impacts any association between measures of CYP1A2 activity with ANC in our sample. 
+
 
 <br>
 
@@ -988,43 +988,9 @@ ggplot(CLOZUK3.fbc.pk.min.1a2, aes(x = activity_score )) +
 <br>
 
 ####  Assessing the Impact of HLA Genotypes on Neutrophil Counts
+Past research has observed associations between HLA genotypes with risk for clozapine-induced agranulocytosis (Goldstein et al. 2014; Konte et al. 2021; Ninomiya et al. 2022). Therefore, we explored whether these alleles were associated with ANC in the CLOZUK3 sample. Pre-imputation array data was restricted to chromosome 6 using PLINK v1.9 (Purcell et al. 2007; Chang et al. 2015). HIBAG v1.34.1 (Zheng et al. 2014) was used to derive HLA alleles, alongside the pre-built InfiniumGlobal-European-HLA4-hg19 prediction model, which best fits the CLOZUK3 data concerning both the genotyping platform and the sample ancestry. This allowed imputation of available HLA genes (-A, -B, -C, -DPB1, -DQA1, -DQB1, -DRB1) to four-digit alleles. The frequencies of imputed HLA alleles in CLOZUK3 were compared to those identified in similar samples through the Allele Frequency Net Database (Gonzalez-Galarza et al. 2020) in Supplementary Tables 2 – 8, in the accompanying excel file. 
 
-Past research has observed associations between HLA genotypes with risk for clozapine induced agranulocytosis (Goldstein et al. 2014; Konte et al. 2021; Ninomiya et al. 2022), therefore we explored whether these alleles were associated with neutrophil counts in the CLOZUK3 sample. Pre-imputation array data was restricted to chromosome 6 using PLINK v1.9 (Purcell et al. 2007; Chang et al. 2015). HIBAG v1.34.1 (Zheng et al. 2014) was used to derive HLA alleles, alongside the pre-built InfiniumGlobal-European-HLA4-hg19 prediction model, which best fits the CLOZUK3 data with respect to both genotyping platform and sample ancestry. This allowed imputation of available HLA genes (-A, -B, -C, -DPB1, -DQA1, -DQB1, -DRB1) to four digits. The frequencies of imputed HLA alleles in CLOZUK3 were compared to those identified in similar samples through the Allele Frequency Net Database (Gonzalez-Galarza et al. 2020) in Supplementary Tables 2 – 8 in the Supplementary Tables Excel. 
-
-<br>
-```{r st2-st8, include = FALSE}
-setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
-
-all_lmm_brief <- read.table("HLA/all_lmm_rounded.txt",header=T)
-
-library(readxl)
-path <- "Z Write Up/Supplementary Tables.xlsx"
-sheetnames <- excel_sheets(path)
-mylist <- lapply(excel_sheets(path), read_excel, path = path)
-
-for (i in 2:8) {
-  mylist[[i]] <- head(mylist[[i]], -3)
-  mylist[[i]] <- mylist[[i]][,c(2:3)]
-  colnames(mylist[[i]]) = c("CLOZUK3_Freq", "EUR_Freq")
-}
-
-# name the dataframes
-names(mylist) <- sheetnames
-
-num <- c(2:8)
-result <- dplyr::bind_rows(mylist[num], .id = 'Gene' )
-result_filtered <- result %>% dplyr::filter(CLOZUK3_Freq > 0.05)
-
-#df <- cbind(all_lmm_brief[,c(1:2)], result)
-
-#list2env(mylist ,.GlobalEnv)
-
-#df <- ldply(listOfDataFrames, data.frame)
-```
-
-<br>
-
-After imputation, alleles with a MAF > 1% were retained for further analysis (Supplementary Table 9), and LMM used to explore their impact on ANC. Following Levin et al. (2015), genotypes were weighted by posterior imputation probabilities to derive estimated allele dosage. These were merged with the FBC/PK dataset so that HLA genotypes were associated with the longitudinal assay data (N = 540; 1627 assays). Each HLA allele was included as a covariate alongside daily clozapine dose, plasma clozapine and norclozapine concentrations, TDS, sex, age, and age2. Covariates were standardised and regressed against ANC, with participant ID included as a random intercept term. A total of 116 alleles across 7 HLA genes were included in the regression analyses. Correction for multiple comparisons was performed using the False Discovery Rate (FDR) and Bonferroni correction.
+After imputation, alleles with a MAF > 1% were retained for further analysis (Supplementary Table 9), and linear mixed-effect models were used to explore their impact on ANC. Following Levin et al. (2015), genotypes were weighted by posterior imputation probabilities to derive their estimated allele dosage. These were merged with the FBC/PK dataset so that HLA genotypes were associated with the longitudinal assay data (N = 540; 1,627 assays). Each HLA allele was included as a covariate alongside daily clozapine dose, plasma clozapine and norclozapine concentrations, TDS, sex, age, and age2. Covariates were standardised and regressed against ANC, with participant ID included as a random intercept term. A total of 116 alleles across 7 HLA genes were included in the regression analyses. Correction for multiple comparisons was performed using the False Discovery Rate (FDR) and Bonferroni correction.
 
 
 
@@ -1044,37 +1010,38 @@ kable(st9,
 <br>
 <br>
 
+## <strong> Supplemental Notes: Statistical Methodology </strong> 
+### Supplemental Notes: Statistical Methodology
+
+#### Exclusion of the Metabolic Ratio Variable
+Previous work demonstrated that including the clozapine/norclozapine ratio (“metabolic ratio”) as a covariate in a regression model of ANC considerably attenuated the effect sizes of both clozapine and norclozapine plasma concentrations (Willcocks et al. 2021). However, incorporating ratio variables in regression models has been criticised on the basis that they may result in deceptive, statistical artifacts (Kronmal 1993). Equally, it is possible that the metabolic ratio acts as a collider variable (Supplementary Figure 2; Supplementary Table 10). Controlling for collider variables through their inclusion as covariates, may also introduce spurious associations as described in the causal inference literature (Rohrer 2018). Therefore, the decision was made to exclude metabolic ratio from the present analyses.
 
 
-#### R Packages
-
-The full CLOZUK3 dataset was used for linear mixed-effect regression models and single-mediator analyses, benefitting from multiple FBC/PK measurements per patient over time. 
-
-* lme4 and lmerTest were used to fit the LMMs (Bates et al. 2015; Kuznetsova et al. 2017).
-* The mediation package (Tingley et al. 2014) was used to perform single-mediation analyses in the longitudinal data. 
-
-The CLOZUK3 dataset was transformed into cross-sectional data through taking the lowest observation of ANC for each participant. This reduced dataset was used for multiple-, and single-mediator analyses using SEM in lavaan (Rosseel 2012), and in replication analyses (i.e., Spearman’s correlations, Linear Models) of previous research (Vaquero-Baez et al. 2019; Willcocks et al. 2021). Prior to inclusion in all regression and structural equation models, covariates were standardised (mean centred and scaled) using the datawizard R package (Patil et al. 2022). 
-
+```{r SF 2, fig.align='center', out.width="1200px", fig.cap="Supplementary Figure 2.  DAG of the causal structure surrounding the relationship between clozapine daily dose and ANC in a sample of Clozapine Users not currently experiencing neutropenia.", dev = "png", dev.args=list(bg="transparent")}
+knitr::include_graphics("SFig1.png")
+```
 
 <br>
+<br>
 
-#### Deriving Residuals for use in Structural Equation Modelling 
+#### R Packages
+The full CLOZUK3 dataset was used for linear mixed-effect regression models and single-mediator analyses, benefitting from multiple FBC/pharmacokinetic measurements per patient over time. *lme4* and *lmerTest* were used to fit the LMMs (Bates et al. 2015; Kuznetsova et al. 2017). The *mediation* package (Tingley et al. 2014) was used to perform single-mediation analyses in the longitudinal data. 
 
-To account for covariates in the mediation analyses, residualised variables were incorporated into the SEM. Each variable was fit as an outcome in separate regression analyses, with the covariates, age, age2, sex, and TDS. 
+The CLOZUK3 dataset was transformed into cross-sectional data by taking the lowest observation of ANC for each participant. This reduced dataset was used for multiple-, and single-mediator analyses using SEM in *lavaan* (Rosseel 2012), and in replication analyses (i.e., Spearman’s correlations, Linear Models) of previous research (Vaquero-Baez et al. 2019; Willcocks et al. 2021). Before inclusion in all regression and structural equation models, covariates were standardised (mean-centred and scaled) using the *datawizard* R package (Patil et al. 2022).    
 
-* ANC was included as the outcome in a linear model. 
-* Daily dose was log-transformed and included as an outcome variable in a linear model. 
-* Plasma Clozapine and Norclozapine levels were included in a generalised linear model (GLM) using a gamma distribution and log link function. 
+<br>
+<br>
 
-Linear models were fit using the lm function, and GLMs were fit using the glm function.  These residuals were standardised and then used in place of their parent measure across all SEM, unless otherwise specified. In a further model, the impact of CYP1A2 activity score was accounted for by including it alongside age, age2, sex, and TDS in the regression models to produce the residualised variables.
+#### Deriving Residuals for use in Structural Equation Modelling
+To account for covariates in the mediation analysis, residualised variables were incorporated during SEM. Each variable was fit as an outcome in separate regression analyses, with the covariates, age, age2, sex, and TDS. ANC was included as the outcome in a linear model. Daily clozapine dose was log-transformed and included as an outcome variable in a linear model. Plasma Clozapine and Norclozapine levels were included in a generalised linear model using a gamma distribution and log link function.   Linear models were fit using the *lm* function, and generalised linear models were fit using the *glm* function.   The residuals of the predictors were standardised and then used in place of their parent measure across all mediation analyses unless otherwise specified. In a further model, the impact of CYP1A2 activity score was accounted for by including it alongside age, age2, sex, and TDS in the regression models to produce the residualised variables.
 
 <br>
 <br>
 <br>
 <br>
  
-## <strong> Supplemental Notes on Results </strong>
-### Supplemental Notes on Results 
+## <strong> Supplemental Notes: Secondary Analysis </strong>
+### Supplemental Notes: Secondary Analysis
 
 #### Extending the Linear Mixed Effect Model with  Genetic Covariates
 
@@ -1099,32 +1066,33 @@ coefs3$p.z <- 2 * (1 - pnorm(abs(coefs3$t.value))) # extracting estimates for us
 
 ```
 
+To assess the impact, if any, of rs2472297 on the association between CYP1A2 activity score with ANC (Supplementary Table 11), two linear mixed-effect models were fit with and without the SNP. CYP1A2 activity score was significantly associated with ANC (β = 0.145; p = 0.004). When the SNP was included as a covariate, there was negligible change in the effect size of CYP1A2 activity score (β = 0.142; p = 0.011), and as in the previous pharmacogenomic analysis (Table 3, Main Text), rs2472297 was not associated with ANC in this model (β = 0.004; p = 0.949). This indicates that the observed association between CYP1A2 activity score and ANC is likely not driven by rs2472297. 
 
-Initial analysis highlighted an association between CYP1A2 activity score and ANC. However, the SNP, rs2472297, may impact upon this association as it has been identified as being a regulator of CYP1A2, and in weak LD with the CYP1A2*1F PGx allele. Therefore, a further two models were fit to assess the impact, if any, of rs2472297 on association between CYP1A2 activity score and ANC (Supplementary Table 10). There is negligible change in effect size between the two models, indicating that the observed effect is likely not being influenced by rs2472297. 
 
-```{r ST10}
-tab_model(anc_dcnt_1a2_ass, anc_dcnt_1a2_asss,  show.est = TRUE, show.se = TRUE, show.ci = FALSE,
+```{r ST11}
+tab_model(anc_dcnt_1a2_asss, anc_dcnt_1a2_ass,  show.est = TRUE, show.se = TRUE, show.ci = FALSE,
                      show.p = F, collapse.se =  TRUE, show.intercept = FALSE, emph.p = TRUE, digits = 3, digits.re = 3,
                      #order.terms = c(1, 2, 7, 3, 4, 5 ,6),
                      string.pred = "Predictor", string.est = "Estimate (SE)",
                      pred.labels = all_labels,
-                     dv.labels = c("Without SNP", "Including rs2472297"),
+                     dv.labels = c("Activity Score Alone", "Including rs2472297"),
                      CSS = list(css.table = '+font-family: Roboto; width: 100%;', css.depvarhead = '+font-style: normal; font-weight: normal; text-align = centre',
                                 css.thead = 'border-top: blank; text-align = centre; padding: 0.5cm;', css.tdata = 'padding: 0.25cm; text-align = centre;',
                                 css.randomparts = 'border-top:1px solid;', css.firsttablerow = 'border-bottom: blank',
                                 css.firstsumrow = 'border-top: 1px solid', css.footnote = 'text-align: left;', 
                                 css.summary = "padding-top:0.2cm; padding-bottom:0.2cm;"), 
-                     title = "Supplementary Table 10. Results of two linear mixed effect models including genetic predictors of Absolute Neutrophil Count. Standardised regression coefficients reported alongside standard error and estimated p valued based on normal distribution. TDS = Time between Dose and Sample; ANC = Absolute Neutrophil Count; PGx = Pharmacogenomic; PRS = Polygenic Risk Scores; LUIN = Participant Identifier used in CLOZUK3; ICC = Intraclass Correlation Coefficient.",
+                     title = "Supplementary Table 11. Results of two linear mixed effect models including genetic predictors of Absolute Neutrophil Count. Standardised regression coefficients reported alongside standard error and estimated p valued based on normal distribution. TDS = Time between Dose and Sample; ANC = Absolute Neutrophil Count; PGx = Pharmacogenomic; PRS = Polygenic Risk Scores; LUIN = Participant Identifier used in CLOZUK3; ICC = Intraclass Correlation Coefficient.",
                      p.style = "stars"
 )
+
 ```
 
 <br>
 <br>
 
-There was no evidence of associations between Polygenic Risk Scores for neither clozapine association (β = 0.034; p = 0.532) nor norclozapine metabolism association (β = -0.009; p = 0.863) with Absolute Neutrophil Count. However, a strong negative association (β = `r round(coefs2$Estimate[9], digits = 3)`; *p* = `r round(coefs2$p.z[9], digits = 3)`) between the Duffy-Null genotype and ANC was observed in the CLOZUK3 sample. The presence of the Duffy-Null genotype was linked with a decline in neutrophils of approximately 770 cells/mm3 in comparison to non-carriers. Full estimates from these additional genetic models are included in Supplementary Table 11.
+There was no evidence of associations between Polygenic Risk Scores for neither clozapine association (β = 0.034; p = 0.532) nor norclozapine metabolism association (β = -0.009; p = 0.863) with Absolute Neutrophil Count. However, a strong negative association (β = `r round(coefs2$Estimate[9], digits = 3)`; *p* = `r round(coefs2$p.z[9], digits = 3)`) between the Duffy-Null genotype and ANC was observed in the CLOZUK3 sample. The presence of the Duffy-Null genotype was linked with a decline in neutrophils of approximately 770 cells/mm3 in comparison to non-carriers. Full estimates from these additional genetic models are included in Supplementary Table 12.
 
-```{r ST11}
+```{r ST12}
 tab_model(anc_dcntdn, anc_dcntprs,  show.est = TRUE, show.se = TRUE, show.ci = FALSE,
                      show.p = F, collapse.se =  TRUE, show.intercept = FALSE, emph.p = TRUE, digits = 3, digits.re = 3,
                      #order.terms = c(1, 2, 7, 3, 4, 5 ,6),
@@ -1144,10 +1112,13 @@ tab_model(anc_dcntdn, anc_dcntprs,  show.est = TRUE, show.se = TRUE, show.ci = F
 <br>
 <br>
 
-HLA genotypes were similarly included in LMMs to explore whether variation in the HLA region influenced neutrophil levels in clozapine users. An overview of these findings is shown in Supplementary Table 12. After controlling for multiple comparisons, no HLA alleles were significantly associated with ANC in the CLOZUK3 sample; this suggests little influence of the HLA region on neutrophil counts in these participants. Prior to this correction, 3 HLA alleles demonstrated nominally significant associations. These included HLA-DRB1 16:01 and HLA-DRB1 04:04, which were positively associated with ANC, alongside HLA-DRB1*01:03, which was inversely associated with neutrophil counts. However, the coefficients associated with these alleles are small, suggesting that they may confer little effect on neutrophil levels. 
+HLA genotypes were similarly included in linear mixed-effect models to explore whether variation in the HLA region influenced neutrophil levels in clozapine users. An overview of these findings is shown in Supplementary Table 13. After controlling for multiple comparisons, no HLA alleles were significantly associated with ANC in the CLOZUK3 sample; this suggests little influence of the HLA region on neutrophil counts in these participants. Prior to this correction, 3 HLA alleles demonstrated nominally significant associations. These included HLA-DRB1 16:01 (β = 0.087; p = 0.001) and HLA-DRB1 04:04 (β = 0.073; p = 0.011), which were positively associated with ANC, alongside HLA-DRB1 01:03 (β = -0.068; p = 0.016), which was inversely associated with ANC. 
 
-```{r ST12}
 
+```{r ST13}
+setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
+
+all_lmm_brief <- read.table("HLA/all_lmm_rounded.txt",header=T)
 DT::datatable(all_lmm_brief)
 
 ```
@@ -1216,17 +1187,11 @@ fit3_red <- sem(model = multipleMediation, data = Data)
 
 ```
 
-Linear Mixed Models revealed a significant association between CYP1A2 activity score and ANC in the CLOZUK3 sample. Thus, to account for the impact of this pharmacogenomic variation on clozapine metabolism, and potentially neutrophil levels, the activity score was residualised out of the included variables, as previously described. In this instance, both the association between dose and ANC (estimate = `r round(summary(fit3_pgx)$pe[1,6], digits = 3)`, *p* = `r round(summary(fit3_pgx)$pe[1,9], digits = 3)`), and the indirect effect via clozapine and norclozapine have been attenuated (estimate = `r round(summary(fit3_pgx)$pe[16,6], digits = 3)`, *p* = `r round(summary(fit3_pgx)$pe[16,9], digits = 3)`).
-
-
-While this attenuation of effects may be due to the inclusion of the CYP1A2 activity scores, it could also arise because of the reduced sample size with complete genetic information. Therefore, the primary model was repeated on this subset of the CLOZUK3 sample, to determine how this smaller sample size affected the model output. Similarly, previously significant effects from the primary model became weakened.
-
-A comparison of the three models (Supplementary Figure 2) showed firstly, that the using a reduced sample size results in larger confidence intervals indicative of a loss of statistical power. Interestingly, controlling for CYP1A2 activity score reduces this uncertainty, bringing the intervals in line with those seen in the primary model, albeit with slightly smaller effect sizes. 
-
+Linear mixed-effect models revealed a significant association between CYP1A2 activity score and ANC in the CLOZUK3 sample. Thus, to account for the impact of this pharmacogenomic variation on clozapine metabolism, and potentially neutrophil levels, the activity score was residualised out of the included variables, as previously described. In this instance, both the association between dose and ANC (β = `r round(summary(fit3_pgx)$pe[1,6], digits = 3)`, *p* = `r round(summary(fit3_pgx)$pe[1,9], digits = 3)`), and the indirect effect via clozapine and norclozapine were weakened (β = 0.050, p = 0.077). While this attenuation of effects may be due to the inclusion of the CYP1A2 activity score, it could also arise because of the reduced sample size with complete genetic information. Therefore, the primary model was repeated on this subset of the CLOZUK3 sample, to determine how this smaller sample size affected the model output. This resulted in inflated estimates and p-values for both direct (β = 0.251, p = 0.530) and indirect effects (β = `r round(summary(fit3_pgx)$pe[16,6], digits = 3)`, *p* = `r round(summary(fit3_pgx)$pe[16,9], digits = 3)`). A comparison of the three models (Supplementary Figure 3) showed that using a reduced sample size results in larger confidence intervals indicative of a loss of statistical power. Interestingly, controlling for CYP1A2 activity score reduces this uncertainty, bringing the intervals in line with those seen in the primary model, albeit with slightly smaller effect sizes. 
 
 <br>
 
-```{r SF2, echo = F, fig.cap= "Supplementary Figure 2. Forest plot comparing effect estimates between the three Structural Equation Models. ‘Full data’ refers to the first model containing the full CLOZUK3 sample. ‘Genetic’ refers to the same model as in Full data, but performed on the subset of the sample for whom genetic data is available. The final model, ‘CYP1A2-controlled’, was performed on the genetic only sample, but controls for CYP1A2 activity scores when creating the residualised variables. Effect estimates are standardised, and error bars show 95% confidence intervals. * p<0.05   ** p<0.01   *** p<0.001"}
+```{r SF3, echo = F, fig.cap= "Supplementary Figure 3. Forest plot comparing effect estimates between the three Structural Equation Models. ‘Full data’ refers to the first model containing the full CLOZUK3 sample. ‘Genetic’ refers to the same model as in Full data, but performed on the subset of the sample for whom genetic data is available. The final model, ‘CYP1A2-controlled’, was performed on the genetic only sample, but controls for CYP1A2 activity scores when creating the residualised variables. Effect estimates are standardised, and error bars show 95% confidence intervals. * p<0.05   ** p<0.01   *** p<0.001"}
 all_sem <- parameterestimates(fit3)[,c(1,3,5,9,10)]
 pgx_sem <- parameterestimates(fit3_pgx)[,c(1,3,5,9,10)]
 gen_sem <- parameterestimates(fit3_red)[,c(1,3,5,9,10)]
@@ -1270,7 +1235,7 @@ ggplot(data = plot_cis, aes(x=Effect, y=est, ymin=ci.lower, ymax=ci.upper,col=Mo
 <br>
 <br>
 
-#### Non-Residualised SEM
+#### Non-Residualised SEM for Mediation Analysis
 
 ```{r non-residualised mediation in lavaan}
 # make up data for sem
@@ -1297,14 +1262,11 @@ fit3_nonres <- sem(model = multipleMediation, data = Data_std)
 #parameterestimates(fit3_nonres)
 ```
 
-
-SEM were also performed on non-residualised versions of the variables (Supplementary Figure 5). The residualised and non-residualised SEM were compared to ensure that controlling for covariates in this way didn’t create spurious results.
-
-As in the residualised model, there was a significant positive effect of daily clozapine dose on lowest ANC (estimate = `r round(summary(fit3_nonres)$pe[3,6], digits = 3)`, *p* = `r round(summary(fit3_nonres)$pe[3,9], digits = 3)`). Equally, there was a significant indirect effect via both clozapine and norclozapine plasma concentrations (estimate = `r round(summary(fit3_nonres)$pe[12,6], digits = 3)`, *p* = `r round(summary(fit3_nonres)$pe[12,9], digits = 3)`) with no evidence for mediation by clozapine plasma concentration alone (estimate = `r round(summary(fit3_nonres)$pe[11,6], digits = 3)`, *p* = `r round(summary(fit3_nonres)$pe[11,9], digits = 3)`). 
+SEM was also used on non-residualised versions of the variables (Supplementary Figure 4) to ensure that controlling for covariates in this way didn’t create spurious results. As in the residualised model, there was a significant positive effect of daily clozapine dose on lowest ANC (β = `r round(summary(fit3_nonres)$pe[3,6], digits = 3)`, *p* = `r round(summary(fit3_nonres)$pe[3,9], digits = 3)`). Equally, there was a significant indirect effect via both clozapine and norclozapine plasma concentrations (β= `r round(summary(fit3_nonres)$pe[12,6], digits = 3)`, *p* = `r round(summary(fit3_nonres)$pe[12,9], digits = 3)`) with no evidence for mediation by plasma clozapine concentration alone (β = `r round(summary(fit3_nonres)$pe[11,6], digits = 3)`, *p* = `r round(summary(fit3_nonres)$pe[11,9], digits = 3)`).
 
 
-```{r SF3, dev = "png", dev.args=list(bg="transparent"), fig.cap="Supplementary Figure 3. Path diagram showing association between Dose and Lowest ANC with Clozapine and Norclozapine as mediators. Plot edges are labelled with standardised regression coefficients. Variables included in SEM are the parent, non-residualised variables. SEM = Structural Equation Modelling. * p<0.05   ** p<0.01   *** p<0.001"}
-knitr::include_graphics("SFig3.png")
+```{r SF4, dev = "png", dev.args=list(bg="transparent"), fig.cap="Supplementary Figure 3. Path diagram showing association between Dose and Lowest ANC with Clozapine and Norclozapine as mediators. Plot edges are labelled with standardised regression coefficients. Variables included in SEM are the parent, non-residualised variables. SEM = Structural Equation Modelling. * p<0.05   ** p<0.01   *** p<0.001"}
+knitr::include_graphics("SFig4.png")
 ```
 
 
@@ -1402,36 +1364,38 @@ out_4med <- as.data.frame(out_4med[c(8,9,5,10),]) %>%
 
 ```
 
-SEM was performed with residualised plasma clozapine concentration as the lone mediator between dose and lowest ANC (Supplementary Table 13). As before, a significant effect of dose on lowest ANC was observed again (estimate = `r round(summary(fit1)$pe[2,6], digits = 3)`, *p* = `r round(summary(fit1)$pe[2,9], digits = 4)`), with no support for clozapine as a mediating variable (estimate = `r round(summary(fit1)$pe[7,6], digits = 3)`, *p* = `r round(summary(fit1)$pe[7,9], digits = 3)`). A secondary, causal mediation analysis was performed using the full CLOZUK3 dataset. These results are consistent with the findings derived from using SEM, showing a significant direct effect of dose (estimate = `r round(out_1med[2,2], digits = 3)`, *p* = `r round(out_1med[2,5], digits = 3)`) and no support for an effect transmitted via clozapine plasma concentration (estimate = `r round(summary(fit1)$pe[7,6], digits = 3)`, *p* = `r round(summary(fit1)$pe[7,9], digits = 3)`).
+SEM was performed with residualised plasma clozapine concentration as the lone mediator between dose and lowest ANC (Supplementary Table 14). As before, a significant effect of dose on lowest ANC was observed (β = `r round(summary(fit1)$pe[2,6], digits = 3)`, *p* = `r round(summary(fit1)$pe[2,9], digits = 4)`), with no support for clozapine as a mediating variable (β = `r round(summary(fit1)$pe[7,6], digits = 3)`, *p* = `r round(summary(fit1)$pe[7,9], digits = 3)`). A secondary, causal mediation analysis was performed using the full CLOZUK3 dataset. These results are consistent with the findings derived from using SEM, showing a significant direct effect of daily clozapine dose (ADE = `r round(out_1med[2,2], digits = 3)`, *p* = `r round(out_1med[2,5], digits = 3)`)  and no indirect effect transmitted via clozapine plasma concentration (ACME = `r round(summary(fit1)$pe[7,6], digits = 3)`, *p* = `r round(summary(fit1)$pe[7,9], digits = 3)`).
 
-```{r ST13}
+
+```{r ST14}
+    
 setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
 
-st13 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 13, col_names = TRUE, skip = 1)
-cap <- st13[nrow(st13),1]
-st13 <- head(st13, -2)
+st14 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 14, col_names = TRUE, skip = 1)
+cap <- st14[nrow(st14),1]
+st14 <- head(st14, -2)
 
-kable(st13, col.names = c("Output", "Estimate","Lower 95% CI","Upper 95% CI","p value", "Output", "Estimate","Lower 95% CI","Upper 95% CI","p value"),
+kable(st14, col.names = c("Output", "Estimate","Lower 95% CI","Upper 95% CI","p value", "Output", "Estimate","Lower 95% CI","Upper 95% CI","p value"),
       caption = cap, digits = 3) %>%
       kable_styling("none", full_width = T, position = "left", font_size = 16) %>%
-      
       add_header_above(c("in Lavaan()" = 5, "in Mediation()" = 5)) %>%
       kable_classic()
 ```
 
 <br>
 
+A complementary single-mediator SEM was performed with norclozapine as the sole mediating variable. A significant direct effect of daily clozapine dose and lowest ANC was observed (β = `r round(summary(fit2)$pe[2,6], digits = 3)`, *p* = `r round(summary(fit2)$pe[2,9], digits = 4)`). Additionally, there is some evidence of a mediating effect when we consider norclozapine plasma concentration alone (β = 0.03, p = 0.049). When this analysis was replicated using the longitudinal sample, a significant direct effect was observed again (ADE = 0.131, p < 2 × 10-16). Furthermore, a significant indirect effect via norclozapine was also observed (ACME = 0.030, p = 0.01), shown in Supplementary Table 15. 
 
-A complementary single-mediator SEM was performed with norclozapine as the sole mediating variable. A significant direct effect of daily clozapine dose and lowest ANC is observed (estimate = `r round(summary(fit2)$pe[2,6], digits = 3)`, *p* = `r round(summary(fit2)$pe[2,9], digits = 4)`). Additionally, there is some evidence for a mediating effect when we consider norclozapine plasma concentration alone (estimate = `r round(summary(fit1)$pe[7,6], digits = 3)`, *p* = `r round(summary(fit1)$pe[7,9], digits = 4)`). When this analysis was replicated using the longitudinal sample, a significant direct effect was observed again (estimate = `r round(out_4med[2,2], digits = 3)`, *p* = `r round(out_4med[2,5], digits = 3)`). Furthermore, a significant indirect effect via norclozapine was also observed (estimate = `r round(out_4med[1,2], digits = 3)`, *p* = `r round(out_4med[1,5], digits = 3)`), shown in Supplementary Table 14. 
+A complementary single-mediator SEM was performed with norclozapine as the sole mediating variable. A significant direct effect of daily clozapine dose and lowest ANC is observed  Additionally, there is some evidence for a mediating effect when we consider norclozapine plasma concentration alone (estimate = `r round(summary(fit1)$pe[7,6], digits = 3)`, *p* = `r round(summary(fit1)$pe[7,9], digits = 4)`). When this analysis was replicated using the longitudinal sample, a significant direct effect was observed again (ADE = `r round(out_4med[2,2], digits = 3)`, *p* = `r round(out_4med[2,5], digits = 3)`). Furthermore, a significant indirect effect via norclozapine was also observed (ACME= `r round(out_4med[1,2], digits = 3)`, *p* = `r round(out_4med[1,5], digits = 3)`), shown in Supplementary Table 14. 
 
-```{r ST14}
+```{r ST15}
 setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
 
-st14 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 14, col_names = TRUE)
-cap <- st14[nrow(st14),1]
-st14 <- head(st14, -2)
+st15 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 15, col_names = TRUE)
+cap <- st14[nrow(st15),1]
+st15 <- head(st15, -2)
 
-kable(st14,
+kable(st15,
       caption = cap) %>%
       kable_styling("none", full_width = T, position = "left", font_size = 16) %>%
       kable_classic()
@@ -1500,13 +1464,14 @@ model3 <- lm(neut_num~clozapine+norclozapine+dailydose+SEX+age_at_assay+std_age2
 
 ```
 
-Bivariate correlations revealed significant, positive relationships between each pharmacokinetic predictor (i.e., Clozapine plasma concentration, Norclozapine Plasma concentration and Daily Clozapine dose) with the lowest value of ANC per patient. Effect sizes were calculated using rho and the sample size to allow comparison with previous studies. Full results shown in Supplementary Table 15 and a comparison of effect sizes is shown in Supplementary Figure 4.  These results contrast with the findings from previous work, demonstrating significant positive associations between lowest ANC and pharmacokinetic variables (i.e., daily clozapine dose, clozapine plasma concentration, norclozapine plasma concentration) where previously, none have been found, or have been found in the opposite direction. Previous and present regression analyses (Smith et al. 2017; Vaquero-Baez et al. 2019; Willcocks et al. 2021) revealed the effect of norclozapine levels on ANC to be greater than, and in the opposite direction to the effect of clozapine levels on ANC. As norclozapine and clozapine plasma concentrations are highly correlated, it could be that the smaller, negative effect of plasma clozapine concentration is being overshadowed by the larger, positive effect of plasma norclozapine concentration in analyses where the two variables are not controlled for.  
+
+Bivariate correlations revealed significant, positive relationships between each pharmacokinetic predictor (i.e., Clozapine plasma concentration, Norclozapine Plasma concentration, and Daily Clozapine dose) with the lowest value of ANC per patient. The effect size, t, was calculated using rho and the sample size to allow comparison with previous studies. Full results are shown in Supplementary Table 16 and a comparison of effect sizes is shown in Supplementary Figure 5. 
 
 <br>
 <br>
 
 
-```{r ST15}
+```{r ST16}
 
 t_from_rho2 <- function(rho, N) {
   # rho: Spearman correlation statistic
@@ -1558,7 +1523,7 @@ table <- cbind(corr_pres, corr_W, corr_VB)
 
 kable(table,
       col.names = c("Predictor", "rho","p value","t", "rho","p value","t", "rho","p value","t"),
-      caption = "Supplementary Table 15. Spearman’s correlations estimate of relationship between medication variables and lowest ANC, alongside p value and an estimated effect size, t. Results shown for present study and those observed in Willcocks et al., (2021) and Vaquero-Baez et al., (2019).") %>%
+      caption = "Supplementary Table 16. Spearman’s correlations estimate of relationship between medication variables and lowest ANC, alongside p value and an estimated effect size, t. Results shown for present study and those observed in Willcocks et al., (2021) and Vaquero-Baez et al., (2019).") %>%
       kable_styling("none", full_width = T, position = "left", font_size = 16) %>%
       add_header_above(c(" " = 1, "Present Study" = 3, "Willcocks et al., (2021)" = 3, "Vaquero-Baez et al., (2019)" = 3)) %>% 
       kable_classic 
@@ -1567,7 +1532,7 @@ kable(table,
 
 <br>
 
-```{r SF4, include= TRUE, fig.width=10, fig.cap="Supplementary Figure 4. Forest plot comparing effect sizes (t) across studies exploring bivariate relationships between ANC (Absolute Neutrophil Count) and Medication Variables. p values from Spearman’s correlations are reported alongside. Error bars indicate standard error around t.  ANC = Absolute Neutrophil Count. * p<0.05   ** p<0.01   *** p<0.001"}
+```{r SF5, include= TRUE, fig.width=10, fig.cap="Supplementary Figure 5. Forest plot comparing effect sizes (t) across studies exploring bivariate relationships between ANC (Absolute Neutrophil Count) and Medication Variables. p values from Spearman’s correlations are reported alongside. Error bars indicate standard error around t.  ANC = Absolute Neutrophil Count. * p<0.05   ** p<0.01   *** p<0.001"}
 
 plot_data <- data.frame(Predictor  = c('[Clozapine] mg/L', '[Norclozapine] mg/L', 'Daily dose (mg/day)'),
                         rho = c(cor1$estimate, cor2$estimate, cor3$estimate, -0.125, -0.033, -0.033, -0.703, -0.448, NA),
@@ -1619,16 +1584,15 @@ ggplot(plot_data, aes(x=Predictor, y=t, ymin=lower, ymax=upper,col=Study,fill=St
 <br>
 <br>
 
-Three linear models were fit in-line with Willcocks et al., (2021), excluding the covariates Time on Treatment variable (absent in CLOZUK3) and Days between Assays (as FBC and Pharmacokinetic assays were performed on the same day for all our data points), with results reported in Supplementary Table 16. A forest plot comparing standardised regression coefficients obtained from the CLOZUK3 and CLOZUK2 samples is shown in Supplementary Figure 5.
+Three linear models were fit in-line with Willcocks et al., (2021), excluding the covariates Time on Treatment (absent in CLOZUK3) and Days between Assays (as FBC and pharmacokinetic assays were performed on the same day for all our data points), with results reported in Supplementary Table 17. A forest plot comparing standardised regression coefficients obtained from the CLOZUK3 and CLOZUK2 samples is shown in Supplementary Figure 6.
 
-In the first model, daily dose (β = `r round(summary(model1)$coefficients[4,1], digits = 3)`, *p* = `r round(summary(model1)$coefficients[4,4], digits = 3)`) and norclozapine level (β = `r round(summary(model1)$coefficients[3,1], digits = 4)`, *p* = `r round(summary(model1)$coefficients[3,4], digits = 3)`) were both positively associated with ANC. Clozapine was negatively associated with ANC (β = `r round(summary(model1)$coefficients[2,1], digits = 3)`, *p* = `r round(summary(model1)$coefficients[2,4], digits = 3)`), although this was not significant. 
-
-The addition of metabolic ratio in Model 2, reduced effect sizes for both clozapine plasma concentration (β = `r round(summary(model2)$coefficients[2,1], digits = 3)`, *p* = `r round(summary(model2)$coefficients[2,4], digits = 3)`) and norclozapine plasma concentration (β = `r round(summary(model2)$coefficients[3,1], digits = 3)`, *p* = `r round(summary(model2)$coefficients[3,4], digits = 3)`). Daily dose was unaffected by this (β = `r round(summary(model2)$coefficients[4,1], digits = 3)`, *p* = `r round(summary(model2)$coefficients[4,4], digits = 3)`), and the metabolic ratio itself was not significantly associated with ANC (β = `r round(summary(model2)$coefficients[9,1], digits = 3)`, *p* = `r round(summary(model2)$coefficients[9,4], digits = 3)`). Finally in Model 3, no pharmacogenomic SNPs were associated with ANC. Furthermore, the previously significant association between daily dose and ANC weakened (β = `r round(summary(model3)$coefficients[4,1], digits = 3)`, *p* = `r round(summary(model3)$coefficients[4,4], digits = 3)`). 
-
-The results from the linear models replicated some of the key findings of Willcocks et al., (2021). Norclozapine plasma concentration was significantly positively associated with lowest ANC. While not significantly associated, clozapine plasma concentration did demonstrate a negative relationship with ANC. As in Willcocks et al., (2021), the addition of metabolic ratio weakened associations between clozapine and norclozapine plasma concentrations with lowest ANC. However, this variable was excluded from the previous mixed-effect and mediation analyses due to its identification through the DAG as a collider variable. 
+In the first model, daily dose (β = `r round(summary(model1)$coefficients[4,1], digits = 3)`, *p* = `r round(summary(model1)$coefficients[4,4], digits = 3)`) and norclozapine level (β = `r round(summary(model1)$coefficients[3,1], digits = 4)`, *p* = `r round(summary(model1)$coefficients[3,4], digits = 3)`) were both positively associated with ANC. Although not significant, clozapine was negatively associated with ANC (β = `r round(summary(model1)$coefficients[2,1], digits = 3)`, *p* = `r round(summary(model1)$coefficients[2,4], digits = 3)`). 
 
 
-```{r ST16}
+The addition of metabolic ratio in the second model, reduced effect sizes for both clozapine plasma concentration (β = `r round(summary(model2)$coefficients[2,1], digits = 3)`, *p* = `r round(summary(model2)$coefficients[2,4], digits = 3)`) and norclozapine plasma concentration (β = `r round(summary(model2)$coefficients[3,1], digits = 3)`, *p* = `r round(summary(model2)$coefficients[3,4], digits = 3)`). Daily clozapine dose was unaffected by this (β = `r round(summary(model2)$coefficients[4,1], digits = 3)`, *p* = `r round(summary(model2)$coefficients[4,4], digits = 3)`), and the metabolic ratio itself was not significantly associated with ANC (β = `r round(summary(model2)$coefficients[9,1], digits = 3)`, *p* = `r round(summary(model2)$coefficients[9,4], digits = 3)`). In the final model, no pharmacogenomic SNPs were associated with ANC. Furthermore, the previously significant association between daily dose and ANC became smaller and less significant (β = `r round(summary(model3)$coefficients[4,1], digits = 3)`, *p* = `r round(summary(model3)$coefficients[4,4], digits = 3)`).
+
+
+```{r ST17}
 
 tab_model(model1, model2, model3, show.est = TRUE, show.se = TRUE, show.ci = FALSE,
           show.p = F, collapse.se =  TRUE, show.intercept = FALSE, emph.p = TRUE,
@@ -1641,7 +1605,7 @@ tab_model(model1, model2, model3, show.est = TRUE, show.se = TRUE, show.ci = FAL
                      css.randomparts = 'border-top:1px solid;', css.firsttablerow = 'border-bottom: blank',
                      css.firstsumrow = 'border-top: 1px solid', css.footnote = 'text-align: left;', 
                      css.summary = "padding-top:0.2cm; padding-bottom:0.2cm;"),
-          title = "Supplementary Table 16. Replication Analysis: Predictors of Lowest Absolute Neutrophil Count. Unstandardised regression coefficients are reported alongside standard error and p value. TDS = Time between Dose and Sample; ANC = Absolute Neutrophil Count.",
+          title = "Supplementary Table 17. Replication Analysis: Predictors of Lowest Absolute Neutrophil Count. Unstandardised regression coefficients are reported alongside standard error and p value. TDS = Time between Dose and Sample; ANC = Absolute Neutrophil Count.",
           p.style = "stars"
 )
 
@@ -1652,7 +1616,7 @@ tab_model(model1, model2, model3, show.est = TRUE, show.se = TRUE, show.ci = FAL
 <br>
 
 
-```{r SF5, include = TRUE, echo = FALSE, fig.cap="Supplementary Figure 5. Forest plot comparing standardised regression coefficients from equivalent models between CLOZUK2 (Willcocks et al., 2021) and CLOZUK3 (Present) datasets. The CLOZUK2 and CLOZUK3 (replication) models explore the association between covariates and lowest value of ANC. The CLOZUK3 (lmm) model utilises the available longitudinal data, incorporating a random effect variable for participant ID. Error bars show 95% Confidence Intervals. ANC = Absolute Neutrophil Count; TDS = Time Between Dose and Sample. "}
+```{r SF6, include = TRUE, echo = FALSE, fig.cap="Supplementary Figure 6. Forest plot comparing standardised regression coefficients from equivalent models between CLOZUK2 (Willcocks et al., 2021) and CLOZUK3 (Present) datasets. The CLOZUK2 and CLOZUK3 (replication) models explore the association between covariates and lowest value of ANC. The CLOZUK3 (lmm) model utilises the available longitudinal data, incorporating a random effect variable for participant ID. Error bars show 95% Confidence Intervals. ANC = Absolute Neutrophil Count; TDS = Time Between Dose and Sample. "}
 
 model1s <- lm(neut_num~clozapine+norclozapine+dailydose+SEX+age_at_assay+std_age2+TDS,data=CLOZUK3.fbc.pk.min.std)
 
@@ -1687,6 +1651,8 @@ Hubbard, L. et al. 2022. DRAGON-Data: A platform and protocol for integrating ge
 
 Konte, B. et al. 2021. HLA-DQB1 6672G>C (rs113332494) is associated with clozapine-induced neutropenia and agranulocytosis in individuals of European ancestry. Translational Psychiatry 11, p. 214. doi: 10.1038/s41398-021-01322-w.
 
+Kronmal, R.A. 1993. Spurious Correlation and the Fallacy of the Ratio Standard Revisited. Journal of the Royal Statistical Society. Series A (Statistics in Society) 156(3), pp. 379–392. doi: 10.2307/2983064.
+
 Kuznetsova, A., Brockhoff, P.B. and Christensen, R.H.B. 2017. lmerTest Package: Tests in Linear Mixed Effects Models. Journal of Statistical Software 82(13), pp. 1–26. doi: 10.18637/jss.v082.i13.
 
 Lee, S., Shin, J.-Y., Kwon, N.-J., Kim, C. and Seo, J.-S. 2022. ClinPharmSeq: A targeted sequencing panel for clinical pharmacogenetics implementation. PLOS ONE 17(7), p. e0272129. doi: 10.1371/journal.pone.0272129.
@@ -1709,11 +1675,11 @@ Purcell, S. et al. 2007. PLINK: A Tool Set for Whole-Genome Association and Popu
 
 Reisberg, S. et al. 2019. Translating genotype data of 44,000 biobank participants into clinical pharmacogenetic recommendations: challenges and solutions. Genetics in Medicine 21(6), pp. 1345–1354. doi: 10.1038/s41436-018-0337-5.
 
+Rohrer, J.M. 2018. Thinking Clearly About Correlations and Causation: Graphical Causal Models for Observational Data. Advances in Methods and Practices in Psychological Science 1(1), pp. 27–42. doi: https://doi.org/10.1177/2515245917745629.
+
 Rosseel, Y. 2012. lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software 48(2), pp. 1–36. doi: 10.18637/jss.v048.i02.
 
 Saiz-Rodríguez, M. et al. 2019. Polymorphisms in CYP1A2, CYP2C9 and ABCB1 affect agomelatine pharmacokinetics. Journal of Psychopharmacology 33(4), pp. 522–531. doi: 10.1177/0269881119827959.
-
-Smith, R.L., Haslemo, T., Andreassen, O.A., Eliasson, E., Dahl, M.-L., Spigset, O. and Molden, E. 2017. Correlation Between Serum Concentrations of N-Desmethylclozapine and Granulocyte Levels in Patients with Schizophrenia: A Retrospective Observational Study. CNS drugs 31(11), pp. 991–997. doi: 10.1007/s40263-017-0469-1.
 
 Tian, D., Natesan, S., White, J.R. and Paine, M.F. 2019. Effects of Common CYP1A2 Genotypes and Other Key Factors on Intraindividual Variation in the Caffeine Metabolic Ratio: An Exploratory Analysis. Clinical and Translational Science 12(1), pp. 39–46. doi: 10.1111/cts.12598.
 
@@ -1728,9 +1694,6 @@ Werk, A.N. and Cascorbi, I. 2014. Functional Gene Variants of CYP3A4. Clinical P
 Willcocks, I.R. et al. 2021. Clozapine Metabolism is Associated With Absolute Neutrophil Count in Individuals With Treatment-Resistant Schizophrenia. Frontiers in Pharmacology 12, p. 658734. doi: 10.3389/fphar.2021.658734.
 
 Zheng, X., Shen, J., Cox, C., Wakefield, J.C., Ehm, M.G., Nelson, M.R. and Weir, B.S. 2014. HIBAG—HLA genotype imputation with attribute bagging. The Pharmacogenomics Journal 14(2), pp. 192–200. doi: 10.1038/tpj.2013.18.
-
-
-
 
 <br>
 <br>
