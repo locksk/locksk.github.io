@@ -541,7 +541,8 @@ kable(genes, caption = "Table 1 . SNPs included in regression analyses exploring
 
 Data analysis was performed in R  v4.1.1 using R Studio v1.4.1717 (R Core Team 2021), with scripts available at https://git.cardiff.ac.uk/c1713552/clozapine_anc_predictors. 
 
-A Directed Acyclic Graph   (DAG) was drawn to consider the causal structure of the clozapine dose – ANC relationship (Rohrer 2018). DAG construction was based on guidelines described by Ferguson et al. (2020), with the rationale for included nodes and relationships outlined in Supplementary Table 1. 
+A Directed Acyclic Graph   (DAG) was drawn to consider the causal structure of the clozapine dose – ANC relationship (Rohrer 2018). DAG construction was based on guidelines described by Ferguson et al. (2020), with the rationale for included nodes and relationships outlined in Supplementary Table 10. 
+
 
 The longitudinal dataset was analysed using Linear Mixed-Effect Models in lme4   and with ANC as the outcome variable. A baseline model, in line with Willcocks et al. (2021), included three pharmacokinetic variables related to clozapine and its metabolism (i.e., daily clozapine dose, plasma clozapine concentration, and plasma norclozapine concentration) alongside the covariates age, age2, sex, and the time between the dose intake and blood sampling (TDS). Participant identifier was included in these models as a random effect term. All predictor variables were standardised    before fitting the regression model. Further analysis also included pharmacogenomic variables (i.e., CYP1A2 activity scores, and the genotypes of pharmacogenomic SNPs outlined in Table 1). 
 Secondary analyses extended the Linear Mixed Models by testing for associations between further genetic predictors (e.g., PRS for clozapine and norclozapine metabolism, the Duffy-null genotype, and HLA genotypes) with neutrophil counts.
@@ -1018,7 +1019,28 @@ Previous work demonstrated that including the clozapine/norclozapine ratio (“m
 
 
 ```{r SF 2, fig.align='center', out.width="1200px", fig.cap="Supplementary Figure 2.  DAG of the causal structure surrounding the relationship between clozapine daily dose and ANC in a sample of Clozapine Users not currently experiencing neutropenia.", dev = "png", dev.args=list(bg="transparent")}
-knitr::include_graphics("SFig1.png")
+knitr::include_graphics("SFig2.png")
+```
+
+```{r ST10, fig.width=10}
+setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
+
+st10 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 10, col_names = TRUE)
+cap <- "Supplementary Table 10. Variables Included in DAG showing the causal associations between clozapine dose and absolute neutrophil count in a sample of clozapine users not currently experiencing neutropenia.  Table 10A shows the included nodes and their properties. Table B shows the paths included and their rationale."
+st10 <- head(st10, -2)
+
+st10a <- st10[1:3] %>% na.exclude()
+st10b <- st10[4:8] %>% na.exclude()
+
+kable(st10a,
+      caption = cap) %>%
+      kable_styling("none", full_width = T, position = "left", font_size = 16) %>%
+      kable_classic()
+
+kable(st10b,
+      caption = cap) %>%
+      kable_styling("none", full_width = T, position = "left", font_size = 16) %>%
+      kable_classic()
 ```
 
 <br>
