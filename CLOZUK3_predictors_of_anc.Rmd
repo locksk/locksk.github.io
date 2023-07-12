@@ -507,7 +507,7 @@ The present study uses Full Blood Counts (FBC) and pharmacokinetic assay data fr
 <br>
 
 #### Inclusion / Exclusion Criteria
-CLOZUK3 contains longitudinal assay data from participants (>18 years) who had not been previously included in prior waves of CLOZUK. Data from assays with key FBC or pharmacokinetic information missing or with clerical errors (e.g., several assays taken at the same date and time yielding different results) were excluded from further analyses. The FBC data      were curated by removing any assay showing an ANC outside of the normal reference range (2.0 – 7.5 x 109 cells/L). As in previous research (Kappel et al. 2023), we removed pharmacokinetic assays    (i) that were outside of a 6-24 hour period between clozapine intake and blood sampling; (ii) where clozapine and norclozapine plasma concentrations were below instrument detection levels (< 0.05 mg/L); (iii) showing a low daily clozapine dose (< 100mg, indicative of drug titration) or (iv) showing a metabolic ratio suggesting non-adherence (< 0.5 or > 3.0). Finally, FBC and pharmacokinetic assays from the same individual taken on the same date were merged to create a dataset of linked FBC and pharmacokinetic assays.  
+CLOZUK3 contains longitudinal assay data from participants (>18 years) who had not been previously included in prior waves of CLOZUK. Data from assays with key FBC or pharmacokinetic information missing or with clerical errors (e.g., several assays taken at the same date and time yielding different results) were excluded from further analyses. The FBC data      were curated by removing any assay showing an ANC outside of the normal reference range (2.0 – 7.5 x 10^9 cells/L). As in previous research (Kappel et al. 2023), we removed pharmacokinetic assays    (i) that were outside of a 6-24 hour period between clozapine intake and blood sampling; (ii) where clozapine and norclozapine plasma concentrations were below instrument detection levels (< 0.05 mg/L); (iii) showing a low daily clozapine dose (< 100mg, indicative of drug titration) or (iv) showing a metabolic ratio suggesting non-adherence (< 0.5 or > 3.0). Finally, FBC and pharmacokinetic assays from the same individual taken on the same date were merged to create a dataset of linked FBC and pharmacokinetic assays.  
 
 <br>
 
@@ -740,7 +740,7 @@ The primary model (Figure 1) showed evidence of a significant direct effect   of
 Sensitivity analyses were performed firstly using non-residualised variables in the model, and then single mediators in the longitudinal dataset. These were all consistent with their comparable models, suggesting that our analyses were not compromised through using either residualised variables, or the smaller, cross-sectional dataset (Supplementary note).  
 
 
-```{r Fig 2, dev = "png", dev.args=list(bg="transparent"), fig.cap="Figure 2. Path diagram showing association between Clozapine Dose and Lowest Absolute Neutrophil Count with Plasma Clozapine concentration and Plasma Norclozapine concentration as mediators. Plot edges are labelled with standardised regression coefficients. Variables included in Structural Equation Model are residualised versions of parent measures. Associations between model variables are shown in blue, whereas the overall direct and indirect paths are shown in black. * p<0.05   ** p<0.01   *** p<0.001"}
+```{r Fig 1, dev = "png", dev.args=list(bg="transparent"), fig.cap="Figure 1. Path diagram showing association between Clozapine Dose and Lowest Absolute Neutrophil Count with Plasma Clozapine concentration and Plasma Norclozapine concentration as mediators. Plot edges are labelled with standardised regression coefficients. Variables included in Structural Equation Model are residualised versions of parent measures. Associations between model variables are shown in blue, whereas the overall direct and indirect paths are shown in black. * p<0.05   ** p<0.01   *** p<0.001"}
 knitr::include_graphics("Fig2.png")
 ```
 
@@ -938,6 +938,9 @@ setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-proje
 st1 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 1, col_names = TRUE)
 cap <- st1[7,1]
 st1 <- head(st1, -3)
+
+st1$`EUR Frequency (Neyshaburinezhad et al. 2021)` <- as.numeric(st1$`EUR Frequency (Neyshaburinezhad et al. 2021)`)
+st1$`Caucasian Frequency (Myrand et al. 2008)` <- as.numeric(st1$`Caucasian Frequency (Myrand et al. 2008)`)
 
 kable(st1,
       caption = cap, digits = 3) %>%
@@ -1206,10 +1209,9 @@ Clozapine ~~ Norclozapine
 fit3_red <- sem(model = multipleMediation, data = Data)
     #se = "bootstrap", 
 
-
 ```
 
-Linear mixed-effect models revealed a significant association between CYP1A2 activity score and ANC in the CLOZUK3 sample. Thus, to account for the impact of this pharmacogenomic variation on clozapine metabolism, and potentially neutrophil levels, the activity score was residualised out of the included variables, as previously described. In this instance, both the association between dose and ANC (β = `r round(summary(fit3_pgx)$pe[1,6], digits = 3)`, *p* = `r round(summary(fit3_pgx)$pe[1,9], digits = 3)`), and the indirect effect via clozapine and norclozapine were weakened (β = 0.050, p = 0.077). While this attenuation of effects may be due to the inclusion of the CYP1A2 activity score, it could also arise because of the reduced sample size with complete genetic information. Therefore, the primary model was repeated on this subset of the CLOZUK3 sample, to determine how this smaller sample size affected the model output. This resulted in inflated estimates and p-values for both direct (β = 0.251, p = 0.530) and indirect effects (β = `r round(summary(fit3_pgx)$pe[16,6], digits = 3)`, *p* = `r round(summary(fit3_pgx)$pe[16,9], digits = 3)`). A comparison of the three models (Supplementary Figure 3) showed that using a reduced sample size results in larger confidence intervals indicative of a loss of statistical power. Interestingly, controlling for CYP1A2 activity score reduces this uncertainty, bringing the intervals in line with those seen in the primary model, albeit with slightly smaller effect sizes. 
+Linear mixed-effect models revealed a significant association between CYP1A2 activity score and ANC in the CLOZUK3 sample. Thus, to account for the impact of this pharmacogenomic variation on clozapine metabolism, and potentially neutrophil levels, the activity score was residualised out of the included variables, as previously described. In this instance, both the association between dose and ANC (β = `r round(summary(fit3_pgx)$pe[3,6], digits = 3)`, *p* = `r round(summary(fit3_pgx)$pe[3,9], digits = 3)`), and the indirect effect via clozapine and norclozapine were weakened (β = `r round(summary(fit3_pgx)$pe[12,6], digits = 3)`,  *p* = `r round(summary(fit3_pgx)$pe[12,9], digits = 3)`). While this attenuation of effects may be due to the inclusion of the CYP1A2 activity score, it could also arise because of the reduced sample size with complete genetic information. Therefore, the primary model was repeated on this subset of the CLOZUK3 sample, to determine how this smaller sample size affected the model output. This resulted in inflated estimates and p-values for both direct (β = `r round(summary(fit3_red)$pe[3,6], digits = 3)`, *p* = `r round(summary(fit3_red)$pe[3,9], digits = 3)`) and indirect effects (β = `r round(summary(fit3_red)$pe[12,6], digits = 3)`, *p* = `r round(summary(fit3_red)$pe[12,9], digits = 3)`). A comparison of the three models (Supplementary Figure 3) showed that using a reduced sample size results in larger confidence intervals indicative of a loss of statistical power. Interestingly, controlling for CYP1A2 activity score reduces this uncertainty, bringing the intervals in line with those seen in the primary model, albeit with slightly smaller effect sizes. 
 
 <br>
 
