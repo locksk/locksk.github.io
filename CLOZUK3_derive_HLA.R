@@ -80,7 +80,9 @@ LD.A <- sapply(unique(colnames(all.A)),function(x) rowSums(all.A[, colnames(all.
 LD.A.MAF <- data.frame(A=colnames(LD.A), MAF=NA)
 for( i in LD.A.MAF$A ) {LD.A.MAF$MAF[LD.A.MAF$A == i] <- sum(LD.A[,i])/(nrow(LD.A)*2)}
 LD.A.table <- LD.A.MAF
-LD.A.table$MAF<- round(LD.A.table$MAF, 4)
+LD.A.table$MAF<- round(LD.A.table$MAF, 3)
+write.table(LD.A.table,file = "HLA_A_Freq.txt",col.names = T, row.names=F, quote=F)
+
 
 
 # Weight probability (as Levin et al. 2015)
@@ -170,7 +172,9 @@ LD.B <- sapply(unique(colnames(all.B)),function(x) rowSums(all.B[, colnames(all.
 LD.B.MAF <- data.frame(B=colnames(LD.B), MAF=NA)
 for( i in LD.B.MAF$B ) {LD.B.MAF$MAF[LD.B.MAF$B == i] <- sum(LD.B[,i])/(nrow(LD.B)*2)}
 LD.B.table <- LD.B.MAF
-LD.B.table$MAF<- round(LD.B.table$MAF, 4)
+LD.B.table$MAF<- round(LD.B.table$MAF, 3)
+write.table(LD.B.table,file = "HLA_B_Freq.txt",col.names = T, row.names=F, quote=F)
+
 
 # Weight probability (as Levin et al. 2015)
 LD.B.pp <- read.table("HLA_Bpp.txt",header=T)
@@ -260,7 +264,8 @@ LD.C <- sapply(unique(colnames(all.C)),function(x) rowSums(all.C[, colnames(all.
 LD.C.MAF <- data.frame(C=colnames(LD.C), MAF=NA)
 for( i in LD.C.MAF$C ) {LD.C.MAF$MAF[LD.C.MAF$C == i] <- sum(LD.C[,i])/(nrow(LD.C)*2)}
 LD.C.table <- LD.C.MAF
-LD.C.table$MAF<- round(LD.C.table$MAF, 4)
+LD.C.table$MAF<- round(LD.C.table$MAF, 3)
+write.table(LD.C.table,file = "HLA_C_Freq.txt",col.names = T, row.names=F, quote=F)
 
 # Weight probability (as Levin et al. 2015)
 LD.C.pp <- read.table("HLA_Cpp.txt",header=T)
@@ -349,7 +354,8 @@ LD.DPB1 <- sapply(unique(colnames(all.DPB1)),function(x) rowSums(all.DPB1[, coln
 LD.DPB1.MAF <- data.frame(DPB1=colnames(LD.DPB1), MAF=NA)
 for( i in LD.DPB1.MAF$DPB1 ) {LD.DPB1.MAF$MAF[LD.DPB1.MAF$DPB1 == i] <- sum(LD.DPB1[,i])/(nrow(LD.DPB1)*2)}
 LD.DPB1.table <- LD.DPB1.MAF
-LD.DPB1.table$MAF<- round(LD.DPB1.table$MAF, 4)
+LD.DPB1.table$MAF<- round(LD.DPB1.table$MAF, 3)
+write.table(LD.DPB1.table,file = "HLA_DPB1_Freq.txt",col.names = T, row.names=F, quote=F)
 
 # Weight probability (as Levin et al. 2015)
 LD.DPB1.pp <- read.table("HLA_DPB1pp.txt",header=T)
@@ -440,7 +446,9 @@ LD.DQA1 <- sapply(unique(colnames(all.DQA1)),function(x) rowSums(all.DQA1[, coln
 LD.DQA1.MAF <- data.frame(DQA1=colnames(LD.DQA1), MAF=NA)
 for( i in LD.DQA1.MAF$DQA1 ) {LD.DQA1.MAF$MAF[LD.DQA1.MAF$DQA1 == i] <- sum(LD.DQA1[,i])/(nrow(LD.DQA1)*2)}
 LD.DQA1.table <- LD.DQA1.MAF
-LD.DQA1.table$MAF<- round(LD.DQA1.table$MAF, 4)
+LD.DQA1.table$MAF<- round(LD.DQA1.table$MAF, 3)
+write.table(LD.DQA1.table,file = "HLA_DQA1_Freq.txt",col.names = T, row.names=F, quote=F)
+
 
 # Weight probability (as Levin et al. 2015)
 LD.DQA1.pp <- read.table("HLA_DQA1pp.txt",header=T)
@@ -535,7 +543,9 @@ LD.DQB1 <- sapply(unique(colnames(all.DQB1)),function(x) rowSums(all.DQB1[, coln
 LD.DQB1.MAF <- data.frame(DQB1=colnames(LD.DQB1), MAF=NA)
 for( i in LD.DQB1.MAF$DQB1 ) {LD.DQB1.MAF$MAF[LD.DQB1.MAF$DQB1 == i] <- sum(LD.DQB1[,i])/(nrow(LD.DQB1)*2)}
 LD.DQB1.table <- LD.DQB1.MAF
-LD.DQB1.table$MAF<- round(LD.DQB1.table$MAF, 4)
+LD.DQB1.table$MAF<- round(LD.DQB1.table$MAF, 3)
+write.table(LD.DQB1.table,file = "HLA_DQB1_Freq.txt",col.names = T, row.names=F, quote=F)
+
 
 
 # Weight probability (as Levin et al. 2015)
@@ -631,7 +641,9 @@ LD.DRB1 <- sapply(unique(colnames(all.DRB1)),function(x) rowSums(all.DRB1[, coln
 LD.DRB1.MAF <- data.frame(DRB1=colnames(LD.DRB1), MAF=NA)
 for( i in LD.DRB1.MAF$DRB1 ) {LD.DRB1.MAF$MAF[LD.DRB1.MAF$DRB1 == i] <- sum(LD.DRB1[,i])/(nrow(LD.DRB1)*2)}
 LD.DRB1.table <- LD.DRB1.MAF
-LD.DRB1.table$MAF<- round(LD.DRB1.table$MAF, 4)
+LD.DRB1.table$MAF<- round(LD.DRB1.table$MAF, 3)
+write.table(LD.DRB1.table,file = "HLA_DRB1_Freq.txt",col.names = T, row.names=F, quote=F)
+
 
 # Weight probability (as Levin et al. 2015)
 LD.DRB1.pp <- read.table("HLA_DRB1pp.txt",header=T)
