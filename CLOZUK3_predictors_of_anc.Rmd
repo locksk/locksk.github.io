@@ -115,7 +115,6 @@ library(mediation)
 library(lavaan)
 library(broom.mixed)
 library(jtools)
-
 ```
 
 
@@ -276,7 +275,7 @@ table(dn_rs2814778$rs2814778_C)
 dn_rs2814778$duffynull = NA
 dn_rs2814778$duffynull[dn_rs2814778$rs2814778_C == 2] <- "1" # yes dn
 dn_rs2814778$duffynull[dn_rs2814778$rs2814778_C < 1] <- "0" # no dn
-table(dn_rs2814778$duffynull) # :-)
+table(dn_rs2814778$duffynull) 
 
 # merge genetic info 
 dn <- dn_rs2814778[,c("FID", "rs2814778_C", "duffynull")]
@@ -499,7 +498,7 @@ Polygenic Scores (PGS) for clozapine and norclozapine metabolism were calculated
 
 ```{r table 1, fig.cap="Table 1. SNPs included in regression analyses exploring the impact of pharmacogenomic variation on clozapine metabolism and neutrophil levels. SNP = Single Nucleotide Polymorphism; CHR = Chromosome; Alt = Alternative (or Minor) allele."}
 
-## Genes Included 
+## Create Table 1
 
 genes <- data.frame(SNP  = c('rs2011425', 'rs61750900', 'rs1126545', 'rs2472297', 'rs2814778'),
                     CHR = c('2', '4', '10', '15', '1' ),
@@ -624,10 +623,13 @@ labels_rep <- c('Intercept' = "Intercept",
 
 
 ```{r main mixed model}
+
+# linear mixed effect regression models on longitudinal clozuk3 data
 anc_dcnt <- lmer(neut_num~dailydose+clozapine+norclozapine+TDS+SEX+age_at_assay+std_age2 + (1|LUIN), data=CLOZUK3.fbc.pk.std) # base model 
 
 coefs1 <- data.frame(coef(summary(anc_dcnt)))
 
+# including genetic predictors too
 anc_dcnt_1a2_snp_as <- lmer(neut_num~dailydose+clozapine+norclozapine+est_score+rs2472297_T+rs61750900_T+rs2011425_G+rs1126545_T+TDS+SEX+age_at_assay+std_age2 + (1|LUIN), data=CLOZUK3.fbc.pk.gen.std) # base model + PGx (SNPs and CYP1A2 Activity Score)
 
 coefs1b <- data.frame(coef(summary(anc_dcnt_1a2_snp_as))) 
@@ -772,8 +774,11 @@ This work adds to a body of research aiming towards a complete understanding of 
 #### Conclusions
 
 ```{r time on treatment, include = FALSE}
+# estimate the length of time people have been on clozapine treatment for. 
+
 library(arsenal)
 
+# find earliest and latest assay date, then find the difference between them.
 earliest.assay <-  CLOZUK3.fbc.pk[order(CLOZUK3.fbc.pk$sampledate),] %>% 
   distinct(LUIN, .keep_all = TRUE)
 
@@ -811,61 +816,117 @@ The pharmacokinetic analysis was supplemented by genetic covariates, notably a C
 ### References 
 <br>
 1.	Kane, J. M. et al. Clinical Guidance on the Identification and Management of Treatment-Resistant Schizophrenia. J Clin Psychiatry 80, 2783 (2019).
+
 2.	Howes, O. D. et al. Treatment-Resistant Schizophrenia: Treatment Response and Resistance in Psychosis (TRRIP) Working Group Consensus Guidelines on Diagnosis and Terminology. AJP 174, 216–229 (2017).
+
 3.	Potkin, S. G. et al. The neurobiology of treatment-resistant schizophrenia: paths to antipsychotic resistance and a roadmap for future research. npj Schizophr 6, 1–10 (2020).
+
 4.	Wiciński, M. & Węclewicz, M. M. Clozapine-induced agranulocytosis/granulocytopenia: mechanisms and monitoring. Current Opinion in Hematology 25, 22–28 (2018).
+
 5.	Taylor, D., Vallianatou, K., Whiskey, E., Dzahini, O. & MacCabe, J. Distinctive pattern of neutrophil count change in clozapine-associated, life-threatening agranulocytosis. Schizophr 8, 21 (2022).
+
 6.	Ponsford, M. J. et al. Clinical and laboratory characteristics of clozapine-treated patients with schizophrenia referred to a national immunodeficiency clinic reveals a B-cell signature resembling common variable immunodeficiency (CVID). Journal of Clinical Pathology 73, 587–592 (2020).
+
 7.	Thorn, C. F., Müller, D. J., Altman, R. B. & Klein, T. E. PharmGKB Summary: Clozapine Pathway, Pharmacokinetics. Pharmacogenet Genomics 28, 214–222 (2018).
+
 8.	Rajagopal, S. Clozapine, agranulocytosis, and benign ethnic neutropenia. Postgraduate Medical Journal 81, 545–546 (2005).
+
 9.	Mütze, S. et al. Myeloperoxidase-derived hypochlorous acid antagonizes the oxidative stress-mediated activation of iron regulatory protein 1. J Biol Chem 278, 40542–40549 (2003).
+
 10.	Aratani, Y. Myeloperoxidase: Its role for host defense, inflammation, and neutrophil function. Archives of Biochemistry and Biophysics 640, 47–52 (2018).
+
 11.	Uetrecht, J., Zahid, N., Tehim, A., Mim Fu, J. & Rakhit, S. Structural features associated with reactive metabolite formation in clozapine analogues. Chemico-Biological Interactions 104, 117–129 (1997).
+
 12.	Franco, R. & Cidlowski, J. A. Apoptosis and glutathione: beyond an antioxidant. Cell Death Differ 16, 1303–1314 (2009).
+
 13.	Ramli, F. F., Ali, A., Syed Hashim, S. A., Kamisah, Y. & Ibrahim, N. Reduction in Absolute Neutrophil Counts in Patient on Clozapine Infected with COVID-19. International Journal of Environmental Research and Public Health 18, 11289 (2021).
+
 14.	Nielsen, J. et al. Worldwide Differences in Regulations of Clozapine Use. CNS Drugs 30, 149–161 (2016).
+
 15.	Oloyede, E. et al. What are the barriers and facilitators of clozapine use in early psychosis? A survey of UK early intervention clinicians. Schizophr 9, 1–7 (2023).
+
 16.	Smith, R. L. et al. Correlation Between Serum Concentrations of N-Desmethylclozapine and Granulocyte Levels in Patients with Schizophrenia: A Retrospective Observational Study. CNS Drugs 31, 991–997 (2017).
+
 17.	Vaquero-Baez, M. et al. Clozapine and desmethylclozapine: correlation with neutrophils and leucocytes counting in Mexican patients with schizophrenia | BMC Psychiatry | Full Text. BMC Psychiatry 19, (2019).
+
 18.	Willcocks, I. R. et al. Clozapine Metabolism is Associated With Absolute Neutrophil Count in Individuals With Treatment-Resistant Schizophrenia. Front Pharmacol 12, 658734 (2021).
+
 19.	Tan, M. S. A. et al. A systematic review and meta-analysis of the association between clozapine and norclozapine serum levels and peripheral adverse drug reactions. Psychopharmacology 238, 615–637 (2021).
+
 20.	Kappel, D. B. et al. Genomic Stratification of Clozapine Prescription Patterns Using Schizophrenia Polygenic Scores. Biological Psychiatry 93, 149–156 (2023).
+
 21.	Pardiñas, A. F. et al. Common schizophrenia alleles are enriched in mutation-intolerant genes and in regions under strong background selection. Nat Genet 50, 381–389 (2018).
+
 22.	Pardiñas, A. F. et al. Pharmacokinetics and pharmacogenomics of clozapine in an ancestrally diverse sample: a longitudinal analysis and genome-wide association study using UK clinical monitoring data. The Lancet Psychiatry 10, 209–219 (2023).
+
 23.	Lee, S., Shin, J.-Y., Kwon, N.-J., Kim, C. & Seo, J.-S. ClinPharmSeq: A targeted sequencing panel for clinical pharmacogenetics implementation. PLOS ONE 17, e0272129 (2022).
+
 24.	Pardiñas, A. F. et al. Pharmacogenomic Variants and Drug Interactions Identified Through the Genetic Analysis of Clozapine Metabolism. AJP 176, 477–486 (2019).
+
 25.	Choi, S. W. & O’Reilly, P. F. PRSice-2: Polygenic Risk Score software for biobank-scale data. GigaScience 8, giz082 (2019).
+
 26.	Legge, S. E. et al. A genome-wide association study in individuals of African ancestry reveals the importance of the Duffy-null genotype in the assessment of clozapine-related neutropenia. Mol Psychiatry 24, 328–337 (2019).
+
 27.	Goldstein, J. I. et al. Clozapine-induced agranulocytosis is associated with rare HLA-DQB1 and HLA-B alleles. Nat Commun 5, 4757 (2014).
+
 28.	Zheng, X. et al. HIBAG—HLA genotype imputation with attribute bagging. Pharmacogenomics J 14, 192–200 (2014).
+
 29.	R Core Team. R: A Language and Environment for Statistical Computing. (R Foundation for Statistical Computing, 2021).
+
 30.	Rohrer, J. M. Thinking Clearly About Correlations and Causation: Graphical Causal Models for Observational Data. Advances in Methods and Practices in Psychological Science 1, 27–42 (2018).
+
 31.	Ferguson, K. D. et al. Evidence synthesis for constructing directed acyclic graphs (ESC-DAGs): a novel and systematic method for building directed acyclic graphs. International Journal of Epidemiology 49, 322–329 (2020).
+
 32.	Zeng, S., Rosenbaum, S., Alberts, S. C., Archie, E. A. & Li, F. Causal mediation analysis for sparse and irregular longitudinal data. The Annals of Applied Statistics 15, 747–767 (2021).
+
 33.	Rosseel, Y. lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software 48, 1–36 (2012).
+
 34.	Tingley, D., Yamamoto, T., Hirose, K., Keele, L. & Imai, K. mediation: R Package for Causal Mediation Analysis. Journal of Statistical Software 59, 1–38 (2014).
+
 35.	Oyewumi, L. K., Cernovsky, Z. Z., Freeman, D. J. & Streiner, D. L. Relation of Blood Counts during Clozapine Treatment to Serum Concentrations of Clozapine and Nor-Clozapine. Can J Psychiatry 47, 257–261 (2002).
+
 36.	Mijovic, A. & MacCabe, J. H. Clozapine-induced agranulocytosis. Ann Hematol 99, 2477–2482 (2020).
+
 37.	Lobach, A. R. & Uetrecht, J. Clozapine promotes the proliferation of granulocyte progenitors in the bone marrow leading to increased granulopoiesis and neutrophilia in rats. Chem Res Toxicol 27, 1109–1119 (2014).
+
 38.	Pollmächer, T., Fenzel, T., Mullington, J. & Hinze-Selch, D. The Influence of Clozapine Treatment on Plasma Granulocyte Colony-Stimulating (G-CSF) Levels. Pharmacopsychiatry 30, 118–121 (1997).
+
 39.	Ng, W., Kennar, R. & Uetrecht, J. Effect of clozapine and olanzapine on neutrophil kinetics: implications for drug-induced agranulocytosis. Chem Res Toxicol 27, 1104–1108 (2014).
+
 40.	Geib, T., Thulasingam, M., Haeggström, J. Z. & Sleno, L. Investigation of Clozapine and Olanzapine Reactive Metabolite Formation and Protein Binding by Liquid Chromatography-Tandem Mass Spectrometry. Chem. Res. Toxicol. 33, 2420–2431 (2020).
+
 41.	Yunis, J. J. et al. HLA associations in clozapine-induced agranulocytosis. Blood 86, 1177–1183 (1995).
+
 42.	Atallah-Yunes, S. A., Ready, A. & Newburger, P. E. Benign ethnic neutropenia. Blood Reviews 37, 100586 (2019).
+
 43.	Andreou, A., Jayaram, J., Walker, A., Tek, C. & Williams, J. C. Re-examining the utility and validity of benign ethnic neutropenia: A narrative literature review. Schizophrenia Research (2022) doi:10.1016/j.schres.2022.02.009.
+
 44.	Williams, J. C., Harowitz, J., Glover, J., Tek, C. & Srihari, V. Systematic review of racial disparities in clozapine prescribing. Schizophrenia Research 224, 11–18 (2020).
+
 45.	Hägg, S., Spigset, O., Mjörndal, T. & Dahlqvist, R. Effect of caffeine on clozapine pharmacokinetics in healthy volunteers. British Journal of Clinical Pharmacology 49, 59–63 (2000).
+
 46.	Lesche, D., Mostafa, S., Everall, I., Pantelis, C. & Bousman, C. A. Impact of CYP1A2, CYP2C19, and CYP2D6 genotype- and phenoconversion-predicted enzyme activity on clozapine exposure and symptom severity. Pharmacogenomics J 20, 192–201 (2020).
+
 47.	Wagner, E., McMahon, L., Falkai, P., Hasan, A. & Siskind, D. Impact of smoking behavior on clozapine blood levels – a systematic review and meta-analysis. Acta Psychiatrica Scandinavica 142, 456–466 (2020).
+
 48.	Ramanaviciene, A., Acaite, J., Ramanavicius, A. & Ramanavicius, A. Chronic caffeine intake affects lysozyme activity and immune cells in mice. Journal of Pharmacy and Pharmacology 56, 671–676 (2004).
+
 49.	Higuchi, T. et al. Current cigarette smoking is a reversible cause of elevated white blood cell count: Cross-sectional and longitudinal studies. Preventive Medicine Reports 4, 417–422 (2016).
+
 50.	Zeng, L. et al. Cigarette smoking, coffee consumption, alcohol intake, and clozapine metabolism: A Mendelian randomization study. Frontiers in Psychiatry 13, (2022).
+
 51.	Tiihonen, J. et al. 11-year follow-up of mortality in patients with schizophrenia: a population-based cohort study (FIN11 study). Lancet 374, 620–627 (2009).
+
 52.	Rose, E. et al. Causes of death in clozapine-treated patients in a catchment area: a 10-year retrospective case-control study. European Neuropsychopharmacology 36, 160–166 (2020).
+
 53.	Ponsford, M. et al. Clozapine is associated with secondary antibody deficiency. Br J Psychiatry 214, 1–7 (2018).
+
 54.	Griffiths, K. et al. Changes in immunoglobulin levels during clozapine treatment in schizophrenia. 2022.05.18.22275238 Preprint at https://doi.org/10.1101/2022.05.18.22275238 (2022).
+
 55.	Skokou, M. et al. Adverse Drug Reactions in Relation to Clozapine Plasma Levels: A Systematic Review. Pharmaceuticals (Basel) 15, 817 (2022).
+
 56.	Oloyede, E. et al. There Is Life After the UK Clozapine Central Non-Rechallenge Database. Schizophr Bull 47, 1088–1098 (2021).
+
 57.	Bonkat, N., Fellendorf, F. T., Dalkner, N. & Reininghaus, E. Z. Severe mental disorders and vaccinations – a systematic review. The World Journal of Biological Psychiatry 23, 501–516 (2022).
 
 <br>
@@ -890,6 +951,8 @@ CYP1A2 plays a key role in clozapine metabolism, therefore it is likely that eff
 As CPIC-validated information regarding CYP1A2 metabolism phenotypes and activity scores is currently not available, each haplotype was assigned an activity score in line with past work (7,8) and described in Supplementary Table 1. These were summed to produce an overall activity score per participant, in which higher scores are reflective of increased enzyme function. Several participants were called with CYP1A2*1F/1C alleles in the same haplotype. These alleles have opposing functions, therefore in line with past work (9), we have treated this haplotype as a normal function allele. Pharmacogenomic variation in CYP3A4 was not explored despite its key role in clozapine metabolism on account of the rarity of pharmacogenomic star alleles conferring non-normal function (10), and likely difficulties that would arise when trying to fit models using such small sample sizes. Likewise, CYP2D6 variation was not explored as many of the increased function CYP2D6 pharmacogenomic alleles arise from structural copy number variation that cannot be reliably identified through genotyping arrays (11). 
 
 ```{r ST1}
+#import supplementary table 1 from excel file. 
+
 setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
 
 st1 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 1, col_names = TRUE)
@@ -958,6 +1021,8 @@ After imputation, alleles with a MAF > 1% were retained for further analysis (Su
 
 
 ```{r ST2}
+#import supplementary table 2 from excel file.
+
 setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
 
 st2 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 2, col_names = TRUE)
@@ -984,11 +1049,15 @@ knitr::include_graphics("SFig2.png")
 ```
 
 ```{r ST3, fig.width=10}
+
+#import supplementary table 3 from excel file. 
 setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
 
 st3 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 3, col_names = TRUE)
 cap <- "Supplementary Table 3. Variables Included in DAG showing the causal associations between clozapine dose and absolute neutrophil count in a sample of clozapine users not currently experiencing neutropenia.  Table 3A shows the included nodes and their properties. Table 3B shows the paths included and their rationale."
 st3 <- head(st3, -2)
+
+# split table so its more legible
 
 st3a <- st3[1:3] %>% na.exclude()
 st3b <- st3[4:8] %>% na.exclude()
@@ -1042,9 +1111,7 @@ anc_dcntprs <- lmer(neut_num~dailydose+clozapine+norclozapine+TDS+SEX+age_at_ass
 
 coefs_nosnp <- data.frame(coef(summary(anc_dcnt_1a2_asss))) 
 coefs_snp <- data.frame(coef(summary(anc_dcnt_1a2_ass))) 
-
 coefs2 <- data.frame(coef(summary(anc_dcntdn))) 
-
 coefs3 <- data.frame(coef(summary(anc_dcntprs)))
 
 ```
@@ -1132,7 +1199,7 @@ reg_cloz_g <- glm(clozapine ~ TDS+SEX+age_at_assay+std_age2+est_score, data=CLOZ
 reg_nor_g <- glm(norclozapine ~ TDS+SEX+age_at_assay+std_age2+est_score, data=CLOZUK3.fbc.pk.gen.min, family = Gamma(link = log))$residuals
 reg_anc_u <- lm(neut_num ~ TDS+SEX+age_at_assay+std_age2+est_score, data=CLOZUK3.fbc.pk.gen.min)$residuals
 
-
+# get variables and make dataframe
 Dose <- reg_dose_u
 Clozapine <- reg_cloz_g
 ANC <- reg_anc_u
@@ -1207,6 +1274,8 @@ plot_cis <- rbind(all_plot, gen_plot, pgx_plot)
 
 barCOLS = c("seagreen2", "mediumpurple1","steelblue")
 
+# create plot
+
 ggplot(data = plot_cis, aes(x=Effect, y=est, ymin=ci.lower, ymax=ci.upper,col=Model,fill=Model)) + 
 #specify position here
   #geom_linerange(linewidth=5, position=position_dodge(width = 0.5)) +
@@ -1249,7 +1318,7 @@ indirect2 := a1 * d21 * b2
 total := c + (a1 * b1) + (a1 * d21 * b2)
 Clozapine ~~ Norclozapine
 '
-
+# sem on non-residualised, standardised variables.
 fit3_nonres <- sem(model = multipleMediation, data = Data_std)
 
 ```
@@ -1268,6 +1337,7 @@ knitr::include_graphics("SFig4.png")
 #### Single Variable Mediation Analysis
 
 ```{r M1 Clozapine}
+# comparison of mediation analysis in lavaan and mediation using one mediator (clozapine).
 simpleMediation <- '
     ANC ~ b * Clozapine + c * Dose
     Clozapine ~ a * Dose
@@ -1277,12 +1347,15 @@ simpleMediation <- '
 
 fit1 <- sem(model = simpleMediation, data = Data_og)
 
-detach_package(lmerTest)
+detach_package(lmerTest) #lmerTest interferes with the mediation package so needs to be removed before hand.
 
 library(mediation)
 m_med1 <- lmer(clozapine~dailydose+TDS+SEX+age_at_assay+std_age2 + (1|LUIN), data=CLOZUK3.fbc.pk.std) 
 m_dv1 <- lmer(neut_num~dailydose+clozapine+TDS+SEX+age_at_assay+std_age2 + (1|LUIN), data=CLOZUK3.fbc.pk.std) 
 m_acme1 <- mediation::mediate(m_med1, m_dv1, sim = 1000, treat="dailydose", mediator="clozapine")
+
+
+#this function extracts the key information from the output of mediation into a nice data frame. as obtained from:  https://stackoverflow.com/questions/41582486/how-to-convert-r-mediation-summary-to-data-frame
 
 extract_mediation_summary <- function (x) { 
 
@@ -1356,20 +1429,16 @@ out_4med <- as.data.frame(out_4med[c(8,9,5,10),]) %>%
 
 SEM was performed with residualised plasma clozapine concentration as the lone mediator between dose and lowest ANC (Supplementary Table 7). As before, a significant effect of dose on lowest ANC was observed (β = `r round(summary(fit1)$pe[2,6], digits = 3)`, *p* = `r round(summary(fit1)$pe[2,9], digits = 5)`), with no support for clozapine as a mediating variable (β = `r round(summary(fit1)$pe[7,6], digits = 3)`, *p* = `r round(summary(fit1)$pe[7,9], digits = 3)`). A secondary, causal mediation analysis was performed using the full CLOZUK3 dataset. These results are consistent with the findings derived from using SEM, showing a significant direct effect of daily clozapine dose (ADE = `r round(out_1med[2,2], digits = 3)`, *p* = <2e-16  and no indirect effect transmitted via clozapine plasma concentration (ADE = `r round(out_1med[1,2], digits = 3)`, *p* = `r round(out_1med[1,5], digits = 3)`) .
 
-```{r remove this chunk, include = FALSE}
-print.data.frame(parameterestimates(fit1), digits = 6)
-print.data.frame(out_1med, digits = 6)
-print.data.frame(parameterestimates(fit2), digits = 6)
-print.data.frame(out_4med, digits = 6)
-```
 
 ```{r ST7}
-    
+
+#get supplementary table 7 caption
+
 setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
 st7 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 7, col_names = TRUE, skip = 1)
 cap <- st7[nrow(st7),1]
 
-
+# get output from lavann (l) and mediation (m)
 l_cloz <- parameterestimates(fit1)[c(7,2,8),]
 l_cloz$effect <- c("Indirect", "Direct", "Total")
 l_cloz <- dplyr::select(l_cloz, c("effect", "est", "ci.lower", "ci.upper", "pvalue"))
@@ -1390,12 +1459,15 @@ kable(list(l_cloz, m_cloz), row.names = FALSE,
 A complementary single-mediator SEM was performed with norclozapine as the sole mediating variable. A significant direct effect of daily clozapine dose and lowest ANC is observed (β = `r round(summary(fit2)$pe[2,6], digits = 3)`, *p* = `r round(summary(fit2)$pe[2,9], digits = 5)`).   Additionally, there is some evidence for a mediating effect when we consider norclozapine plasma concentration alone (β = `r round(summary(fit2)$pe[7,6], digits = 3)`, *p* = `r round(summary(fit2)$pe[7,9], digits = 4)`). When this analysis was replicated using the longitudinal sample, a significant direct effect was observed again (ADE = `r round(out_4med[2,2], digits = 3)`, *p* = <2e-16). Furthermore, a significant indirect effect via norclozapine was also observed (ACME= `r round(out_4med[1,2], digits = 3)`, *p* = `r round(out_4med[1,5], digits = 3)`), shown in Supplementary Table 8. 
 
 ```{r ST8}
+
+#get supplementary table 8 caption
+
 setwd(dir = "D:/siobh/Documents/Uni/PhD/Y1/Clozapine Project/Git/clozapine-project/")
 
 st8 <- readxl::read_xlsx(path = "Z Write Up/Supplementary Tables.xlsx", sheet = 8, col_names = TRUE, skip = 1)
 cap <- st8[nrow(st8),1]
 
-
+# get output from lavaan (l) and mediation (m)
 l_nor <- parameterestimates(fit2)[c(7,2,8),]
 l_nor$effect <- c("Indirect", "Direct", "Total")
 l_nor <- dplyr::select(l_nor, c("effect", "est",  "ci.lower", "ci.upper", "pvalue"))
@@ -1442,8 +1514,10 @@ colnames(masterfile) <- c("LUIN", "dailydose", "neut_num", "clozapine", "norcloz
 # Compute Unstandardised model (The one in the paper)
 lm1 <- lm(neut_num ~ clozapine + norclozapine + dailydose + SEX + age_at_assay + std_age2 + TDS + daydiff + timeontreatment , data = masterfile)
 
+# create standardised version of the predictors
 masterfiles <- datawizard::standardise(x = masterfile, select = c("dailydose", "age_at_assay", "std_age2", "TDS", "clozapine", "norclozapine", "SEX", "daydiff", "timeontreatment"))
 
+# model for plot (Supplementary Figure 5) using standardised input
 lm5 <- lm(neut_num ~ clozapine + norclozapine + dailydose + SEX + age_at_assay + std_age2 + TDS + daydiff + timeontreatment , data = masterfiles)
 ```
 
@@ -1481,6 +1555,7 @@ Bivariate correlations revealed significant, positive relationships between each
 
 
 ```{r ST9}
+# calculate effect size t from rho and N
 
 t_from_rho2 <- function(rho, N) {
   # rho: Spearman correlation statistic
@@ -1495,7 +1570,7 @@ t_from_rho2 <- function(rho, N) {
   return(res.stats)
 }
 
-
+# do for correlations in vaquero-baez et al., 2019
 cloz_VB <- t_from_rho2(-0.703, 41)
 nor_VB <- t_from_rho2(-0.448, 41)
 
@@ -1506,6 +1581,7 @@ corr_VB <- data.frame(#Predictor  = c('[Clozapine] mg/L', '[Norclozapine] mg/L',
 
 corr_VB <- corr_VB %>% mutate(across(where(is.numeric), round, digits=3))
 
+# do for correlations in willcocks et al., 2021
 cloz_W <- t_from_rho2(-0.125, 208)
 nor_W <- t_from_rho2(-0.033, 208)
 dose_W <- t_from_rho2(-0.033, 208)
@@ -1517,6 +1593,7 @@ corr_W <- data.frame(#Predictor  = c('[Clozapine] mg/L', '[Norclozapine] mg/L', 
 
 corr_W <- corr_W %>% mutate(across(where(is.numeric), round, digits=3))
 
+# do for the present study
 cloz_pres <- t_from_rho2(0.087, 797)
 nor_pres <- t_from_rho2(0.120, 797)
 dose_pres <- t_from_rho2(0.135, 797)
@@ -1527,7 +1604,8 @@ corr_pres <- data.frame(Predictor  = c('[Clozapine] mg/L', '[Norclozapine] mg/L'
                     t =  c(cloz_pres["t"], nor_pres["t"], dose_pres["t"]))
 
 corr_pres <- corr_pres %>% mutate(across(where(is.numeric), round, digits=3))
-                    
+
+# bind all results from all 3 studies together                 
 table <- cbind(corr_pres, corr_W, corr_VB)
 
 kable(table,
@@ -1572,16 +1650,13 @@ tab_model(model1, model2, model3, show.est = TRUE, show.se = TRUE, show.ci = FAL
 <br>
 
 
-```{r SF5, include = TRUE, echo = FALSE, fig.cap="Supplementary Figure 5. Forest plot comparing standardised regression coefficients from equivalent models between CLOZUK2 (Willcocks et al., 2021) and CLOZUK3 (Present) datasets. The CLOZUK2 and CLOZUK3 (replication) models explore the association between covariates and lowest value of ANC. The CLOZUK3 (lmm) model utilises the available longitudinal data, incorporating a random effect variable for participant ID. Error bars show 95% Confidence Intervals. ANC = Absolute Neutrophil Count; TDS = Time Between Dose and Sample; lmm = Linear Mixed-Effect Model. "}
+```{r SF5, include = TRUE, echo = FALSE, fig.cap="Supplementary Figure 5. Forest plot comparing standardised regression coefficients from equivalent models between CLOZUK2 (Willcocks et al., 2021) and CLOZUK3 (Present) datasets. The CLOZUK2 and CLOZUK3 (replication) models explore the association between covariates and lowest value of ANC. The CLOZUK3 (lmm) model utilises the available longitudinal data, incorporating a random effect variable for participant ID. Error bars show 95% Confidence Intervals. ANC = Absolute Neutrophil Count; TDS = Time Between Dose and Sample; lmm = Linear Mixed-Effect Model."}
 
 model1s <- lm(neut_num~clozapine+norclozapine+dailydose+SEX+age_at_assay+std_age2+TDS,data=CLOZUK3.fbc.pk.min.std)
 
 plot_summs(lm5, model1s, anc_dcnt, legend.title = "Data", point.shape = c("circle", "triangle", "diamond") , model.names = c("CLOZUK2 (Willcocks et al., 2021)", "CLOZUK3 (replication)", "CLOZUK3 (lmm)"), colors = c( "mediumpurple1", "seagreen2", "lightslateblue"), coefs = c("Daily Dose (mg)" = "dailydose", "[Clozapine]" = "clozapine", "[Norclozapine]" = "norclozapine", "Sex (Male)" = "SEXMALE", "Age" = "age_at_assay", "Age Squared" = "stdage_2","TDS" = "TDS", "Days between Assays" = "daydiff",  "Time on Clozapine" = "timeontreatment")) +
  ggtitle("Comparison of Base Models across CLOZUK Cohorts")
 ```
-
-
-
 
 <br>
 <br>
@@ -1593,63 +1668,62 @@ plot_summs(lm5, model1s, anc_dcnt, legend.title = "Data", point.shape = c("circl
 
 <br>
 
-Bates, D., Mächler, M., Bolker, B. and Walker, S. 2015. Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software 67(1), pp. 1–48. doi: 10.18637/jss.v067.i01.
+1.	Lynham, A. J. et al. DRAGON-Data: a platform and protocol for integrating genomic and phenotypic data across large psychiatric cohorts. BJPsych Open 9, e32 (2023).
 
-Chang, C.C., Chow, C.C., Tellier, L.C.A.M., Vattikuti, S., Purcell, S.M. and Lee, J.J. 2015. Second-generation PLINK: rising to the challenge of larger and richer datasets. GigaScience 4(1), p. 7. doi: 10.1186/s13742-015-0047-8.
+2.	Das, S. et al. Next-generation genotype imputation service and methods. Nat Genet 48, 1284–1287 (2016).
 
-Das, S. et al. 2016. Next-generation genotype imputation service and methods. Nature Genetics 48(10), pp. 1284–1287. doi: 10.1038/ng.3656.
+3.	McCarthy, S. et al. A reference panel of 64,976 haplotypes for genotype imputation. Nat Genet 48, 1279–1283 (2016).
 
-Goldstein, J.I. et al. 2014. Clozapine-induced agranulocytosis is associated with rare HLA-DQB1 and HLA-B alleles. Nature Communications 5(1), p. 4757. doi: 10.1038/ncomms5757.
+4.	Pardiñas, A. F. et al. Pharmacokinetics and pharmacogenomics of clozapine in an ancestrally diverse sample: a longitudinal analysis and genome-wide association study using UK clinical monitoring data. The Lancet Psychiatry 10, 209–219 (2023).
 
-Gonzalez-Galarza, F.F. et al. 2020. Allele frequency net database (AFND) 2020 update: gold-standard data classification, open access genotype data and new query tools. Nucleic Acids Research 48(D1), pp. D783–D788. doi: 10.1093/nar/gkz1029.
+5.	Lee, S., Shin, J.-Y., Kwon, N.-J., Kim, C. & Seo, J.-S. ClinPharmSeq: A targeted sequencing panel for clinical pharmacogenetics implementation. PLOS ONE 17, e0272129 (2022).
 
-Hubbard, L. et al. 2022. DRAGON-Data: A platform and protocol for integrating genomic and phenotypic data across large psychiatric cohorts. p. 2022.01.18.22269463. Available at: https://www.medrxiv.org/content/10.1101/2022.01.18.22269463v1 [Accessed: 21 June 2022].
+6.	Van Rossum, G. & Drake, F. L. Python 3  Reference Manual. (2009).
 
-Konte, B. et al. 2021. HLA-DQB1 6672G>C (rs113332494) is associated with clozapine-induced neutropenia and agranulocytosis in individuals of European ancestry. Translational Psychiatry 11, p. 214. doi: 10.1038/s41398-021-01322-w.
+7.	Saiz-Rodríguez, M. et al. Polymorphisms in CYP1A2, CYP2C9 and ABCB1 affect agomelatine pharmacokinetics. J Psychopharmacol 33, 522–531 (2019).
 
-Kronmal, R.A. 1993. Spurious Correlation and the Fallacy of the Ratio Standard Revisited. Journal of the Royal Statistical Society. Series A (Statistics in Society) 156(3), pp. 379–392. doi: 10.2307/2983064.
+8.	Lesche, D., Mostafa, S., Everall, I., Pantelis, C. & Bousman, C. A. Impact of CYP1A2, CYP2C19, and CYP2D6 genotype- and phenoconversion-predicted enzyme activity on clozapine exposure and symptom severity. Pharmacogenomics J 20, 192–201 (2020).
 
-Kuznetsova, A., Brockhoff, P.B. and Christensen, R.H.B. 2017. lmerTest Package: Tests in Linear Mixed Effects Models. Journal of Statistical Software 82(13), pp. 1–26. doi: 10.18637/jss.v082.i13.
+9.	Tian, D., Natesan, S., White, J. R. & Paine, M. F. Effects of Common CYP1A2 Genotypes and Other Key Factors on Intraindividual Variation in the Caffeine Metabolic Ratio: An Exploratory Analysis. Clin Transl Sci 12, 39–46 (2019).
 
-Lee, S., Shin, J.-Y., Kwon, N.-J., Kim, C. and Seo, J.-S. 2022. ClinPharmSeq: A targeted sequencing panel for clinical pharmacogenetics implementation. PLOS ONE 17(7), p. e0272129. doi: 10.1371/journal.pone.0272129.
+10.	Werk, A. N. & Cascorbi, I. Functional Gene Variants of CYP3A4. Clinical Pharmacology & Therapeutics 96, 340–348 (2014).
 
-Lesche, D., Mostafa, S., Everall, I., Pantelis, C. and Bousman, C.A. 2020. Impact of CYP1A2, CYP2C19, and CYP2D6 genotype- and phenoconversion-predicted enzyme activity on clozapine exposure and symptom severity. The Pharmacogenomics Journal 20(2), pp. 192–201. doi: 10.1038/s41397-019-0108-y.
+11.	Reisberg, S. et al. Translating genotype data of 44,000 biobank participants into clinical pharmacogenetic recommendations: challenges and solutions. Genetics in Medicine 21, 1345–1354 (2019).
 
-Levin, A.M. et al. 2015. Association of HLA-DRB1 with Sarcoidosis Susceptibility and Progression in African Americans. American Journal of Respiratory Cell and Molecular Biology 53(2), pp. 206–216. doi: 10.1165/rcmb.2014-0227OC.
+12.	Pardiñas, A. F. et al. Pharmacogenomic Variants and Drug Interactions Identified Through the Genetic Analysis of Clozapine Metabolism. AJP 176, 477–486 (2019).
 
-McCarthy, S. et al. 2016. A reference panel of 64,976 haplotypes for genotype imputation. Nature Genetics 48(10), pp. 1279–1283. doi: 10.1038/ng.3643.
+13.	Goldstein, J. I. et al. Clozapine-induced agranulocytosis is associated with rare HLA-DQB1 and HLA-B alleles. Nat Commun 5, 4757 (2014).
 
-Ninomiya, K., Saito, T., Ikeda, M., Iwata, N. and Girardin, F.R. 2022. Pharmacogenomic-guided clozapine administration based on HLA-DQB1, HLA-B and SLCO1B3-SLCO1B7 variants: an effectiveness and cost-effectiveness analysis. Frontiers in Pharmacology 13. Available at: https://www.frontiersin.org/articles/10.3389/fphar.2022.1016669 [Accessed: 13 April 2023].
+14.	Konte, B. et al. HLA-DQB1 6672G>C (rs113332494) is associated with clozapine-induced neutropenia and agranulocytosis in individuals of European ancestry. Transl Psychiatry 11, 214 (2021).
 
-Pardiñas, A.F. et al. 2019. Pharmacogenomic Variants and Drug Interactions Identified Through the Genetic Analysis of Clozapine Metabolism. American Journal of Psychiatry 176(6), pp. 477–486. doi: 10.1176/appi.ajp.2019.18050589.
+15.	Ninomiya, K., Saito, T., Ikeda, M., Iwata, N. & Girardin, F. R. Pharmacogenomic-guided clozapine administration based on HLA-DQB1, HLA-B and SLCO1B3-SLCO1B7 variants: an effectiveness and cost-effectiveness analysis. Frontiers in Pharmacology 13, (2022).
 
-Pardiñas, A.F. et al. 2023. Pharmacokinetics and pharmacogenomics of clozapine in an ancestrally diverse sample: a longitudinal analysis and genome-wide association study using UK clinical monitoring data. The Lancet Psychiatry 10(3), pp. 209–219. doi: 10.1016/S2215-0366(23)00002-0.
+16.	Purcell, S. et al. PLINK: A Tool Set for Whole-Genome Association and Population-Based Linkage Analyses. The American Journal of Human Genetics 81, 559–575 (2007).
 
-Patil, I., Makowski, D., Ben-Shachar, M.S., Wiernik, B.M., Bacher, E. and Lüdecke, D. 2022. datawizard: An R Package for Easy Data Preparation and Statistical Transformations. Journal of Open Source Software 7(78), p. 4684. doi: 10.21105/joss.04684.
+17.	Chang, C. C. et al. Second-generation PLINK: rising to the challenge of larger and richer datasets. GigaSci 4, 7 (2015).
 
-Purcell, S. et al. 2007. PLINK: A Tool Set for Whole-Genome Association and Population-Based Linkage Analyses. The American Journal of Human Genetics 81(3), pp. 559–575. doi: 10.1086/519795.
+18.	Zheng, X. et al. HIBAG—HLA genotype imputation with attribute bagging. Pharmacogenomics J 14, 192–200 (2014).
 
-Reisberg, S. et al. 2019. Translating genotype data of 44,000 biobank participants into clinical pharmacogenetic recommendations: challenges and solutions. Genetics in Medicine 21(6), pp. 1345–1354. doi: 10.1038/s41436-018-0337-5.
+19.	Levin, A. M. et al. Association of HLA-DRB1 with Sarcoidosis Susceptibility and Progression in African Americans. Am J Respir Cell Mol Biol 53, 206–216 (2015).
 
-Rohrer, J.M. 2018. Thinking Clearly About Correlations and Causation: Graphical Causal Models for Observational Data. Advances in Methods and Practices in Psychological Science 1(1), pp. 27–42. doi: https://doi.org/10.1177/2515245917745629.
+20.	Willcocks, I. R. et al. Clozapine Metabolism is Associated With Absolute Neutrophil Count in Individuals With Treatment-Resistant Schizophrenia. Front Pharmacol 12, 658734 (2021).
 
-Rosseel, Y. 2012. lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software 48(2), pp. 1–36. doi: 10.18637/jss.v048.i02.
+21.	Kronmal, R. A. Spurious Correlation and the Fallacy of the Ratio Standard Revisited. Journal of the Royal Statistical Society. Series A (Statistics in Society) 156, 379–392 (1993).
 
-Saiz-Rodríguez, M. et al. 2019. Polymorphisms in CYP1A2, CYP2C9 and ABCB1 affect agomelatine pharmacokinetics. Journal of Psychopharmacology 33(4), pp. 522–531. doi: 10.1177/0269881119827959.
+22.	Rohrer, J. M. Thinking Clearly About Correlations and Causation: Graphical Causal Models for Observational Data. Advances in Methods and Practices in Psychological Science 1, 27–42 (2018).
 
-Tian, D., Natesan, S., White, J.R. and Paine, M.F. 2019. Effects of Common CYP1A2 Genotypes and Other Key Factors on Intraindividual Variation in the Caffeine Metabolic Ratio: An Exploratory Analysis. Clinical and Translational Science 12(1), pp. 39–46. doi: 10.1111/cts.12598.
+23.	Bates, D., Mächler, M., Bolker, B. & Walker, S. Fitting Linear Mixed-Effects Models Using lme4. Journal of Statistical Software 67, 1–48 (2015).
 
-Tingley, D., Yamamoto, T., Hirose, K., Keele, L. and Imai, K. 2014. mediation: R Package for Causal Mediation Analysis. Journal of Statistical Software 59(5), pp. 1–38.
+24.	Kuznetsova, A., Brockhoff, P. B. & Christensen, R. H. B. lmerTest Package: Tests in Linear Mixed Effects Models. Journal of Statistical Software 82, 1–26 (2017).
 
-Van Rossum, G. and Drake, F.L. 2009. Python 3  Reference Manual.
+25.	Tingley, D., Yamamoto, T., Hirose, K., Keele, L. & Imai, K. mediation: R Package for Causal Mediation Analysis. Journal of Statistical Software 59, 1–38 (2014).
 
-Vaquero-Baez, M. et al. 2019. Clozapine and desmethylclozapine: correlation with neutrophils and leucocytes counting in Mexican patients with schizophrenia | BMC Psychiatry | Full Text. BMC Psychiatry 19(295). Available at: https://bmcpsychiatry.biomedcentral.com/articles/10.1186/s12888-019-2286-1 [Accessed: 4 October 2022].
+26.	Rosseel, Y. lavaan: An R Package for Structural Equation Modeling. Journal of Statistical Software 48, 1–36 (2012).
 
-Werk, A.N. and Cascorbi, I. 2014. Functional Gene Variants of CYP3A4. Clinical Pharmacology & Therapeutics 96(3), pp. 340–348. doi: 10.1038/clpt.2014.129.
+27.	Vaquero-Baez, M. et al. Clozapine and desmethylclozapine: correlation with neutrophils and leucocytes counting in Mexican patients with schizophrenia | BMC Psychiatry | Full Text. BMC Psychiatry 19, (2019).
 
-Willcocks, I.R. et al. 2021. Clozapine Metabolism is Associated With Absolute Neutrophil Count in Individuals With Treatment-Resistant Schizophrenia. Frontiers in Pharmacology 12, p. 658734. doi: 10.3389/fphar.2021.658734.
+28.	Patil, I. et al. datawizard: An R Package for Easy Data Preparation and Statistical Transformations. Journal of Open Source Software 7, 4684 (2022).
 
-Zheng, X., Shen, J., Cox, C., Wakefield, J.C., Ehm, M.G., Nelson, M.R. and Weir, B.S. 2014. HIBAG—HLA genotype imputation with attribute bagging. The Pharmacogenomics Journal 14(2), pp. 192–200. doi: 10.1038/tpj.2013.18.
 
 <br>
 <br>
