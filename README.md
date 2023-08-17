@@ -2,7 +2,7 @@
 
 ## Mediation and Longitudinal Analysis to interpret the association between clozapine pharmacokinetics, pharmacogenomics, and absolute neutrophil count. 
 
-* CLOZUK3_predictors_ANC.rmd contains the code used for analysis of the CLOZUK3 dataset.
+* CLOZUK3_predictors_ANC.rmd contains the code used for analysis of the CLOZUK3 dataset - see: https://locksk.github.io/clozapine-project/
     * .html file contains output
     * .pngs are figures used in the .rmd
     * style.css helps format the .rmd
