@@ -1,5 +1,5 @@
 ---
-title: <center> <strong> CLOZUK3 Results </strong> </center>
+title: <center> <strong> CLOZUK3 Mediation and Longitudinal Analysis Companion </strong> </center>
 author: <center> <small> Siobhan Lock  </small> </center>
 date: <center> <small> `r format(Sys.Date(), format="%B %d %Y")` </small> </center>
 output: 
@@ -446,6 +446,10 @@ CLOZUK3.fbc.pk.gen.std <- datawizard::standardise(x = CLOZUK3.fbc.pk.gen, select
 
 
 # Mediation and Longitudinal Analysis to interpret the association between clozapine pharmacokinetics, pharmacogenomics, and absolute neutrophil count.  {.tabset}
+
+**Siobhan K. Lock, Sophie E. Legge, Djenifer B. Kappel, Isabella R. Willcocks, Marinka Helthuis, John Jansen, James T. R. Walters, Michael J. Owen, Michael O’Donovan, <a href = "mailto: PardinasA@cardiff.ac.uk"> Antonio F Pardiñas </a>**
+
+
 <br>
 <br>
 
@@ -534,8 +538,35 @@ Further sensitivity analyses tested the robustness of these mediation models, as
 
 ## <strong> Main Results </strong> 
 ### Main Results 
+```{r time on treatment, include = FALSE}
+# estimate the length of time people have been on clozapine treatment for. 
 
-The final curated CLOZUK3 longitudinal dataset included 811 participants, with a total of 2,362 FBC and pharmacokinetic assays taken on the same day. Participants had a mean (SD) age of 40.1 (12.2) years; 28.9% were female (N = 234) and 71.1% were male (N = 577). Full descriptive statistics of the sample at the point of lowest ANC are given in Table 2. While the first occurrence of each individual on our ZTAS dataset is not necessarily the date they started clozapine, we note that about a third of the CLOZUK3 individuals with valid data (32.6%; 264/811)  had records spanning at least a year  of clozapine treatment.
+library(arsenal)
+
+# find earliest and latest assay date, then find the difference between them.
+earliest.assay <-  CLOZUK3.fbc.pk[order(CLOZUK3.fbc.pk$sampledate),] %>% 
+  distinct(LUIN, .keep_all = TRUE)
+
+comparedf(earliest.assay, earliest.assay)
+
+latest.assay <-  CLOZUK3.fbc.pk[order(CLOZUK3.fbc.pk$sampledate, decreasing = TRUE),] %>% 
+  distinct(LUIN, .keep_all = TRUE)
+
+test <- left_join(earliest.assay[1:2],latest.assay[1:2], by = 'LUIN')
+
+test$diff <- test$sampledate.y - test$sampledate.x
+
+test$weeks <- as.numeric(test$diff)/7
+
+test$over1[test$weeks >= 52] <- "Yes"
+test$over1[test$weeks < 52] <- "No"
+
+tmp <- as.data.frame(table(test$over1))
+
+a <- (tmp[2.2]/(tmp[1,2] + tmp[2,2])) * 100
+```
+
+The final curated CLOZUK3 longitudinal dataset included 811 participants, with a total of 2,362 FBC and pharmacokinetic assays taken on the same day. Participants had a mean (SD) age of 40.1 (12.2) years; 28.9% were female (N = 234) and 71.1% were male (N = 577). Full descriptive statistics of the sample at the point of lowest ANC are given in Table 2. While the first occurrence of each individual on our ZTAS dataset is not necessarily the date they started clozapine, we note that about a third of the CLOZUK3 individuals with valid data (`r round(a[2,], digits = 1)`%; `r tmp[2,2]`/`r tmp[1,2]`)  had records spanning at least a year  of clozapine treatment.
 
 The DAG (Supplementary Figure 2) displays the possible causal paths between ANC (the outcome), daily clozapine dose (the exposure variable), and plasma concentrations of clozapine and norclozapine (potential mediators between dose and ANC). 
 
@@ -769,35 +800,6 @@ This work adds to a body of research aiming towards a complete understanding of 
 
 #### Conclusions
 
-```{r time on treatment, include = FALSE}
-# estimate the length of time people have been on clozapine treatment for. 
-
-library(arsenal)
-
-# find earliest and latest assay date, then find the difference between them.
-earliest.assay <-  CLOZUK3.fbc.pk[order(CLOZUK3.fbc.pk$sampledate),] %>% 
-  distinct(LUIN, .keep_all = TRUE)
-
-comparedf(earliest.assay, earliest.assay)
-
-latest.assay <-  CLOZUK3.fbc.pk[order(CLOZUK3.fbc.pk$sampledate, decreasing = TRUE),] %>% 
-  distinct(LUIN, .keep_all = TRUE)
-
-test <- left_join(earliest.assay[1:2],latest.assay[1:2], by = 'LUIN')
-
-test$diff <- test$sampledate.y - test$sampledate.x
-
-test$weeks <- as.numeric(test$diff)/7
-
-test$over1[test$weeks >= 52] <- "Yes"
-test$over1[test$weeks < 52] <- "No"
-
-tmp <- as.data.frame(table(test$over1))
-
-a <- (tmp[2.2]/(tmp[1,2] + tmp[2,2])) * 100
-```
-
-
 Here, we show daily clozapine dose was positively associated with ANC, with clozapine pharmacokinetics (indexed by clozapine and norclozapine plasma levels) accounting for a third of the total effect. Our analysis of multiple pharmacokinetic and pharmacogenomic variables supports and expands on the results from past research, which for decades has suggested an opposing relationship between ANC and plasma clozapine and norclozapine levels. We build on this to show that these effects exist in a sample in which about a third of the individuals were taking clozapine for over a year, commonly considered to be at a lower risk of immune-related ADRs.
 
 The pharmacokinetic analysis was supplemented by genetic covariates, notably a CYP1A2 activity score inferred from pharmacogenomic star alleles. CYP1A2 activity was positively associated with ANC; however, no associations were seen between neutrophil counts with pharmacogenomic SNPs previously associated with clozapine metabolism. Additional work in larger, more genetically diverse samples is required to clarify the role of pharmacogenomic variation in clozapine metabolism, and its capacity to influence neutrophil levels in clozapine users. In all, this work advances our understanding of the impacts of clozapine use on neutrophil counts, which in the future may help to improve access to clozapine via the development of targeted interventions and personalised drug monitoring schedules based on individual risk factors.
@@ -956,8 +958,8 @@ st1 <- readxl::read_xlsx(path = "Supplementary Tables.xlsx", sheet = 1, col_name
 cap <- st1[7,1]
 st1 <- head(st1, -3)
 
-st1$`EUR Frequency (Neyshaburinezhad et al. 2021)` <- as.numeric(st1$`EUR Frequency (Neyshaburinezhad et al. 2021)`)
-st1$`EUR ALFA Allele Frequency (dbSNP)`<- as.numeric(st1$`EUR ALFA Allele Frequency (dbSNP)`)
+st1$`EUR Frequency 1` <- as.numeric(st1$`EUR Frequency 1`)
+st1$`EUR ALFA Allele Frequency 2`<- as.numeric(st1$`EUR ALFA Allele Frequency 2`)
 
 kable(st1,
       caption = cap, digits = 3) %>%
@@ -1321,7 +1323,7 @@ fit3_nonres <- sem(model = multipleMediation, data = Data_std)
 SEM was also used on non-residualised versions of the variables (Supplementary Figure 4) to ensure that controlling for covariates in this way didn’t create spurious results. As in the residualised model, there was a significant positive effect of daily clozapine dose on lowest ANC (β = `r round(summary(fit3_nonres)$pe[3,6], digits = 3)`, *p* = `r round(summary(fit3_nonres)$pe[3,9], digits = 3)`). Equally, there was a significant indirect effect via both clozapine and norclozapine plasma concentrations (β= `r round(summary(fit3_nonres)$pe[12,6], digits = 3)`, *p* = `r round(summary(fit3_nonres)$pe[12,9], digits = 3)`) with no evidence for mediation by plasma clozapine concentration alone (β = `r round(summary(fit3_nonres)$pe[11,6], digits = 3)`, *p* = `r round(summary(fit3_nonres)$pe[11,9], digits = 3)`).
 
 
-```{r SF4, dev = "png", dev.args=list(bg="transparent"), fig.cap="Supplementary Figure 3. Path diagram showing association between Dose and Lowest ANC with Clozapine and Norclozapine as mediators. Plot edges are labelled with standardised regression coefficients. Variables included in SEM are the parent, non-residualised variables. SEM = Structural Equation Modelling. * p<0.05   ** p<0.01   *** p<0.001"}
+```{r SF4, dev = "png", dev.args=list(bg="transparent"), fig.cap="Supplementary Figure 4. Path diagram showing association between Dose and Lowest ANC with Clozapine and Norclozapine as mediators. Plot edges are labelled with standardised regression coefficients. Variables included in SEM are the parent, non-residualised variables. SEM = Structural Equation Modelling. * p<0.05   ** p<0.01   *** p<0.001"}
 knitr::include_graphics("SFig4.png")
 ```
 
