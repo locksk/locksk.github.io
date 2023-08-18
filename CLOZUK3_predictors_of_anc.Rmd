@@ -950,8 +950,8 @@ st1 <- readxl::read_xlsx(path = "Supplementary Tables.xlsx", sheet = 1, col_name
 cap <- st1[7,1]
 st1 <- head(st1, -3)
 
-st1$`EUR Frequency 1` <- as.numeric(st1$`EUR Frequency 1`)
-st1$`EUR ALFA Allele Frequency 2`<- as.numeric(st1$`EUR ALFA Allele Frequency 2`)
+st1$`EUR Frequency` <- as.numeric(st1$`EUR Frequency`)
+st1$`EUR ALFA Allele Frequency`<- as.numeric(st1$`EUR ALFA Allele Frequency`)
 
 colnames(st1) <- c("CYP1A2 PGx Star Allele", "Activity Score", "Frequency (CLOZUK3)", "EUR Frequency [12]", "EUR ALFA Frequency [13]")
 
@@ -1048,7 +1048,9 @@ knitr::include_graphics("SFig2.png")
 
 #import supplementary table 3 from excel file. 
 st3 <- readxl::read_xlsx(path = "Supplementary Tables.xlsx", sheet = 3, col_names = TRUE)
-cap <- "Supplementary Table 3. Variables Included in DAG showing the causal associations between clozapine dose and absolute neutrophil count in a sample of clozapine users not currently experiencing neutropenia.  Table 3A shows the included nodes and their properties. Table 3B shows the paths included and their rationale."
+capa <- "Supplementary Table 3a. Variables Included in DAG showing the causal associations between clozapine dose and absolute neutrophil count in a sample of clozapine users not currently experiencing neutropenia.  Table 3a shows the included nodes and their properties."
+
+capb <- "Supplementary Table 3b. Variables Included in DAG showing the causal associations between clozapine dose and absolute neutrophil count in a sample of clozapine users not currently experiencing neutropenia. Table 3b shows the paths included and their rationale."
 st3 <- head(st3, -2)
 
 # split table so its more legible
@@ -1057,12 +1059,12 @@ st3a <- st3[1:3] %>% na.exclude()
 st3b <- st3[4:8] %>% na.exclude()
 
 kable(st3a,
-      caption = cap) %>%
+      caption = capa) %>%
       kable_styling("none", full_width = T, position = "left", font_size = 16) %>%
       kable_classic()
 
 kable(st3b,
-      caption = cap) %>%
+      caption = capb) %>%
       kable_styling("none", full_width = T, position = "left", font_size = 16) %>%
       kable_classic()
 ```
@@ -1071,9 +1073,9 @@ kable(st3b,
 <br>
 
 #### R Packages
-The full CLOZUK3 dataset was used for linear mixed-effect regression models and single-mediator analyses, benefitting from multiple FBC/pharmacokinetic measurements per patient over time. lme4 and lmerTest were used to fit the LMMs [25,26]. The mediation package [27] was used to perform single-mediation analyses in the longitudinal data. 
+The full CLOZUK3 dataset was used for linear mixed-effect regression models and single-mediator analyses, benefitting from multiple FBC/pharmacokinetic measurements per patient over time. *lme4* and *lmerTest* were used to fit the LMMs [25,26]. The *mediation* package [27] was used to perform single-mediation analyses in the longitudinal data. 
 
-The CLOZUK3 dataset was transformed into cross-sectional data by taking the lowest observation of ANC for each participant. This reduced dataset was used for multiple-, and single-mediator analyses using Structural Equation Modelling (SEM) in lavaan [28], and in replication analyses (i.e., Spearman’s correlations, Linear Models) of previous research [22,29]. Before inclusion in all regression and structural equation models, covariates were standardised (mean-centred and scaled) using the datawizard R package [30]. 
+The CLOZUK3 dataset was transformed into cross-sectional data by taking the lowest observation of ANC for each participant. This reduced dataset was used for multiple-, and single-mediator analyses using Structural Equation Modelling (SEM) in *lavaan* [28], and in replication analyses (i.e., Linear Models) of previous research [22,29]. Before inclusion in all regression and structural equation models, covariates were standardised (mean-centred and scaled) using the *datawizard* R package [30]. 
 
 <br>
 <br>
@@ -1510,19 +1512,7 @@ lm5 <- lm(neut_num ~ clozapine + norclozapine + dailydose + SEX + age_at_assay +
 ```
 
 
-``` {r Lowest ANC Corr & LM, echo = FALSE}
-
-# replicating willcocks et al., 2021 and Vaquero-Baez et al., 2019 analyses with linear models
-
-# correlations
-cor1 <- cor.test(x = CLOZUK3.fbc.pk.min$clozapine, y = CLOZUK3.fbc.pk.min$neut_num, method = "spearman")
-cor2 <- cor.test(x = CLOZUK3.fbc.pk.min$norclozapine, y = CLOZUK3.fbc.pk.min$neut_num, method = "spearman")
-cor3 <- cor.test(x = CLOZUK3.fbc.pk.min$dailydose, y = CLOZUK3.fbc.pk.min$neut_num, method = "spearman")
-
-# make correlation results dataframe
-corres <- data.frame(Predictor  = c('[Clozapine] mg/L', '[Norclozapine] mg/L', 'Daily dose (mg/day)'),
-                    rho = c(cor1$estimate, cor2$estimate, cor3$estimate),
-                    p_value = c(cor1$p.value, cor2$p.value, cor3$p.value))
+``` {r Lowest ANC LM, echo = FALSE}
 
 # models
 model1 <- lm(neut_num~dailydose+clozapine+norclozapine+TDS+SEX+age_at_assay+std_age2,data=CLOZUK3.fbc.pk.min.std) # excluded time on treatment
