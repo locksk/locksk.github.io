@@ -17,7 +17,7 @@
 The full CLOZUK3 dataset was used for linear mixed-effect regression models and single-mediator analyses, benefitting from multiple FBC/PK measurements per patient over time. 
 
 * lme4 and lmerTest were used to fit the LMMs (Bates et al. 2015; Kuznetsova et al. 2017). The mediation package (Tingley et al. 2014) was used to perform single-mediation analyses in the longitudinal data. 
-* The CLOZUK3 dataset was transformed into cross-sectional data through taking the lowest observation of ANC for each participant. This reduced dataset was used for multiple-, and single-mediator analyses using SEM in lavaan (Rosseel 2012), and in replication analyses (i.e., Spearman’s correlations, Linear Models) of previous research (Vaquero-Baez et al. 2019; Willcocks et al. 2021).
+* The CLOZUK3 dataset was transformed into cross-sectional data through taking the lowest observation of ANC for each participant. This reduced dataset was used for multiple-, and single-mediator analyses using SEM in lavaan (Rosseel 2012), and in replication analyses (i.e., Linear Models) of previous research (Vaquero-Baez et al. 2019; Willcocks et al. 2021).
 * Prior to inclusion in all regression and structural equation models, covariates were standardised (mean centred and scaled) using the datawizard R package (Patil et al. 2022). 
 
 
