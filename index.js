@@ -1,3 +1,4 @@
+// main js stuff, i think relates to header responsiveness - part of initial template
 $(document).ready(function(){
   $("a").on('click', function(event) {
     if (this.hash !== "") {
@@ -32,7 +33,7 @@ setTimeout(function(){
     },800);
 },1450);
 
-
+// scroll to top button 
 var scrollToTopBtn = document.querySelector(".scrollToTopBtn");
 var rootElement = document.documentElement;
 
@@ -57,4 +58,6 @@ function scrollToTop() {
 }
 scrollToTopBtn.addEventListener("click", scrollToTop);
 document.addEventListener("scroll", handleScroll);
+
+// cute footer
 
