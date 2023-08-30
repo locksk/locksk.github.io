@@ -60,4 +60,3 @@ scrollToTopBtn.addEventListener("click", scrollToTop);
 document.addEventListener("scroll", handleScroll);
 
 // cute footer
-

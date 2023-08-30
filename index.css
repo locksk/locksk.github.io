@@ -352,7 +352,7 @@ body {
   .tooltip {
     display:inline-block;
     position:relative;
-    border-bottom:0px dotted #666;
+    border-bottom:0px dotted #12121262;
     text-align:center;
 }
 
@@ -363,14 +363,14 @@ body {
     transform:translate(-50%, 0);
     padding:10px 20px;
     color:#FFFFFF;
-    background-color:#333333;
+    background-color:#12121262;
     font-weight:normal;
     font-size:13px;
     border-radius:8px;
     position:absolute;
     z-index:99999999;
     box-sizing:border-box;
-    border:1px solid #333333;box-shadow:0 1px 8px rgba(0,0,0,0.5);
+    border:1px solid #12121262;box-shadow:0 1px 8px rgba(0,0,0,0.5);
     visibility:hidden; opacity:0; transition:opacity 0.8s;
 }
 
@@ -395,8 +395,8 @@ body {
     height:12px;
     left:50%;
     transform:translate(-50%,50%) rotate(45deg);
-    background-color:#333333;
-    border:1px solid #333333;box-shadow:0 1px 8px rgba(0,0,0,0.5);
+    background-color:#12121262;
+    border:1px solid #12121262;box-shadow:0 1px 8px rgba(0,0,0,0.5);
 }
 
 /* this centers my hover over images and also adjusts the size */
@@ -407,17 +407,4 @@ body {
     width: 50%;
   }
 
-/* clicky tool tip */
-
-tippy(".item", {
-    trigger: 'click',
-    content: `item info`,
-    allowHTML: true,
-    animation: 'fade',
-    onShow(instance) {
-      let element = instance.reference;
-      instance.setContent(element.getAttribute('data-info'));
-      //console.log(instance);
-    },
-  });
  
