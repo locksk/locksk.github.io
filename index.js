@@ -59,4 +59,12 @@ function scrollToTop() {
 scrollToTopBtn.addEventListener("click", scrollToTop);
 document.addEventListener("scroll", handleScroll);
 
-// cute footer
+// tool tip stay
+
+//$('.tooltip .bottom').on('mouseover',function(){
+//  $(this).css({
+//      "visibility": "visible",
+//      "opacity": "1"
+//     // more styles go here
+//  });
+//});
