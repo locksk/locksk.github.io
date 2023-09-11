@@ -21,6 +21,7 @@
         <a href="#bio">about</a>
         <a href="#work">photo</a>
         <a href="#science">science</a>
+        <a href="#edu">education</a>
         <a href="#contact">contact</a>
     </div>
     </div>
@@ -50,43 +51,120 @@
               <div id="work">
                  <h1>photo.</h1>
 
-                 <div id="photos">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC01759.jpg?raw=true" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC01257.jpg?raw=true" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC01896.jpg?raw=true" class = "portimg">
-                    
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/934A7860.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_0726.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_0393.jpg?raw=true" loading = "lazy" class = "portimg">
-                    
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/Untitled_Panorama1 small.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/e934A0241.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC09575s.jpg?raw=true" loading = "lazy" class = "portimg">
+                 <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC01759.jpg?raw=true" title="Aonach Eagach" alt="aonach eagach" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/DSC01759.jpg?raw=true', 'mountain ridge')">
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC01257.jpg?raw=true" title="Schiehallion" alt="schiehallion" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/DSC01257.jpg?raw=true', 'rocky mountain')">
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC01896.jpg?raw=true" title="Three Sisters" alt="three sisters" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/DSC01896.jpg?raw=true', 'rough mountain')">
+                    </div>
 
+                    <!-- Repeat the above three divs for each set of images -->
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/934A7860.jpg?raw=true" title="Oli Sykes of Bring Me The Horizon" alt="oli sykes of bmth" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/934A7860.jpg?raw=true', 'Oli Sykes')">
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_0726.jpg?raw=true"  title = "James Arthur" alt="james arthur" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/IMG_0726.jpg?raw=true', 'James Arthur')"></a>
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_0393.jpg?raw=true" title="Steve Morse of Deep Purple" alt="steve morse of deep purple" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/IMG_0393.jpg?raw=true', 'Steve Morse of Deep Purple')"></a>
+                    </div> 
+                              
+                    <!-- Repeat the above three divs for each set of images -->
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/Untitled_Panorama1 small.jpg?raw=true" title="Sgwd Gwladys" alt="waterfall" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/Untitled_Panorama1_small.jpg?raw=true', 'Waterfall')"></a>
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/e934A0241.jpg?raw=true"  title="Dinefwr Castle" alt="dinefwr castle" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/e934A0241.jpg?raw=true', 'Keep at Dinefwr Castle')"</a>
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC09575s.jpg?raw=true" title="Sgwrd Gwladys"  alt="Floating in the plunge pool at Sgwrd Gwladys" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/DSC09575s.jpg?raw=true', 'Sgwrd Gwladys')"</a>
+                    </div>
+                  
+                    <!-- Repeat the above three divs for each set of images -->
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC02441.jpg?raw=true" title="Paulin Watches" alt="Model 1 & 2 wall clocks at Paulin Watches in Glasgow." onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/DSC02441.jpg?raw=true', 'Wall Clocks')"</a>
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_8056.jpg?raw=true" title="LG"  alt="Liam Gallagher standing with tamborine" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/IMG_8056.jpg?raw=true', 'Liam Gallagher')"</a>
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/vertical_pano.jpg?raw=true" title="Dunraven Bay" alt="Milky Way rising over the ice tower at Dunraven Bay" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/vertical_pano.jpg?raw=true', 'Milky Way')"</a>
+                    </div>
+                  
+                        
+                    <!-- Repeat the above three divs for each set of images -->
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_9044.jpg?raw=true"  title="Hayley Williams of Paramore" alt="Hayley Williams of Paramore" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/IMG_9044.jpg?raw=true', 'Paramore')"</a>
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/eIMG_6183.jpg?raw=true" title="Penderyn Distillery" alt="Waiting bottles ready to be filled with Merlyn Cream Liqueur at Penderyn Distillery." onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/eIMG_6183.jpg?raw=true', 'Penderryn Distillery')"</a>
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC02404.jpg?raw=true" title="Paulin Watches" alt="Putting the final hand touches on a wrist watch, Paulin Watches in Glasgow." onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/DSC02404.jpg?raw=true', 'Paulin Watches')"</a>
+                    </div> 
+                  
+                   <!-- Repeat the above three divs for each set of images -->
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/e934A2235.jpg?raw=true" title="Lighthouse at Nash Point" alt="nash point" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/e934A2235.jpg?raw=true', 'Nash Point')"</a>
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/eIMG_7966.jpg?raw=true" title="AJ" alt="Anthony Joshua at the Weigh In at Joshua vs Takam 2017." onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/eIMG_7966.jpg?raw=true', 'AJ')"</a>
+                    </div>
+                  
+            
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_8787 s.jpg?raw=true" title="Le Palais du Justice en Nantes." alt="pdj nantes." onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/IMG_8787_s.jpg?raw=true', 'Nantes Palais du Justice')"</a>
+                    </div> 
+                  <!-- Repeat the above three divs for each set of images -->
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/ee934A3395.jpg?raw=true" title="Stars Above Marloes Sands" alt="marloes sands" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/ee934A3395.jpg?raw=true', 'Marloes Stars')"></a>
+                    </div>
+                  
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_2343.jpg?raw=true" title="Falls of Bruar"  alt="falls of bruar" onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/IMG_2343.jpg?raw=true', 'Bruar')"> </a>
+                    </div>
+                  
+            
+                    <div class="gallery-item">
+                        <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC05786.jpg?raw=true" title= "Shaping." alt="Sanding down a blank at Waterbourne Surfboards in Porthcawl." onclick="openLightbox('https://github.com/locksk/landing-page/blob/main/photos/DSC05786.jpg?raw=true', 'Shaping')"</a>
+                    </div>       
+               
+              </div>
 
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC02441.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_8056.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/vertical_pano.jpg?raw=true" loading = "lazy" class = "portimg">
-
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/eIMG_6183.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC02404.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_9044.jpg?raw=true" loading = "lazy" class = "portimg">
-                    
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/e934A2235.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/eIMG_7966.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_8787 s.jpg?raw=true" loading = "lazy" class = "portimg">
-                    
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/ee934A3395.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/IMG_2343.jpg?raw=true" loading = "lazy" class = "portimg">
-                    <img src="https://github.com/locksk/landing-page/blob/main/photos/DSC05786.jpg?raw=true" loading = "lazy" class = "portimg">
-                </ul>
-                </div>
-
+                 <!-- Lightbox HTML -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <div class="lightbox-img-container">
+                <img id="lightbox-image" src="" alt="">
+                <div class="lightbox-title" id="lightbox-title"></div>
+            </div>
+            <div class="lightbox-navigation">
+                <span class="lightbox-prev" onclick="prevImage()">&#9664;</span>
+                <span class="lightbox-next" onclick="nextImage()">&#9654;</span>
+            </div>
+        </div>
+    </div>
              </div>
          
              
              <div id="science">
-                <h1>science</h1>
+                <h1>science.</h1>
                                    
                         <div class="container">
                             <div class="card">
@@ -99,12 +177,10 @@
                               </div>
                               <div class="face face2">
                                 <div class="content">
-                                    <p>insert</p>
-                                    <p>something</p>
-                                    <p>you</p>
-                                    <p>can</p>
-                                    <p>do</p>
-                                    <p>a little R</p>
+                                    <p><b>Computing:</b> R (mostly), bash/CLI (partly), python (barely) </p>
+                                    <br>
+                                    <p><b>Statistics:</b> regression modelling, mediation analysis, data visualisation</p>
+                                    <p></p>
                                 </div>
                               </div>
                            </div>
@@ -117,12 +193,12 @@
                               </div>
                               <div class="face face2">
                                 <div class="content">
-                                    <p>insert</p>
-                                    <p>something</p>
-                                    <p>you</p>
-                                    <p>have</p>
-                                    <p>done</p>
-                                    <p> a tiny bit of teaching</p>
+                                    <p><b>Teaching:</b> Pharmacogenomics of Schizophrenia (UG Medic Practical Reserch Experience)</p>
+                                    <br>
+                                    <p><b>Community:</b> Life Sciences Challenge (Helping to design and deliver an inter-schools science quiz competition.) </p>
+                                    
+                                    
+                                    
                                 </div>
                               </div>
                            </div>
@@ -137,21 +213,74 @@
                               </div>
                               <div class="face face2">
                                 <div class="content">
-                                    <p>close</p>
-                                    <p>to</p>
-                                    <p>nothing</p>
                                     <p><strong>Clozapine and ANC </strong><br> <a href ="https://www.medrxiv.org/content/10.1101/2023.08.22.23294262v1"> Preprint</a> and <a href ="https://locksk.github.io/clozuk3-anc/"> Markdown </a></p>
-                                    <br>
-                                                                    
+                                    <br>                            
                               </div>
                            </div>
-                           
-                           
                   </div>
+                
             </div>
 
+            <div id="edu">
+            <h1> education.</h1>
+            <ul class="timeline">
 
+                <!-- Item 1 -->
+                <li>
+                    <div class="direction-r">
+                        <div class="flag-wrapper">
+                            <span class="flag">PhD Project.</span>
+                            <span class="time-wrapper"><span class="time">2022 - present</span></span>
+                        </div>
+                        <div class="desc">New approaches in precision psychiatry: Exploring genomic markers and linked health records to predict symptom improvement and drug response in schizophrenia.</div>
+                    </div>
+                </li>
+              
+                <!-- Item 2 -->
+                <li>
+                    <div class="direction-l">
+                        <div class="flag-wrapper">
+                            <span class="flag">MSc Bioinformatics.</span>
+                            <span class="time-wrapper"><span class="time">2021 - 2022</span></span>
+                        </div>
+                        <div class="desc"><small>Distinction.</small>
+                  <br>
+                    <br>
+                    Dissertation project: Pharmacogenomic makeup and 
+            medication use in Schizophrenia. An Investigation of CYP Enzyme Metabolism Variables and Medication Phenotypes in the CardiffCOGS sample. 
+                    <br>
+                    <br>
+                    Individual data project: Investigating the role of <i>Abi3</i> in Microglia from recently published data by exploring differential gene expression and perfoming a pathway analysis.
+                    <br>
+                    <br>
+                   Group data project: A Cross-Cultural Exploration of Nutritional Impacts on Huntington’s Disease involving the development of a data dashboard in R Shiny and an examination of preliminary findings.
+                  </div>
+                    </div>
+                </li>
             
+                <!-- Item 3 -->
+                <li>
+                    <div class="direction-r">
+                        <div class="flag-wrapper">
+                            <span class="flag">BSc Psychology.</span>
+                            <span class="time-wrapper"><span class="time">2017 - 2021</span></span>
+                        </div>
+                        <div class="desc"><small>1st class.</small> 
+                    <br>
+                    <br>
+                    Dissertation project: Investigating the Impact of Cyfip1 Haploinsufficiency on Brain Structure and Plasticity After Training on a Biconditional Task 
+                  <br>
+                  <br>
+                    Placement year: Using Diffusion Tensor Imaging to reconstruct subcortical white matter pathways. 
+                  <br>
+                  <br>
+                    Summer internship: Does Moral Elevation buffer the Moral Licensing Effect?
+                  </div>
+                    </div>
+                </li>
+              
+            </ul>
+            </div>
 
               <div id="contact">
                  <h1>contact.</h1>                 
@@ -199,7 +328,9 @@
         icons from <br> <a href ="https://www.flaticon.com"> Freepik - Flaticon</a>
         <p></p>
         boxes by <br> <a href ="https://codepen.io/lincohn"> quangdao</a>
-        <br>         
+        <p></p>
+        timeline by <br> <a href ="  https://codepen.io/NilsWe"> Nils Wittler</a>       
+              <br>
     </div>
     
 <script src="index.js" type="text/javascript"></script>
